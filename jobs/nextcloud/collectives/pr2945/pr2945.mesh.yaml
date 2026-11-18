@@ -1,0 +1,2859 @@
+kind: suite
+report:
+  excludedPhaseIds:
+    - urn:phase:setup
+label: Collectives sharing permissions
+outputDir: out
+target:
+  service: collectives-install
+  output: identity
+model:
+  use: "@openuji/journey-model-ujg/plugin"
+services:
+  collectives-source:
+    use: "@openuji/journey-service-git/plugin"
+    options:
+      repository: https://github.com/nextcloud/collectives.git
+      pullRequest: 2945
+      directory: .tmp/collectives-source
+  collectives-build:
+    use: "@openuji/journey-driver-nextcloud/app-build/service"
+    inputs:
+      source:
+        service: collectives-source
+        output: source
+    options:
+      directory: .runtime/builds
+      image: journey-mesh/collectives
+      nodeImage: node:24.11.1-bookworm-slim@sha256:48abc13a19400ca3985071e287bd405a1d99306770eb81d61202fb6b65cf0b57
+      composerImage: composer:2.8.12@sha256:5248900ab8b5f7f880c2d62180e40960cd87f60149ec9a1abfd62ac72a02577c
+  stack:
+    use: "@openuji/journey-driver-nextcloud/stack/service"
+    options:
+      project: journey-collectives-sharing
+      composeFiles:
+        - deployment/compose.yaml
+      directory: .runtime/stack
+      image: nextcloud:35.0.2-apache@sha256:786c102155d2717ba0f53a62b3fdd7a1354edc48e800b94dbe32294d9a5752a2
+      expectedVersion: 35.0.2
+      systemConfig:
+        auth.bruteforce.protection.enabled: false
+      environment:
+        NEXTCLOUD_COLLECTIVES_PORT: ${NEXTCLOUD_COLLECTIVES_PORT:-18445}
+      services:
+        nextcloud:
+          baseURL: http://host.docker.internal:${NEXTCLOUD_COLLECTIVES_PORT:-18445}
+          username: admin
+          password: JourneyAdmin2026!
+      enabledApps:
+        - circles
+        - text
+        - files_sharing
+  collectives-install:
+    use: "@openuji/journey-driver-nextcloud/app-install/service"
+    inputs:
+      app:
+        service: collectives-build
+        output: app
+      stack:
+        service: stack
+        output: stack
+    options:
+      directory: .runtime/install
+      services:
+        - nextcloud
+      enable: true
+adapters:
+  web:
+    use: "@openuji/journey-adapter-playwright/plugin"
+    options:
+      browser: chromium
+      headless: ${HEADLESS:-true}
+      contextOptions:
+        viewport:
+          width: 1440
+          height: 1000
+        locale: en-US
+    driver:
+      use: "@openuji/journey-driver-nextcloud/web/plugin"
+      options:
+        touchpoints:
+          urn:touchpoint:collectives:
+            baseURL: http://host.docker.internal:${NEXTCLOUD_COLLECTIVES_PORT:-18445}
+        users:
+          urn:user:owner:
+            username: journey-owner
+            password: JourneyFixture2026!
+          urn:user:admin:
+            username: journey-admin
+            password: JourneyFixture2026!
+          urn:user:alice:
+            username: journey-alice
+            password: JourneyFixture2026!
+          urn:user:bob:
+            username: journey-bob
+            password: JourneyFixture2026!
+        entries:
+          login: /login
+          collectives: /apps/collectives
+        transitionValues:
+          urn:journey:collective-own:login:transition:0:
+            source: user.username
+          urn:journey:collective-own:login:transition:1:
+            source: user.password
+          urn:journey:collective-own:sharing:transition:6: Newsletter
+          urn:journey:collective-member:login:transition:0:
+            source: user.username
+          urn:journey:collective-member:login:transition:1:
+            source: user.password
+          urn:journey:collective-admin:login:transition:0:
+            source: user.username
+          urn:journey:collective-admin:login:transition:1:
+            source: user.password
+          urn:journey:collective-sharing-restricted:login:transition:0:
+            source: user.username
+          urn:journey:collective-sharing-restricted:login:transition:1:
+            source: user.password
+          urn:journey:collective-editing-restricted:login:transition:0:
+            source: user.username
+          urn:journey:collective-editing-restricted:login:transition:1:
+            source: user.password
+          urn:journey:page-own:login:transition:0:
+            source: user.username
+          urn:journey:page-own:login:transition:1:
+            source: user.password
+          urn:journey:page-own:sharing:transition:7: Newsletter
+          urn:journey:page-member:login:transition:0:
+            source: user.username
+          urn:journey:page-member:login:transition:1:
+            source: user.password
+          urn:journey:page-admin:login:transition:0:
+            source: user.username
+          urn:journey:page-admin:login:transition:1:
+            source: user.password
+          urn:journey:page-sharing-restricted:login:transition:0:
+            source: user.username
+          urn:journey:page-sharing-restricted:login:transition:1:
+            source: user.password
+          urn:journey:page-editing-restricted:login:transition:0:
+            source: user.username
+          urn:journey:page-editing-restricted:login:transition:1:
+            source: user.password
+    observers:
+      - use: "@openuji/journey-observer-axe/plugin"
+        options:
+          reportId: collectives-sharing.axe
+          strict: false
+          sourceScreenshots:
+            states: true
+            fullPage: true
+          excludedPhaseIds:
+            - urn:phase:setup
+profiles:
+  default:
+    use: "@openuji/journey-profiles/plugin"
+    options:
+      preset: default
+  keyboard-only:
+    use: "@openuji/journey-profiles/plugin"
+    options:
+      preset: keyboard-only
+tests:
+  collective-own:
+    timeoutMs: 600000
+    services:
+      - collectives-install
+    journeys:
+      - id: login
+        source: ujg/collective-own.ujg.jsonld
+        select: urn:journey:collective-own:login
+        adapter: web
+      - id: sharing
+        source: ujg/collective-own.ujg.jsonld
+        select: urn:journey:collective-own:sharing
+        adapter: web
+    profiles:
+      - id: default
+        journeys:
+          login: default
+          sharing: default
+      - id: keyboard-only
+        journeys:
+          login: keyboard-only
+          sharing: keyboard-only
+    environment:
+      use: "@openuji/journey-environment-http/plugin"
+      options:
+        clients: &a1
+          provisioner:
+            baseURL: http://host.docker.internal:${NEXTCLOUD_COLLECTIVES_PORT:-18445}
+            headers:
+              OCS-APIRequest: "true"
+              Accept: application/json
+            auth:
+              username: admin
+              password: JourneyAdmin2026!
+          public:
+            baseURL: http://host.docker.internal:${NEXTCLOUD_COLLECTIVES_PORT:-18445}
+            headers:
+              OCS-APIRequest: "true"
+              Accept: application/json
+          owner:
+            baseURL: http://host.docker.internal:${NEXTCLOUD_COLLECTIVES_PORT:-18445}
+            headers:
+              OCS-APIRequest: "true"
+              Accept: application/json
+            auth:
+              username: journey-owner
+              password: JourneyFixture2026!
+          admin:
+            baseURL: http://host.docker.internal:${NEXTCLOUD_COLLECTIVES_PORT:-18445}
+            headers:
+              OCS-APIRequest: "true"
+              Accept: application/json
+            auth:
+              username: journey-admin
+              password: JourneyFixture2026!
+          alice:
+            baseURL: http://host.docker.internal:${NEXTCLOUD_COLLECTIVES_PORT:-18445}
+            headers:
+              OCS-APIRequest: "true"
+              Accept: application/json
+            auth:
+              username: journey-alice
+              password: JourneyFixture2026!
+          bob:
+            baseURL: http://host.docker.internal:${NEXTCLOUD_COLLECTIVES_PORT:-18445}
+            headers:
+              OCS-APIRequest: "true"
+              Accept: application/json
+            auth:
+              username: journey-bob
+              password: JourneyFixture2026!
+        setup:
+          - id: create-owner
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-owner
+              password: JourneyFixture2026!
+              displayName: Collective Owner
+            cleanup:
+              - id: delete-owner
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-owner
+                status:
+                  - 200
+                  - 404
+          - id: create-admin
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-admin
+              password: JourneyFixture2026!
+              displayName: Collective Administrator
+            cleanup:
+              - id: delete-admin
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-admin
+                status:
+                  - 200
+                  - 404
+          - id: create-alice
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-alice
+              password: JourneyFixture2026!
+              displayName: Alice Journey
+            cleanup:
+              - id: delete-alice
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-alice
+                status:
+                  - 200
+                  - 404
+          - id: create-bob
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-bob
+              password: JourneyFixture2026!
+              displayName: Bob Journey
+            cleanup:
+              - id: delete-bob
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-bob
+                status:
+                  - 200
+                  - 404
+          - id: create-collective
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives
+            status:
+              - 200
+            json:
+              name: Journey collective-own
+            capture:
+              collective: /ocs/data/collective/id
+              circle: /ocs/data/collective/circleId
+            cleanup:
+              - id: trash-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}
+                status:
+                  - 200
+                  - 404
+              - id: purge-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/trash/{{collective}}
+                status:
+                  - 200
+                  - 404
+                json:
+                  circle: true
+          - id: add-admin
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-admin
+              type: 1
+            capture:
+              adminMember: /ocs/data/id
+          - id: add-alice
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-alice
+              type: 1
+          - id: add-bob
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-bob
+              type: 1
+          - id: promote-admin
+            client: owner
+            method: PUT
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members/{{adminMember}}/level
+            status:
+              - 200
+            json:
+              level: 8
+          - id: seed-owner-link
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+            status:
+              - 200
+            json:
+              label: Owner link
+            capture:
+              ownerToken: /ocs/data/token
+          - id: seed-alice-link
+            client: alice
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+            status:
+              - 200
+            json:
+              label: ""
+            capture:
+              aliceToken: /ocs/data/token
+          - id: seed-bob-link
+            client: bob
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+            status:
+              - 200
+            json:
+              label: Bob link
+            capture:
+              bobToken: /ocs/data/token
+        effects:
+          urn:journey:collective-own:sharing:transition:3:effect:
+            - id: list-capabilities
+              client: alice
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    owner: journey-alice
+                    canUpdate: true
+                    canDelete: true
+                - pointer: /ocs/data
+                  length: 3
+          urn:journey:collective-own:sharing:transition:7:effect:
+            - id: updated
+              client: alice
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              poll: {}
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    token: "{{aliceToken}}"
+                    label: Newsletter
+          urn:journey:collective-own:sharing:transition:9:effect:
+            - id: created
+              client: alice
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              poll: {}
+              assertions:
+                - pointer: /ocs/data
+                  length: 4
+          urn:journey:collective-own:sharing:transition:11:effect:
+            - id: collective-public-before
+              client: public
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/p/collectives/{{aliceToken}}
+              status:
+                - 200
+            - id: folder-public-before
+              client: public
+              method: GET
+              path: /index.php/s/{{aliceToken}}
+              status:
+                - 200
+          urn:journey:collective-own:sharing:transition:12:effect:
+            - id: not-listed
+              client: owner
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              poll: {}
+              assertions:
+                - pointer: /ocs/data
+                  excludes:
+                    token: "{{aliceToken}}"
+            - id: collective-public-revoked
+              client: public
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/p/collectives/{{aliceToken}}
+              status:
+                - 404
+            - id: folder-public-revoked
+              client: public
+              method: GET
+              path: /index.php/s/{{aliceToken}}
+              status:
+                - 404
+        cleanupTimeoutMs: 60000
+    reporters:
+      - use: "@openuji/journey-observer-axe/reporter"
+  collective-member:
+    timeoutMs: 600000
+    services:
+      - collectives-install
+    journeys:
+      - id: login
+        source: ujg/collective-member.ujg.jsonld
+        select: urn:journey:collective-member:login
+        adapter: web
+      - id: sharing
+        source: ujg/collective-member.ujg.jsonld
+        select: urn:journey:collective-member:sharing
+        adapter: web
+    profiles:
+      - id: default
+        journeys:
+          login: default
+          sharing: default
+      - id: keyboard-only
+        journeys:
+          login: keyboard-only
+          sharing: keyboard-only
+    environment:
+      use: "@openuji/journey-environment-http/plugin"
+      options:
+        clients: *a1
+        setup:
+          - id: create-owner
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-owner
+              password: JourneyFixture2026!
+              displayName: Collective Owner
+            cleanup:
+              - id: delete-owner
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-owner
+                status:
+                  - 200
+                  - 404
+          - id: create-admin
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-admin
+              password: JourneyFixture2026!
+              displayName: Collective Administrator
+            cleanup:
+              - id: delete-admin
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-admin
+                status:
+                  - 200
+                  - 404
+          - id: create-alice
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-alice
+              password: JourneyFixture2026!
+              displayName: Alice Journey
+            cleanup:
+              - id: delete-alice
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-alice
+                status:
+                  - 200
+                  - 404
+          - id: create-bob
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-bob
+              password: JourneyFixture2026!
+              displayName: Bob Journey
+            cleanup:
+              - id: delete-bob
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-bob
+                status:
+                  - 200
+                  - 404
+          - id: create-collective
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives
+            status:
+              - 200
+            json:
+              name: Journey collective-member
+            capture:
+              collective: /ocs/data/collective/id
+              circle: /ocs/data/collective/circleId
+            cleanup:
+              - id: trash-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}
+                status:
+                  - 200
+                  - 404
+              - id: purge-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/trash/{{collective}}
+                status:
+                  - 200
+                  - 404
+                json:
+                  circle: true
+          - id: add-admin
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-admin
+              type: 1
+            capture:
+              adminMember: /ocs/data/id
+          - id: add-alice
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-alice
+              type: 1
+          - id: add-bob
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-bob
+              type: 1
+          - id: promote-admin
+            client: owner
+            method: PUT
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members/{{adminMember}}/level
+            status:
+              - 200
+            json:
+              level: 8
+          - id: seed-owner-link
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+            status:
+              - 200
+            json:
+              label: Owner link
+            capture:
+              ownerToken: /ocs/data/token
+          - id: seed-alice-link
+            client: alice
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+            status:
+              - 200
+            json:
+              label: Alice link
+            capture:
+              aliceToken: /ocs/data/token
+          - id: seed-bob-link
+            client: bob
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+            status:
+              - 200
+            json:
+              label: Bob link
+            capture:
+              bobToken: /ocs/data/token
+        effects:
+          urn:journey:collective-member:sharing:transition:3:effect:
+            - id: list-capabilities
+              client: bob
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    owner: journey-alice
+                    canUpdate: false
+                    canDelete: false
+                - pointer: /ocs/data
+                  length: 3
+            - id: label-unchanged
+              client: owner
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    token: "{{aliceToken}}"
+                    label: Alice link
+            - id: link-preserved
+              client: public
+              method: GET
+              path: /index.php/s/{{aliceToken}}
+              status:
+                - 200
+        cleanupTimeoutMs: 60000
+    reporters:
+      - use: "@openuji/journey-observer-axe/reporter"
+  collective-admin:
+    timeoutMs: 600000
+    services:
+      - collectives-install
+    journeys:
+      - id: login
+        source: ujg/collective-admin.ujg.jsonld
+        select: urn:journey:collective-admin:login
+        adapter: web
+      - id: sharing
+        source: ujg/collective-admin.ujg.jsonld
+        select: urn:journey:collective-admin:sharing
+        adapter: web
+    profiles:
+      - id: default
+        journeys:
+          login: default
+          sharing: default
+      - id: keyboard-only
+        journeys:
+          login: keyboard-only
+          sharing: keyboard-only
+    environment:
+      use: "@openuji/journey-environment-http/plugin"
+      options:
+        clients: *a1
+        setup:
+          - id: create-owner
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-owner
+              password: JourneyFixture2026!
+              displayName: Collective Owner
+            cleanup:
+              - id: delete-owner
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-owner
+                status:
+                  - 200
+                  - 404
+          - id: create-admin
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-admin
+              password: JourneyFixture2026!
+              displayName: Collective Administrator
+            cleanup:
+              - id: delete-admin
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-admin
+                status:
+                  - 200
+                  - 404
+          - id: create-alice
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-alice
+              password: JourneyFixture2026!
+              displayName: Alice Journey
+            cleanup:
+              - id: delete-alice
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-alice
+                status:
+                  - 200
+                  - 404
+          - id: create-bob
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-bob
+              password: JourneyFixture2026!
+              displayName: Bob Journey
+            cleanup:
+              - id: delete-bob
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-bob
+                status:
+                  - 200
+                  - 404
+          - id: create-collective
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives
+            status:
+              - 200
+            json:
+              name: Journey collective-admin
+            capture:
+              collective: /ocs/data/collective/id
+              circle: /ocs/data/collective/circleId
+            cleanup:
+              - id: trash-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}
+                status:
+                  - 200
+                  - 404
+              - id: purge-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/trash/{{collective}}
+                status:
+                  - 200
+                  - 404
+                json:
+                  circle: true
+          - id: add-admin
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-admin
+              type: 1
+            capture:
+              adminMember: /ocs/data/id
+          - id: add-alice
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-alice
+              type: 1
+          - id: add-bob
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-bob
+              type: 1
+          - id: promote-admin
+            client: owner
+            method: PUT
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members/{{adminMember}}/level
+            status:
+              - 200
+            json:
+              level: 8
+          - id: seed-owner-link
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+            status:
+              - 200
+            json:
+              label: Owner link
+            capture:
+              ownerToken: /ocs/data/token
+          - id: seed-alice-link
+            client: alice
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+            status:
+              - 200
+            json:
+              label: Alice link
+            capture:
+              aliceToken: /ocs/data/token
+          - id: seed-bob-link
+            client: bob
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+            status:
+              - 200
+            json:
+              label: Bob link
+            capture:
+              bobToken: /ocs/data/token
+        effects:
+          urn:journey:collective-admin:sharing:transition:3:effect:
+            - id: list-capabilities
+              client: admin
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    owner: journey-alice
+                    canUpdate: false
+                    canDelete: true
+                - pointer: /ocs/data
+                  length: 3
+            - id: label-unchanged
+              client: owner
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    token: "{{aliceToken}}"
+                    label: Alice link
+          urn:journey:collective-admin:sharing:transition:8:effect:
+            - id: collective-public-before
+              client: public
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/p/collectives/{{aliceToken}}
+              status:
+                - 200
+            - id: folder-public-before
+              client: public
+              method: GET
+              path: /index.php/s/{{aliceToken}}
+              status:
+                - 200
+          urn:journey:collective-admin:sharing:transition:9:effect:
+            - id: not-listed
+              client: owner
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              poll: {}
+              assertions:
+                - pointer: /ocs/data
+                  excludes:
+                    token: "{{aliceToken}}"
+            - id: collective-public-revoked
+              client: public
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/p/collectives/{{aliceToken}}
+              status:
+                - 404
+            - id: folder-public-revoked
+              client: public
+              method: GET
+              path: /index.php/s/{{aliceToken}}
+              status:
+                - 404
+        cleanupTimeoutMs: 60000
+    reporters:
+      - use: "@openuji/journey-observer-axe/reporter"
+  collective-sharing-restricted:
+    timeoutMs: 600000
+    services:
+      - collectives-install
+    journeys:
+      - id: login
+        source: ujg/collective-sharing-restricted.ujg.jsonld
+        select: urn:journey:collective-sharing-restricted:login
+        adapter: web
+      - id: sharing
+        source: ujg/collective-sharing-restricted.ujg.jsonld
+        select: urn:journey:collective-sharing-restricted:sharing
+        adapter: web
+    profiles:
+      - id: default
+        journeys:
+          login: default
+          sharing: default
+      - id: keyboard-only
+        journeys:
+          login: keyboard-only
+          sharing: keyboard-only
+    environment:
+      use: "@openuji/journey-environment-http/plugin"
+      options:
+        clients: *a1
+        setup:
+          - id: create-owner
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-owner
+              password: JourneyFixture2026!
+              displayName: Collective Owner
+            cleanup:
+              - id: delete-owner
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-owner
+                status:
+                  - 200
+                  - 404
+          - id: create-admin
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-admin
+              password: JourneyFixture2026!
+              displayName: Collective Administrator
+            cleanup:
+              - id: delete-admin
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-admin
+                status:
+                  - 200
+                  - 404
+          - id: create-alice
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-alice
+              password: JourneyFixture2026!
+              displayName: Alice Journey
+            cleanup:
+              - id: delete-alice
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-alice
+                status:
+                  - 200
+                  - 404
+          - id: create-bob
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-bob
+              password: JourneyFixture2026!
+              displayName: Bob Journey
+            cleanup:
+              - id: delete-bob
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-bob
+                status:
+                  - 200
+                  - 404
+          - id: create-collective
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives
+            status:
+              - 200
+            json:
+              name: Journey collective-sharing-restricted
+            capture:
+              collective: /ocs/data/collective/id
+              circle: /ocs/data/collective/circleId
+            cleanup:
+              - id: trash-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}
+                status:
+                  - 200
+                  - 404
+              - id: purge-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/trash/{{collective}}
+                status:
+                  - 200
+                  - 404
+                json:
+                  circle: true
+          - id: add-admin
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-admin
+              type: 1
+            capture:
+              adminMember: /ocs/data/id
+          - id: add-alice
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-alice
+              type: 1
+          - id: add-bob
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-bob
+              type: 1
+          - id: promote-admin
+            client: owner
+            method: PUT
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members/{{adminMember}}/level
+            status:
+              - 200
+            json:
+              level: 8
+          - id: seed-owner-link
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+            status:
+              - 200
+            json:
+              label: Owner link
+            capture:
+              ownerToken: /ocs/data/token
+          - id: seed-alice-link
+            client: alice
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+            status:
+              - 200
+            json:
+              label: Alice link
+            capture:
+              aliceToken: /ocs/data/token
+          - id: seed-bob-link
+            client: bob
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+            status:
+              - 200
+            json:
+              label: Bob link
+            capture:
+              bobToken: /ocs/data/token
+          - id: restrict-sharing
+            client: owner
+            method: PUT
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shareLevel
+            status:
+              - 200
+            json:
+              level: 4
+        effects:
+          urn:journey:collective-sharing-restricted:sharing:transition:3:effect:
+            - id: list-capabilities
+              client: alice
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    owner: journey-alice
+                    canUpdate: false
+                    canDelete: true
+                - pointer: /ocs/data
+                  length: 1
+            - id: label-unchanged
+              client: owner
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    token: "{{aliceToken}}"
+                    label: Alice link
+            - id: own-only
+              client: alice
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  excludes:
+                    owner: journey-owner
+                - pointer: /ocs/data
+                  excludes:
+                    owner: journey-bob
+        cleanupTimeoutMs: 60000
+    reporters:
+      - use: "@openuji/journey-observer-axe/reporter"
+  collective-editing-restricted:
+    timeoutMs: 600000
+    services:
+      - collectives-install
+    journeys:
+      - id: login
+        source: ujg/collective-editing-restricted.ujg.jsonld
+        select: urn:journey:collective-editing-restricted:login
+        adapter: web
+      - id: sharing
+        source: ujg/collective-editing-restricted.ujg.jsonld
+        select: urn:journey:collective-editing-restricted:sharing
+        adapter: web
+    profiles:
+      - id: default
+        journeys:
+          login: default
+          sharing: default
+      - id: keyboard-only
+        journeys:
+          login: keyboard-only
+          sharing: keyboard-only
+    environment:
+      use: "@openuji/journey-environment-http/plugin"
+      options:
+        clients: *a1
+        setup:
+          - id: create-owner
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-owner
+              password: JourneyFixture2026!
+              displayName: Collective Owner
+            cleanup:
+              - id: delete-owner
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-owner
+                status:
+                  - 200
+                  - 404
+          - id: create-admin
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-admin
+              password: JourneyFixture2026!
+              displayName: Collective Administrator
+            cleanup:
+              - id: delete-admin
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-admin
+                status:
+                  - 200
+                  - 404
+          - id: create-alice
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-alice
+              password: JourneyFixture2026!
+              displayName: Alice Journey
+            cleanup:
+              - id: delete-alice
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-alice
+                status:
+                  - 200
+                  - 404
+          - id: create-bob
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-bob
+              password: JourneyFixture2026!
+              displayName: Bob Journey
+            cleanup:
+              - id: delete-bob
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-bob
+                status:
+                  - 200
+                  - 404
+          - id: create-collective
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives
+            status:
+              - 200
+            json:
+              name: Journey collective-editing-restricted
+            capture:
+              collective: /ocs/data/collective/id
+              circle: /ocs/data/collective/circleId
+            cleanup:
+              - id: trash-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}
+                status:
+                  - 200
+                  - 404
+              - id: purge-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/trash/{{collective}}
+                status:
+                  - 200
+                  - 404
+                json:
+                  circle: true
+          - id: add-admin
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-admin
+              type: 1
+            capture:
+              adminMember: /ocs/data/id
+          - id: add-alice
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-alice
+              type: 1
+          - id: add-bob
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-bob
+              type: 1
+          - id: promote-admin
+            client: owner
+            method: PUT
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members/{{adminMember}}/level
+            status:
+              - 200
+            json:
+              level: 8
+          - id: seed-owner-link
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+            status:
+              - 200
+            json:
+              label: Owner link
+            capture:
+              ownerToken: /ocs/data/token
+          - id: seed-alice-link
+            client: alice
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+            status:
+              - 200
+            json:
+              label: Alice link
+            capture:
+              aliceToken: /ocs/data/token
+          - id: seed-bob-link
+            client: bob
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+            status:
+              - 200
+            json:
+              label: Bob link
+            capture:
+              bobToken: /ocs/data/token
+          - id: restrict-editing
+            client: owner
+            method: PUT
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/editLevel
+            status:
+              - 200
+            json:
+              level: 4
+        effects:
+          urn:journey:collective-editing-restricted:sharing:transition:3:effect:
+            - id: list-capabilities
+              client: alice
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    owner: journey-alice
+                    canUpdate: false
+                    canDelete: true
+                - pointer: /ocs/data
+                  length: 3
+            - id: label-unchanged
+              client: owner
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    token: "{{aliceToken}}"
+                    label: Alice link
+          urn:journey:collective-editing-restricted:sharing:transition:8:effect:
+            - id: collective-public-before
+              client: public
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/p/collectives/{{aliceToken}}
+              status:
+                - 200
+            - id: folder-public-before
+              client: public
+              method: GET
+              path: /index.php/s/{{aliceToken}}
+              status:
+                - 200
+          urn:journey:collective-editing-restricted:sharing:transition:9:effect:
+            - id: not-listed
+              client: owner
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              poll: {}
+              assertions:
+                - pointer: /ocs/data
+                  excludes:
+                    token: "{{aliceToken}}"
+            - id: collective-public-revoked
+              client: public
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/p/collectives/{{aliceToken}}
+              status:
+                - 404
+            - id: folder-public-revoked
+              client: public
+              method: GET
+              path: /index.php/s/{{aliceToken}}
+              status:
+                - 404
+        cleanupTimeoutMs: 60000
+    reporters:
+      - use: "@openuji/journey-observer-axe/reporter"
+  page-own:
+    timeoutMs: 600000
+    services:
+      - collectives-install
+    journeys:
+      - id: login
+        source: ujg/page-own.ujg.jsonld
+        select: urn:journey:page-own:login
+        adapter: web
+      - id: sharing
+        source: ujg/page-own.ujg.jsonld
+        select: urn:journey:page-own:sharing
+        adapter: web
+    profiles:
+      - id: default
+        journeys:
+          login: default
+          sharing: default
+      - id: keyboard-only
+        journeys:
+          login: keyboard-only
+          sharing: keyboard-only
+    environment:
+      use: "@openuji/journey-environment-http/plugin"
+      options:
+        clients: *a1
+        setup:
+          - id: create-owner
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-owner
+              password: JourneyFixture2026!
+              displayName: Collective Owner
+            cleanup:
+              - id: delete-owner
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-owner
+                status:
+                  - 200
+                  - 404
+          - id: create-admin
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-admin
+              password: JourneyFixture2026!
+              displayName: Collective Administrator
+            cleanup:
+              - id: delete-admin
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-admin
+                status:
+                  - 200
+                  - 404
+          - id: create-alice
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-alice
+              password: JourneyFixture2026!
+              displayName: Alice Journey
+            cleanup:
+              - id: delete-alice
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-alice
+                status:
+                  - 200
+                  - 404
+          - id: create-bob
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-bob
+              password: JourneyFixture2026!
+              displayName: Bob Journey
+            cleanup:
+              - id: delete-bob
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-bob
+                status:
+                  - 200
+                  - 404
+          - id: create-collective
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives
+            status:
+              - 200
+            json:
+              name: Journey page-own
+            capture:
+              collective: /ocs/data/collective/id
+              circle: /ocs/data/collective/circleId
+            cleanup:
+              - id: trash-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}
+                status:
+                  - 200
+                  - 404
+              - id: purge-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/trash/{{collective}}
+                status:
+                  - 200
+                  - 404
+                json:
+                  circle: true
+          - id: add-admin
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-admin
+              type: 1
+            capture:
+              adminMember: /ocs/data/id
+          - id: add-alice
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-alice
+              type: 1
+          - id: add-bob
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-bob
+              type: 1
+          - id: promote-admin
+            client: owner
+            method: PUT
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members/{{adminMember}}/level
+            status:
+              - 200
+            json:
+              level: 8
+          - id: root-page
+            client: owner
+            method: GET
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages
+            status:
+              - 200
+            capture:
+              rootPage: /ocs/data/pages/0/id
+          - id: create-page
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{rootPage}}
+            status:
+              - 200
+            json:
+              title: Journey page
+              parentId: "{{rootPage}}"
+            capture:
+              page: /ocs/data/page/id
+          - id: seed-owner-link
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{page}}/shares
+            status:
+              - 200
+            json:
+              label: Owner link
+            capture:
+              ownerToken: /ocs/data/token
+          - id: seed-alice-link
+            client: alice
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{page}}/shares
+            status:
+              - 200
+            json:
+              label: ""
+            capture:
+              aliceToken: /ocs/data/token
+          - id: seed-bob-link
+            client: bob
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{page}}/shares
+            status:
+              - 200
+            json:
+              label: Bob link
+            capture:
+              bobToken: /ocs/data/token
+        effects:
+          urn:journey:page-own:sharing:transition:4:effect:
+            - id: list-capabilities
+              client: alice
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    owner: journey-alice
+                    canUpdate: true
+                    canDelete: true
+                - pointer: /ocs/data
+                  length: 3
+          urn:journey:page-own:sharing:transition:8:effect:
+            - id: updated
+              client: alice
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              poll: {}
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    token: "{{aliceToken}}"
+                    label: Newsletter
+          urn:journey:page-own:sharing:transition:10:effect:
+            - id: created
+              client: alice
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              poll: {}
+              assertions:
+                - pointer: /ocs/data
+                  length: 4
+          urn:journey:page-own:sharing:transition:12:effect:
+            - id: collective-public-before
+              client: public
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/p/collectives/{{aliceToken}}
+              status:
+                - 200
+            - id: folder-public-before
+              client: public
+              method: GET
+              path: /index.php/s/{{aliceToken}}
+              status:
+                - 200
+          urn:journey:page-own:sharing:transition:13:effect:
+            - id: not-listed
+              client: owner
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              poll: {}
+              assertions:
+                - pointer: /ocs/data
+                  excludes:
+                    token: "{{aliceToken}}"
+            - id: collective-public-revoked
+              client: public
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/p/collectives/{{aliceToken}}
+              status:
+                - 404
+            - id: folder-public-revoked
+              client: public
+              method: GET
+              path: /index.php/s/{{aliceToken}}
+              status:
+                - 404
+        cleanupTimeoutMs: 60000
+    reporters:
+      - use: "@openuji/journey-observer-axe/reporter"
+  page-member:
+    timeoutMs: 600000
+    services:
+      - collectives-install
+    journeys:
+      - id: login
+        source: ujg/page-member.ujg.jsonld
+        select: urn:journey:page-member:login
+        adapter: web
+      - id: sharing
+        source: ujg/page-member.ujg.jsonld
+        select: urn:journey:page-member:sharing
+        adapter: web
+    profiles:
+      - id: default
+        journeys:
+          login: default
+          sharing: default
+      - id: keyboard-only
+        journeys:
+          login: keyboard-only
+          sharing: keyboard-only
+    environment:
+      use: "@openuji/journey-environment-http/plugin"
+      options:
+        clients: *a1
+        setup:
+          - id: create-owner
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-owner
+              password: JourneyFixture2026!
+              displayName: Collective Owner
+            cleanup:
+              - id: delete-owner
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-owner
+                status:
+                  - 200
+                  - 404
+          - id: create-admin
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-admin
+              password: JourneyFixture2026!
+              displayName: Collective Administrator
+            cleanup:
+              - id: delete-admin
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-admin
+                status:
+                  - 200
+                  - 404
+          - id: create-alice
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-alice
+              password: JourneyFixture2026!
+              displayName: Alice Journey
+            cleanup:
+              - id: delete-alice
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-alice
+                status:
+                  - 200
+                  - 404
+          - id: create-bob
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-bob
+              password: JourneyFixture2026!
+              displayName: Bob Journey
+            cleanup:
+              - id: delete-bob
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-bob
+                status:
+                  - 200
+                  - 404
+          - id: create-collective
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives
+            status:
+              - 200
+            json:
+              name: Journey page-member
+            capture:
+              collective: /ocs/data/collective/id
+              circle: /ocs/data/collective/circleId
+            cleanup:
+              - id: trash-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}
+                status:
+                  - 200
+                  - 404
+              - id: purge-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/trash/{{collective}}
+                status:
+                  - 200
+                  - 404
+                json:
+                  circle: true
+          - id: add-admin
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-admin
+              type: 1
+            capture:
+              adminMember: /ocs/data/id
+          - id: add-alice
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-alice
+              type: 1
+          - id: add-bob
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-bob
+              type: 1
+          - id: promote-admin
+            client: owner
+            method: PUT
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members/{{adminMember}}/level
+            status:
+              - 200
+            json:
+              level: 8
+          - id: root-page
+            client: owner
+            method: GET
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages
+            status:
+              - 200
+            capture:
+              rootPage: /ocs/data/pages/0/id
+          - id: create-page
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{rootPage}}
+            status:
+              - 200
+            json:
+              title: Journey page
+              parentId: "{{rootPage}}"
+            capture:
+              page: /ocs/data/page/id
+          - id: seed-owner-link
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{page}}/shares
+            status:
+              - 200
+            json:
+              label: Owner link
+            capture:
+              ownerToken: /ocs/data/token
+          - id: seed-alice-link
+            client: alice
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{page}}/shares
+            status:
+              - 200
+            json:
+              label: Alice link
+            capture:
+              aliceToken: /ocs/data/token
+          - id: seed-bob-link
+            client: bob
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{page}}/shares
+            status:
+              - 200
+            json:
+              label: Bob link
+            capture:
+              bobToken: /ocs/data/token
+        effects:
+          urn:journey:page-member:sharing:transition:4:effect:
+            - id: list-capabilities
+              client: bob
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    owner: journey-alice
+                    canUpdate: false
+                    canDelete: false
+                - pointer: /ocs/data
+                  length: 3
+            - id: label-unchanged
+              client: owner
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    token: "{{aliceToken}}"
+                    label: Alice link
+            - id: link-preserved
+              client: public
+              method: GET
+              path: /index.php/s/{{aliceToken}}
+              status:
+                - 200
+        cleanupTimeoutMs: 60000
+    reporters:
+      - use: "@openuji/journey-observer-axe/reporter"
+  page-admin:
+    timeoutMs: 600000
+    services:
+      - collectives-install
+    journeys:
+      - id: login
+        source: ujg/page-admin.ujg.jsonld
+        select: urn:journey:page-admin:login
+        adapter: web
+      - id: sharing
+        source: ujg/page-admin.ujg.jsonld
+        select: urn:journey:page-admin:sharing
+        adapter: web
+    profiles:
+      - id: default
+        journeys:
+          login: default
+          sharing: default
+      - id: keyboard-only
+        journeys:
+          login: keyboard-only
+          sharing: keyboard-only
+    environment:
+      use: "@openuji/journey-environment-http/plugin"
+      options:
+        clients: *a1
+        setup:
+          - id: create-owner
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-owner
+              password: JourneyFixture2026!
+              displayName: Collective Owner
+            cleanup:
+              - id: delete-owner
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-owner
+                status:
+                  - 200
+                  - 404
+          - id: create-admin
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-admin
+              password: JourneyFixture2026!
+              displayName: Collective Administrator
+            cleanup:
+              - id: delete-admin
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-admin
+                status:
+                  - 200
+                  - 404
+          - id: create-alice
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-alice
+              password: JourneyFixture2026!
+              displayName: Alice Journey
+            cleanup:
+              - id: delete-alice
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-alice
+                status:
+                  - 200
+                  - 404
+          - id: create-bob
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-bob
+              password: JourneyFixture2026!
+              displayName: Bob Journey
+            cleanup:
+              - id: delete-bob
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-bob
+                status:
+                  - 200
+                  - 404
+          - id: create-collective
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives
+            status:
+              - 200
+            json:
+              name: Journey page-admin
+            capture:
+              collective: /ocs/data/collective/id
+              circle: /ocs/data/collective/circleId
+            cleanup:
+              - id: trash-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}
+                status:
+                  - 200
+                  - 404
+              - id: purge-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/trash/{{collective}}
+                status:
+                  - 200
+                  - 404
+                json:
+                  circle: true
+          - id: add-admin
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-admin
+              type: 1
+            capture:
+              adminMember: /ocs/data/id
+          - id: add-alice
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-alice
+              type: 1
+          - id: add-bob
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-bob
+              type: 1
+          - id: promote-admin
+            client: owner
+            method: PUT
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members/{{adminMember}}/level
+            status:
+              - 200
+            json:
+              level: 8
+          - id: root-page
+            client: owner
+            method: GET
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages
+            status:
+              - 200
+            capture:
+              rootPage: /ocs/data/pages/0/id
+          - id: create-page
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{rootPage}}
+            status:
+              - 200
+            json:
+              title: Journey page
+              parentId: "{{rootPage}}"
+            capture:
+              page: /ocs/data/page/id
+          - id: seed-owner-link
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{page}}/shares
+            status:
+              - 200
+            json:
+              label: Owner link
+            capture:
+              ownerToken: /ocs/data/token
+          - id: seed-alice-link
+            client: alice
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{page}}/shares
+            status:
+              - 200
+            json:
+              label: Alice link
+            capture:
+              aliceToken: /ocs/data/token
+          - id: seed-bob-link
+            client: bob
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{page}}/shares
+            status:
+              - 200
+            json:
+              label: Bob link
+            capture:
+              bobToken: /ocs/data/token
+        effects:
+          urn:journey:page-admin:sharing:transition:4:effect:
+            - id: list-capabilities
+              client: admin
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    owner: journey-alice
+                    canUpdate: false
+                    canDelete: true
+                - pointer: /ocs/data
+                  length: 3
+            - id: label-unchanged
+              client: owner
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    token: "{{aliceToken}}"
+                    label: Alice link
+          urn:journey:page-admin:sharing:transition:9:effect:
+            - id: collective-public-before
+              client: public
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/p/collectives/{{aliceToken}}
+              status:
+                - 200
+            - id: folder-public-before
+              client: public
+              method: GET
+              path: /index.php/s/{{aliceToken}}
+              status:
+                - 200
+          urn:journey:page-admin:sharing:transition:10:effect:
+            - id: not-listed
+              client: owner
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              poll: {}
+              assertions:
+                - pointer: /ocs/data
+                  excludes:
+                    token: "{{aliceToken}}"
+            - id: collective-public-revoked
+              client: public
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/p/collectives/{{aliceToken}}
+              status:
+                - 404
+            - id: folder-public-revoked
+              client: public
+              method: GET
+              path: /index.php/s/{{aliceToken}}
+              status:
+                - 404
+        cleanupTimeoutMs: 60000
+    reporters:
+      - use: "@openuji/journey-observer-axe/reporter"
+  page-sharing-restricted:
+    timeoutMs: 600000
+    services:
+      - collectives-install
+    journeys:
+      - id: login
+        source: ujg/page-sharing-restricted.ujg.jsonld
+        select: urn:journey:page-sharing-restricted:login
+        adapter: web
+      - id: sharing
+        source: ujg/page-sharing-restricted.ujg.jsonld
+        select: urn:journey:page-sharing-restricted:sharing
+        adapter: web
+    profiles:
+      - id: default
+        journeys:
+          login: default
+          sharing: default
+      - id: keyboard-only
+        journeys:
+          login: keyboard-only
+          sharing: keyboard-only
+    environment:
+      use: "@openuji/journey-environment-http/plugin"
+      options:
+        clients: *a1
+        setup:
+          - id: create-owner
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-owner
+              password: JourneyFixture2026!
+              displayName: Collective Owner
+            cleanup:
+              - id: delete-owner
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-owner
+                status:
+                  - 200
+                  - 404
+          - id: create-admin
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-admin
+              password: JourneyFixture2026!
+              displayName: Collective Administrator
+            cleanup:
+              - id: delete-admin
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-admin
+                status:
+                  - 200
+                  - 404
+          - id: create-alice
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-alice
+              password: JourneyFixture2026!
+              displayName: Alice Journey
+            cleanup:
+              - id: delete-alice
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-alice
+                status:
+                  - 200
+                  - 404
+          - id: create-bob
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-bob
+              password: JourneyFixture2026!
+              displayName: Bob Journey
+            cleanup:
+              - id: delete-bob
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-bob
+                status:
+                  - 200
+                  - 404
+          - id: create-collective
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives
+            status:
+              - 200
+            json:
+              name: Journey page-sharing-restricted
+            capture:
+              collective: /ocs/data/collective/id
+              circle: /ocs/data/collective/circleId
+            cleanup:
+              - id: trash-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}
+                status:
+                  - 200
+                  - 404
+              - id: purge-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/trash/{{collective}}
+                status:
+                  - 200
+                  - 404
+                json:
+                  circle: true
+          - id: add-admin
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-admin
+              type: 1
+            capture:
+              adminMember: /ocs/data/id
+          - id: add-alice
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-alice
+              type: 1
+          - id: add-bob
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-bob
+              type: 1
+          - id: promote-admin
+            client: owner
+            method: PUT
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members/{{adminMember}}/level
+            status:
+              - 200
+            json:
+              level: 8
+          - id: root-page
+            client: owner
+            method: GET
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages
+            status:
+              - 200
+            capture:
+              rootPage: /ocs/data/pages/0/id
+          - id: create-page
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{rootPage}}
+            status:
+              - 200
+            json:
+              title: Journey page
+              parentId: "{{rootPage}}"
+            capture:
+              page: /ocs/data/page/id
+          - id: seed-owner-link
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{page}}/shares
+            status:
+              - 200
+            json:
+              label: Owner link
+            capture:
+              ownerToken: /ocs/data/token
+          - id: seed-alice-link
+            client: alice
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{page}}/shares
+            status:
+              - 200
+            json:
+              label: Alice link
+            capture:
+              aliceToken: /ocs/data/token
+          - id: seed-bob-link
+            client: bob
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{page}}/shares
+            status:
+              - 200
+            json:
+              label: Bob link
+            capture:
+              bobToken: /ocs/data/token
+          - id: restrict-sharing
+            client: owner
+            method: PUT
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shareLevel
+            status:
+              - 200
+            json:
+              level: 4
+        effects:
+          urn:journey:page-sharing-restricted:sharing:transition:4:effect:
+            - id: list-capabilities
+              client: alice
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    owner: journey-alice
+                    canUpdate: false
+                    canDelete: true
+                - pointer: /ocs/data
+                  length: 1
+            - id: label-unchanged
+              client: owner
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    token: "{{aliceToken}}"
+                    label: Alice link
+            - id: own-only
+              client: alice
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  excludes:
+                    owner: journey-owner
+                - pointer: /ocs/data
+                  excludes:
+                    owner: journey-bob
+        cleanupTimeoutMs: 60000
+    reporters:
+      - use: "@openuji/journey-observer-axe/reporter"
+  page-editing-restricted:
+    timeoutMs: 600000
+    services:
+      - collectives-install
+    journeys:
+      - id: login
+        source: ujg/page-editing-restricted.ujg.jsonld
+        select: urn:journey:page-editing-restricted:login
+        adapter: web
+      - id: sharing
+        source: ujg/page-editing-restricted.ujg.jsonld
+        select: urn:journey:page-editing-restricted:sharing
+        adapter: web
+    profiles:
+      - id: default
+        journeys:
+          login: default
+          sharing: default
+      - id: keyboard-only
+        journeys:
+          login: keyboard-only
+          sharing: keyboard-only
+    environment:
+      use: "@openuji/journey-environment-http/plugin"
+      options:
+        clients: *a1
+        setup:
+          - id: create-owner
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-owner
+              password: JourneyFixture2026!
+              displayName: Collective Owner
+            cleanup:
+              - id: delete-owner
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-owner
+                status:
+                  - 200
+                  - 404
+          - id: create-admin
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-admin
+              password: JourneyFixture2026!
+              displayName: Collective Administrator
+            cleanup:
+              - id: delete-admin
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-admin
+                status:
+                  - 200
+                  - 404
+          - id: create-alice
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-alice
+              password: JourneyFixture2026!
+              displayName: Alice Journey
+            cleanup:
+              - id: delete-alice
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-alice
+                status:
+                  - 200
+                  - 404
+          - id: create-bob
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-bob
+              password: JourneyFixture2026!
+              displayName: Bob Journey
+            cleanup:
+              - id: delete-bob
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-bob
+                status:
+                  - 200
+                  - 404
+          - id: create-collective
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives
+            status:
+              - 200
+            json:
+              name: Journey page-editing-restricted
+            capture:
+              collective: /ocs/data/collective/id
+              circle: /ocs/data/collective/circleId
+            cleanup:
+              - id: trash-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}
+                status:
+                  - 200
+                  - 404
+              - id: purge-collective
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/trash/{{collective}}
+                status:
+                  - 200
+                  - 404
+                json:
+                  circle: true
+          - id: add-admin
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-admin
+              type: 1
+            capture:
+              adminMember: /ocs/data/id
+          - id: add-alice
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-alice
+              type: 1
+          - id: add-bob
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members
+            status:
+              - 200
+            json:
+              userId: journey-bob
+              type: 1
+          - id: promote-admin
+            client: owner
+            method: PUT
+            path: /ocs/v2.php/apps/circles/circles/{{circle}}/members/{{adminMember}}/level
+            status:
+              - 200
+            json:
+              level: 8
+          - id: root-page
+            client: owner
+            method: GET
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages
+            status:
+              - 200
+            capture:
+              rootPage: /ocs/data/pages/0/id
+          - id: create-page
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{rootPage}}
+            status:
+              - 200
+            json:
+              title: Journey page
+              parentId: "{{rootPage}}"
+            capture:
+              page: /ocs/data/page/id
+          - id: seed-owner-link
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{page}}/shares
+            status:
+              - 200
+            json:
+              label: Owner link
+            capture:
+              ownerToken: /ocs/data/token
+          - id: seed-alice-link
+            client: alice
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{page}}/shares
+            status:
+              - 200
+            json:
+              label: Alice link
+            capture:
+              aliceToken: /ocs/data/token
+          - id: seed-bob-link
+            client: bob
+            method: POST
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/pages/{{page}}/shares
+            status:
+              - 200
+            json:
+              label: Bob link
+            capture:
+              bobToken: /ocs/data/token
+          - id: restrict-editing
+            client: owner
+            method: PUT
+            path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/editLevel
+            status:
+              - 200
+            json:
+              level: 4
+        effects:
+          urn:journey:page-editing-restricted:sharing:transition:4:effect:
+            - id: list-capabilities
+              client: alice
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    owner: journey-alice
+                    canUpdate: false
+                    canDelete: true
+                - pointer: /ocs/data
+                  length: 3
+            - id: label-unchanged
+              client: owner
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    token: "{{aliceToken}}"
+                    label: Alice link
+          urn:journey:page-editing-restricted:sharing:transition:9:effect:
+            - id: collective-public-before
+              client: public
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/p/collectives/{{aliceToken}}
+              status:
+                - 200
+            - id: folder-public-before
+              client: public
+              method: GET
+              path: /index.php/s/{{aliceToken}}
+              status:
+                - 200
+          urn:journey:page-editing-restricted:sharing:transition:10:effect:
+            - id: not-listed
+              client: owner
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/collectives/{{collective}}/shares
+              status:
+                - 200
+              poll: {}
+              assertions:
+                - pointer: /ocs/data
+                  excludes:
+                    token: "{{aliceToken}}"
+            - id: collective-public-revoked
+              client: public
+              method: GET
+              path: /ocs/v2.php/apps/collectives/api/v1.0/p/collectives/{{aliceToken}}
+              status:
+                - 404
+            - id: folder-public-revoked
+              client: public
+              method: GET
+              path: /index.php/s/{{aliceToken}}
+              status:
+                - 404
+        cleanupTimeoutMs: 60000
+    reporters:
+      - use: "@openuji/journey-observer-axe/reporter"

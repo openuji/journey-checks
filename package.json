@@ -13,6 +13,9 @@
     "@openuji/journey-model-ujg": "link:./journey-mesh/packages/journey-model-ujg",
     "@openuji/journey-observer-axe": "link:./journey-mesh/packages/journey-observer-axe",
     "@openuji/journey-observer-ux": "link:./journey-mesh/packages/journey-observer-ux",
-    "@openuji/journey-profiles": "link:./journey-mesh/packages/journey-profiles"
+    "@openuji/journey-profiles": "link:./journey-mesh/packages/journey-profiles",
+    "@openuji/journey-service-git": "link:./journey-mesh/packages/journey-service-git",
+    "@openuji/journey-environment-http": "link:./journey-mesh/packages/journey-environment-http",
+    "yaml": "^2.9.1"
   }
 }

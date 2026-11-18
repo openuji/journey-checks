@@ -54,3 +54,10 @@ test("exit 0 never succeeds without ok:true, and a nonzero exit never succeeds w
   assert.equal(mismatch.succeeded, false);
   assert.match(mismatch.error, /exited 1/);
 });
+
+test("the mesh-selected installed target takes precedence over the hosting server", async () => {
+  const target = { repository: 'https://github.com/nextcloud/collectives.git', pullRequest: 2945, sourceSha: 'a'.repeat(40), version: '4.8.0' };
+  const result = await buildResult({ ...base, exitCode: 0, bundlePath: await bundle({ ok: true, target, provenance: { stack: { services: [{ version: '35.0.2' }] } } }) });
+  assert.deepEqual(result.target, target);
+  assert.equal(result.succeeded, true);
+});

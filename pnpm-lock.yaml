@@ -17,6 +17,9 @@ importers:
       '@openuji/journey-driver-nextcloud':
         specifier: link:./journey-mesh/packages/journey-driver-nextcloud
         version: link:journey-mesh/packages/journey-driver-nextcloud
+      '@openuji/journey-environment-http':
+        specifier: link:./journey-mesh/packages/journey-environment-http
+        version: link:journey-mesh/packages/journey-environment-http
       '@openuji/journey-model-ujg':
         specifier: link:./journey-mesh/packages/journey-model-ujg
         version: link:journey-mesh/packages/journey-model-ujg
@@ -29,3 +32,20 @@ importers:
       '@openuji/journey-profiles':
         specifier: link:./journey-mesh/packages/journey-profiles
         version: link:journey-mesh/packages/journey-profiles
+      '@openuji/journey-service-git':
+        specifier: link:./journey-mesh/packages/journey-service-git
+        version: link:journey-mesh/packages/journey-service-git
+      yaml:
+        specifier: ^2.9.1
+        version: 2.9.1
+
+packages:
+
+  yaml@2.9.1:
+    resolution: {integrity: sha512-3NxN8+78OdzbT7C/WjGsyfPAtJaN3FNDsWxv7Y7mcDsT/oOmgW8BpyQQFFBnvZE3j9Y2Sdz1ULFLezL7Eb2yFw==}
+    engines: {node: '>= 14.6'}
+    hasBin: true
+
+snapshots:
+
+  yaml@2.9.1: {}

@@ -25,11 +25,11 @@ export async function buildResult({ job, exitCode, bundlePath, ref, sha, run, no
   // The tested stack, when journey-mesh recorded one (e.g. the PR's head commit).
   const stack = bundle?.provenance?.stack;
   const service = stack?.services?.[0];
-  const target = stack && {
+  const target = bundle?.target ?? (stack && {
     ...(stack.pullRequest !== undefined && { pullRequest: stack.pullRequest }),
     ...(service?.sourceSha && { sourceSha: service.sourceSha }),
     ...(service?.version && { version: service.version }),
-  };
+  });
 
   return {
     job,
