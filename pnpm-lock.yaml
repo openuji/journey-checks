@@ -1,0 +1,31 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    devDependencies:
+      '@openuji/journey-adapter-playwright':
+        specifier: link:./journey-mesh/packages/journey-adapter-playwright
+        version: link:journey-mesh/packages/journey-adapter-playwright
+      '@openuji/journey-cli':
+        specifier: link:./journey-mesh/packages/journey-cli
+        version: link:journey-mesh/packages/journey-cli
+      '@openuji/journey-driver-nextcloud':
+        specifier: link:./journey-mesh/packages/journey-driver-nextcloud
+        version: link:journey-mesh/packages/journey-driver-nextcloud
+      '@openuji/journey-model-ujg':
+        specifier: link:./journey-mesh/packages/journey-model-ujg
+        version: link:journey-mesh/packages/journey-model-ujg
+      '@openuji/journey-observer-axe':
+        specifier: link:./journey-mesh/packages/journey-observer-axe
+        version: link:journey-mesh/packages/journey-observer-axe
+      '@openuji/journey-observer-ux':
+        specifier: link:./journey-mesh/packages/journey-observer-ux
+        version: link:journey-mesh/packages/journey-observer-ux
+      '@openuji/journey-profiles':
+        specifier: link:./journey-mesh/packages/journey-profiles
+        version: link:journey-mesh/packages/journey-profiles

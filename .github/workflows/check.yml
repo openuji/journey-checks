@@ -1,0 +1,130 @@
+name: Check journeys
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+    inputs:
+      journey_mesh_ref:
+        description: "journey-mesh tag, branch or SHA to run (default: latest v* tag)"
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-journeys
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      jobs: ${{ steps.jobs.outputs.jobs }}
+      ref: ${{ steps.ref.outputs.ref }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: List jobs
+        id: jobs
+        run: |
+          jobs="$(find jobs -name job.json | sed 's|^jobs/||; s|/job.json$||' | sort | jq -R . | jq -sc .)"
+          echo "jobs=$jobs" >> "$GITHUB_OUTPUT"
+          echo "Jobs: $jobs"
+      - name: Pick the journey-mesh version once for every job
+        id: ref
+        env:
+          INPUT_REF: ${{ inputs.journey_mesh_ref }}
+        run: |
+          ref="${INPUT_REF:-$(scripts/latest-tag.sh)}"
+          if [ "$ref" = main ] && [ -z "$INPUT_REF" ]; then
+            echo "::warning::journey-mesh has no v* tag yet, running main"
+          fi
+          echo "ref=$ref" >> "$GITHUB_OUTPUT"
+          echo "journey-mesh ref: $ref"
+
+  check:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        job: ${{ fromJSON(needs.plan.outputs.jobs) }}
+    env:
+      JOB: ${{ matrix.job }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: openuji/journey-mesh
+          ref: ${{ needs.plan.outputs.ref }}
+          path: journey-mesh
+          persist-credentials: false
+      - name: Name the artifacts
+        id: names
+        run: echo "slug=${JOB//\//-}" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: corepack enable
+      - name: Register the canonical web hostname
+        run: echo "127.0.0.1 host.docker.internal" | sudo tee -a /etc/hosts
+      # Builds journey-mesh (the tool), runs the job's mesh in place and always writes the
+      # result. Exits nonzero when the job did not succeed, which turns this run red; the
+      # steps below still run so the result is published either way.
+      - name: Run the job
+        env:
+          JOURNEY_MESH_REF: ${{ needs.plan.outputs.ref }}
+        run: scripts/run-job.sh "$JOB"
+      - name: Show the result
+        if: ${{ !cancelled() && hashFiles('site-part/**') != '' }}
+        run: |
+          { echo '```json'; cat "site-part/$JOB.json"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload the result
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: result-${{ steps.names.outputs.slug }}
+          path: site-part
+          if-no-files-found: error
+      - name: Upload the report and evidence
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-${{ steps.names.outputs.slug }}
+          path: jobs/${{ matrix.job }}/out
+          if-no-files-found: ignore
+          retention-days: 30
+
+  publish:
+    needs: [plan, check]
+    if: ${{ !cancelled() && needs.plan.result == 'success' }}
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: result-*
+          path: site
+          merge-multiple: true
+      - name: Index every result
+        run: |
+          find site -name '*.json' ! -name index.json -print0 \
+            | xargs -0 jq -s '{generatedAt: (now | todate), jobs: (map({key: .job, value: .}) | from_entries)}' \
+            > site/index.json
+          cat site/index.json
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - uses: actions/deploy-pages@v4
+        id: deployment
