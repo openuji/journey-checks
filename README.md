@@ -64,13 +64,3 @@ JOURNEY_MESH_REF=<release-with-service-composition> scripts/run-job.sh nextcloud
 ```
 
 Needs Docker, Node 22, pnpm, jq, and `127.0.0.1 host.docker.internal` in `/etc/hosts`. The result lands in `site-part/<job>.json`, the report in `jobs/<job>/out/index.html`. Set `SKIP_SETUP=1` to skip install and build on repeat runs.
-
-## One-time setup
-
-Repo **Settings → Pages → Source: GitHub Actions**.
-
-## Develop
-
-```sh
-npm test    # scripts/write-result.mjs
-```
