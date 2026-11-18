@@ -153,7 +153,6 @@ services:
       project: journey-mesh-pr66147
       composeFiles:
         - deployment/compose.yaml
-        - deployment/compose.comparison.yaml
       image: journey-mesh/nextcloud
       directory: .runtime
       environment:
@@ -162,7 +161,6 @@ services:
         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
         NEXTCLOUD_ADMIN_USER: ${NEXTCLOUD_ADMIN_USER}
         NEXTCLOUD_ADMIN_PASSWORD: ${NEXTCLOUD_ADMIN_PASSWORD}
-        NEXTCLOUD_STACK_SUBNET: 10.251.36.0/24
         NEXTCLOUD_ALICE_HOST: host.docker.internal
         NEXTCLOUD_ALICE_PORT: "18381"
         NEXTCLOUD_ALICE_URL: http://host.docker.internal:18381
