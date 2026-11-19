@@ -9,7 +9,7 @@ import test from "node:test";
 import { writeJsonDocument } from "../journey-mesh/packages/journey-plugin/dist/index.js";
 import { buildResult } from "./write-result.mjs";
 
-const base = { job: "nextcloud/server/66147", ref: "v0.2.0", sha: "abc", run: "https://example.test/run/1", now: new Date("2026-01-02T03:04:05Z") };
+const base = { job: "nextcloud/server/pr66147", ref: "v0.2.0", sha: "abc", run: "https://example.test/run/1", now: new Date("2026-01-02T03:04:05Z") };
 const execute = promisify(execFile);
 
 async function directory(t) {
@@ -163,10 +163,10 @@ test("run-job publishes results and propagates success, failures, and stale-repo
       for (const file of ["run-job.sh", "write-result.mjs"]) await copyFile(new URL(file, import.meta.url), join(root, "scripts", file));
       if (scenario.setupFailed) await mkdir(join(root, "journey-mesh"));
       else await symlink(fileURLToPath(new URL("../journey-mesh", import.meta.url)), join(root, "journey-mesh"));
-      await mkdir(join(root, "jobs/check"), { recursive: true });
-      await writeFile(join(root, "jobs/check/job.json"), JSON.stringify({ mesh: "check.mesh.yaml" }));
-      await writeFile(join(root, "jobs/check/check.mesh.yaml"), "kind: suite\n");
-      const out = join(root, "jobs/check/out");
+      const jobdir = join(root, "jobs", base.job);
+      await mkdir(jobdir, { recursive: true });
+      await writeFile(join(jobdir, "check.mesh.yaml"), "kind: suite\n");
+      const out = join(jobdir, "out");
       await cp(await report(t, { ok: true }), out, { recursive: true });
       await writeFile(join(out, "bundle.json"), JSON.stringify({ ok: true }));
       const fixture = await report(t, scenario.summary);
@@ -176,15 +176,16 @@ import { cpSync } from "node:fs";
 const args = process.argv.slice(2);
 if (process.env.FIXTURE_SETUP_FAILED) process.exit(1);
 if (args[0] !== "exec" || args[1] !== "journey-mesh" || args[2] !== "test") process.exit(99);
+if (args[3] !== "jobs/${base.job}/check.mesh.yaml" || args.includes("--test")) process.exit(99);
 if (process.env.FIXTURE_WRITE_REPORT) cpSync(process.env.FIXTURE_REPORT, args[args.indexOf("--output") + 1], { recursive: true });
 process.exit(Number(process.env.FIXTURE_EXIT));
 `, { mode: 0o755 });
       await writeFile(join(root, "package.json"), JSON.stringify({ type: "module" }));
-      const resultPath = join(root, "result.json");
+      const resultPath = join(root, "site-part", `${base.job}.json`);
       let exit = 0;
       try {
-        await execute("bash", [join(root, "scripts/run-job.sh"), "check"], { cwd: root, timeout: 30000, env: {
-          ...process.env, PATH: `${join(root, "bin")}:${process.env.PATH}`, OUT: out, RESULT: resultPath,
+        await execute("bash", [join(root, "scripts/run-job.sh"), base.job], { cwd: root, timeout: 30000, env: {
+          ...process.env, PATH: `${join(root, "bin")}:${process.env.PATH}`, OUT: "", RESULT: "",
           SKIP_SETUP: scenario.setupFailed ? "" : "1", JOURNEY_MESH_REF: base.ref, GITHUB_RUN_ID: "",
           FIXTURE_REPORT: fixture, FIXTURE_WRITE_REPORT: scenario.summary ? "1" : "", FIXTURE_EXIT: String(scenario.exit),
           FIXTURE_SETUP_FAILED: scenario.setupFailed ? "1" : "",
@@ -195,6 +196,7 @@ process.exit(Number(process.env.FIXTURE_EXIT));
       }
       assert.equal(exit, scenario.succeeded ? 0 : 1);
       const result = JSON.parse(await readFile(resultPath, "utf8"));
+      assert.equal(result.job, base.job);
       assert.equal(result.succeeded, scenario.succeeded);
       if (scenario.error) assert.match(result.error, scenario.error);
     });

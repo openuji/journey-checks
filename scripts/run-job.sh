@@ -9,10 +9,10 @@
 #
 # What it does:
 #   1. builds journey-mesh (pnpm install + build), installs Chromium, then pnpm install here
-#   2. journey-mesh test jobs/<job-id>/<mesh> [--test <test>] --output <OUT>
+#   2. journey-mesh test jobs/<job-id>/*.mesh.yaml --output <OUT>
 #   3. writes RESULT (always, even when 1 or 2 failed)
 #
-# job.json: { "mesh": "<mesh file in the job folder>", "test": "<optional --test id>" }
+# Each job folder contains one *.mesh.yaml; its suite defines every test to run.
 #
 # Environment (all optional):
 #   JOURNEY_MESH_REF   ref recorded in the result      default: git describe of ./journey-mesh
@@ -29,12 +29,9 @@ job="${1:-}"
 [ -n "$job" ] || die "usage: run-job.sh <job-id>"
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 jobdir="$root/jobs/$job"
-spec="$jobdir/job.json"
-[ -f "$spec" ] || die "no such job: $job (missing $spec)"
-
-mesh="$(jq -er '.mesh' "$spec")" || die "$spec needs a \"mesh\" (the mesh file in the job folder)"
-test_id="$(jq -r '.test // empty' "$spec")"
-[ -f "$jobdir/$mesh" ] || die "mesh file not found: $jobdir/$mesh"
+meshes=("$jobdir"/*.mesh.yaml)
+[ "${#meshes[@]}" -eq 1 ] && [ -f "${meshes[0]}" ] || die "expected one *.mesh.yaml in $jobdir"
+mesh="${meshes[0]##*/}"
 
 mesh_dir="$root/journey-mesh"
 [ -d "$mesh_dir" ] || die "journey-mesh checkout not found at $mesh_dir (see README: Run a job locally)"
@@ -64,7 +61,6 @@ rm -f "$out/manifest.json" "$out/bundle.json" || die "could not clear the previo
 exit_code=""
 if [ -n "${SKIP_SETUP:-}" ] || setup; then
   args=(test "jobs/$job/$mesh" --output "$out")
-  [ -z "$test_id" ] || args+=(--test "$test_id")
   (cd "$root" && pnpm exec journey-mesh "${args[@]}")
   exit_code=$?
 else

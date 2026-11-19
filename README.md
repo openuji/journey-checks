@@ -25,8 +25,8 @@ https://openuji.github.io/journey-checks/index.json            # every job in on
 
 `.github/workflows/check.yml` runs daily and on demand (`workflow_dispatch`, optionally with a `journey_mesh_ref` to run a specific journey-mesh tag, branch or SHA).
 
-1. **plan** lists every job (`jobs/**/job.json`) and resolves the journey-mesh version once: the input, else the newest `vX.Y.Z` tag (`scripts/latest-tag.sh`), else `main` with a warning.
-2. **check** (one per job) checks out journey-mesh at that version and runs `scripts/run-job.sh <job>`. The script builds the checkout (`pnpm install && pnpm build`), runs `pnpm install` here to link it, then `journey-mesh test jobs/<job>/<mesh> --test <test>` with the mesh **in place**, then `scripts/write-result.mjs`.
+1. **plan** discovers job directories from `jobs/**/*.mesh.yaml` and resolves the journey-mesh version once: the input, else the newest `vX.Y.Z` tag (`scripts/latest-tag.sh`), else `main` with a warning.
+2. **check** (one per job) checks out journey-mesh at that version and runs `scripts/run-job.sh <job>`. The script builds the checkout (`pnpm install && pnpm build`), runs `pnpm install` here to link it, then `journey-mesh test jobs/<job>/<mesh>` with the mesh **in place**, running every test in its suite, then `scripts/write-result.mjs`.
 3. **publish** collects every result and deploys them to GitHub Pages.
 
 The mesh composes the subject from reusable services: Git source → build → installation. Each source declares its repository and PR once; every run resolves the current head and passes the same identity to its dependents. `target` selects a verified installed identity for the published result. This works for both the Nextcloud server PR and the Collectives app PR.
@@ -37,11 +37,10 @@ These composed jobs require the journey-mesh service-input/output, HTTP-environm
 
 Use the [journey-checks-job skill](.agents/skills/journey-checks-job/SKILL.md) to author and verify a job from its user goal and UJG model through execution evidence and the rendered report.
 
-A job is a directory under `jobs/` containing a `job.json`. Its id is the path below `jobs/`, by convention `<owner>/<repo>/<pr>`.
+A job is a directory under `jobs/` containing one `*.mesh.yaml`. The mesh defines the suite and all tests to run. Its job id is the directory path below `jobs/`, by convention `<owner>/<repo>/<pr>`.
 
 ```
 jobs/nextcloud/server/pr66147/
-├─ job.json                   {"mesh": "pr66147.mesh.yaml", "test": "browser-sharing"}
 ├─ pr66147.mesh.yaml          the mesh; every path in it is inside this folder
 ├─ ujg/                       the journeys it runs
 └─ deployment/                compose files, environment defaults, fixtures
@@ -50,9 +49,6 @@ jobs/nextcloud/server/pr66147/
 **A job is self-contained.** Its mesh names only files in its own folder, so the job runs from where it lies and no job files are copied into the journey-mesh checkout. Services manage their own temporary build copies and container artifacts. Run state (`out/`, `.runtime/`, `.tmp/`) is written inside the job folder and is gitignored.
 
 journey-mesh is only the **tool**. This repo's `package.json` links its CLI and plugin packages from a checkout at `./journey-mesh`. That is how the mesh's `use: "@openuji/…"` entries resolve. If a new job needs another plugin package, add it there.
-
-- `mesh`: the mesh file, relative to the job folder.
-- `test`: optional `--test` id.
 
 ## Run a job locally
 

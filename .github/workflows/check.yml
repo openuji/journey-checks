@@ -30,7 +30,7 @@ jobs:
       - name: List jobs
         id: jobs
         run: |
-          jobs="$(find jobs -name job.json | sed 's|^jobs/||; s|/job.json$||' | sort | jq -R . | jq -sc .)"
+          jobs="$(find jobs -name '*.mesh.yaml' | sed 's|^jobs/||; s|/[^/]*$||' | sort -u | jq -R . | jq -sc .)"
           echo "jobs=$jobs" >> "$GITHUB_OUTPUT"
           echo "Jobs: $jobs"
       - name: Pick the journey-mesh version once for every job
