@@ -19,7 +19,7 @@ https://openuji.github.io/journey-checks/index.json            # every job in on
 }
 ```
 
-`succeeded` is `true` only if `journey-mesh test` exited `0` **and** its `bundle.json` says `ok: true`. A failing check is a published result (`succeeded: false`), not a crash. The workflow run is also marked red in that case. The full report (`index.html`, screenshots, bundle) is the `evidence-<job>` artifact of the run.
+`succeeded` is `true` only if `journey-mesh test` exited `0` **and** its completed report says `ok: true`. The runner reads `manifest.json` and decodes the summary it references, including summaries split across files. A failing check is a published result (`succeeded: false`), not a crash. The workflow run is also marked red in that case. The full report (`index.html`, `manifest.json`, `data/`, and screenshots) is the `evidence-<job>` artifact of the run.
 
 ## How a run works
 
@@ -31,7 +31,7 @@ https://openuji.github.io/journey-checks/index.json            # every job in on
 
 The mesh composes the subject from reusable services: Git source → build → installation. Each source declares its repository and PR once; every run resolves the current head and passes the same identity to its dependents. `target` selects a verified installed identity for the published result. This works for both the Nextcloud server PR and the Collectives app PR.
 
-These composed jobs require the journey-mesh service-input/output, HTTP-environment, and UJG report updates ([prerequisite patch](changes/journey-mesh-v0.2.0.patch)). Publish that prerequisite release before enabling these changes in the daily workflow. All browser behavior comes from the UJG JSON-LD models; HTTP effect checks only read back their declared effects. Report phase exclusions are declared explicitly in each mesh.
+These composed jobs require the journey-mesh service-input/output, HTTP-environment, and report updates included in [journey-mesh PR #16](https://github.com/openuji/journey-mesh/pull/16). All browser behavior comes from the UJG JSON-LD models; HTTP effect checks only read back their declared effects. Report phase exclusions are declared explicitly in each mesh.
 
 ## Add a job
 
@@ -64,3 +64,5 @@ JOURNEY_MESH_REF=<release-with-service-composition> scripts/run-job.sh nextcloud
 ```
 
 Needs Docker, Node 22, pnpm, jq, and `127.0.0.1 host.docker.internal` in `/etc/hosts`. The result lands in `site-part/<job>.json`, the report in `jobs/<job>/out/index.html`. Set `SKIP_SETUP=1` to skip install and build on repeat runs.
+
+After building the journey-mesh checkout, run `pnpm test` to check result extraction and the runner's success and failure exit statuses.

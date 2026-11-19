@@ -57,8 +57,9 @@ setup() {
   )
 }
 
-# A stale bundle must never be mistaken for this run's.
-rm -f "$out/bundle.json"
+# The reporter commits manifest.json last. Remove the previous entry point so a
+# failed setup, validation or publication cannot reuse a stale successful report.
+rm -f "$out/manifest.json" "$out/bundle.json" || die "could not clear the previous report"
 
 exit_code=""
 if [ -n "${SKIP_SETUP:-}" ] || setup; then
@@ -70,7 +71,7 @@ else
   echo "run-job: setup failed, journey-mesh did not run" >&2
 fi
 
-result_args=(--job "$job" --exit "$exit_code" --bundle "$out/bundle.json" --out "$result" --ref "$ref"
+result_args=(--job "$job" --exit "$exit_code" --report "$out" --out "$result" --ref "$ref"
   --sha "$(git -C "$mesh_dir" rev-parse HEAD 2>/dev/null || true)")
 [ -z "${GITHUB_RUN_ID:-}" ] || result_args+=(--run "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID")
 node "$root/scripts/write-result.mjs" "${result_args[@]}" || die "could not write the result"
