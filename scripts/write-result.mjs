@@ -1,56 +1,42 @@
 #!/usr/bin/env node
 // Turns one journey-mesh run into the published result:
 //   { "job": "...", "succeeded": true|false, ... }
-// A job succeeded only if journey-mesh exited 0 AND its completed report says ok.
-import { mkdir, readFile, realpath, writeFile } from "node:fs/promises";
-import { dirname, isAbsolute, relative, resolve, sep } from "node:path";
+// A job succeeded only if journey-mesh exited 0 AND its completed run record says ok.
+import { mkdir, realpath, writeFile } from "node:fs/promises";
+import { dirname } from "node:path";
 import { pathToFileURL } from "node:url";
 import { parseArgs } from "node:util";
 
-async function readSummary(reportDir) {
-  const directory = await realpath(reportDir);
-  const manifest = JSON.parse(await readFile(resolve(directory, "manifest.json"), "utf8"));
-  if (manifest?.format !== "journey-mesh/report" || manifest.version !== 1 || manifest.kind !== "suite") {
-    throw new Error("Expected a Journey Mesh suite report manifest (version 1)");
-  }
-  // run-job builds the checkout first. Load its decoder only when reading a report,
+async function readRun(reportDir) {
+  // run-job builds the checkout first. Load its reader only when reading a run,
   // so setup failures can still publish a result without a built tool.
-  const { readJsonDocument, validateReportHref } = await import("../journey-mesh/packages/journey-plugin/dist/index.js");
-  const read = async ({ href }) => {
-    validateReportHref(href);
-    const path = await realpath(resolve(directory, href));
-    const child = relative(directory, path);
-    if (!child || child === ".." || child.startsWith(`..${sep}`) || isAbsolute(child)) {
-      throw new Error("Report reference escapes the report directory");
-    }
-    return readFile(path);
-  };
-  const summary = await readJsonDocument(read, manifest.summary);
-  if (summary?.kind !== "suite" || typeof summary.ok !== "boolean") throw new Error("Invalid suite report summary");
-  return summary;
+  const { readRunRecord } = await import("../journey-mesh/packages/journey-run-record/dist/node.js");
+  const record = await readRunRecord(reportDir);
+  if (typeof record.ok !== "boolean") throw new Error("Invalid run record verdict");
+  return record;
 }
 
 export async function buildResult({ job, exitCode, reportDir, ref, sha, run, now = new Date() }) {
   const ran = Number.isInteger(exitCode);
-  let summary;
+  let record;
   let error;
   if (!ran) error = "journey-mesh did not run";
   else {
     try {
-      summary = await readSummary(reportDir);
+      record = await readRun(reportDir);
     } catch (cause) {
       error = cause.code === "ENOENT"
-        ? `journey-mesh produced no complete report (exit ${exitCode})`
-        : `unreadable report: ${cause.message}`;
+        ? `journey-mesh produced no complete run record (exit ${exitCode})`
+        : `unreadable run record: ${cause.message}`;
     }
   }
-  const succeeded = ran && exitCode === 0 && summary?.ok === true;
-  if (!error && !succeeded && summary?.ok === true) error = `journey-mesh exited ${exitCode} although the report says ok`;
+  const succeeded = ran && exitCode === 0 && record?.ok === true;
+  if (!error && !succeeded && record?.ok === true) error = `journey-mesh exited ${exitCode} although the run record says ok`;
 
   // The tested stack, when journey-mesh recorded one (e.g. the PR's head commit).
-  const stack = summary?.provenance?.stack;
+  const stack = record?.provenance?.stack;
   const service = stack?.services?.[0];
-  const target = summary?.target ?? (stack && {
+  const target = record?.target ?? (stack && {
     ...(stack.pullRequest !== undefined && { pullRequest: stack.pullRequest }),
     ...(service?.sourceSha && { sourceSha: service.sourceSha }),
     ...(service?.version && { version: service.version }),

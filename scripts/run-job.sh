@@ -54,9 +54,9 @@ setup() {
   )
 }
 
-# The reporter commits manifest.json last. Remove the previous entry point so a
-# failed setup, validation or publication cannot reuse a stale successful report.
-rm -f "$out/manifest.json" "$out/bundle.json" || die "could not clear the previous report"
+# The host commits run.json last. Clear the previous run and report entry points
+# (including legacy formats) so failed setup or validation cannot reuse old results.
+rm -f "$out/run.json" "$out/report/report.json" "$out/manifest.json" "$out/bundle.json" || die "could not clear the previous run"
 
 exit_code=""
 if [ -n "${SKIP_SETUP:-}" ] || setup; then
