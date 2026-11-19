@@ -60,8 +60,6 @@ tests:
         preserveFixtures: ${NEXTCLOUD_PRESERVE_FIXTURES:-false}
     services:
       - notifications-install
-    reporters:
-      - use: "@openuji/journey-observer-axe/reporter"
 adapters:
   web:
     use: "@openuji/journey-adapter-playwright/plugin"
@@ -148,6 +146,8 @@ kind: suite
 report:
   excludedPhaseIds:
     - urn:phase:setup
+  interpreters:
+    - use: "@openuji/journey-report-axe"
 label: "PR #66147"
 services:
   server-source:

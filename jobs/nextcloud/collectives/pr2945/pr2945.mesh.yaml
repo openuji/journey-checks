@@ -2,6 +2,8 @@ kind: suite
 report:
   excludedPhaseIds:
     - urn:phase:setup
+  interpreters:
+    - use: "@openuji/journey-report-axe"
 label: Collectives sharing permissions
 outputDir: out
 target:
@@ -476,8 +478,6 @@ tests:
               status:
                 - 404
         cleanupTimeoutMs: 60000
-    reporters:
-      - use: "@openuji/journey-observer-axe/reporter"
   collective-member:
     timeoutMs: 600000
     services:
@@ -706,8 +706,6 @@ tests:
               status:
                 - 200
         cleanupTimeoutMs: 60000
-    reporters:
-      - use: "@openuji/journey-observer-axe/reporter"
   collective-admin:
     timeoutMs: 600000
     services:
@@ -967,8 +965,6 @@ tests:
               status:
                 - 404
         cleanupTimeoutMs: 60000
-    reporters:
-      - use: "@openuji/journey-observer-axe/reporter"
   collective-sharing-restricted:
     timeoutMs: 600000
     services:
@@ -1212,8 +1208,6 @@ tests:
                   excludes:
                     owner: journey-bob
         cleanupTimeoutMs: 60000
-    reporters:
-      - use: "@openuji/journey-observer-axe/reporter"
   collective-editing-restricted:
     timeoutMs: 600000
     services:
@@ -1481,8 +1475,6 @@ tests:
               status:
                 - 404
         cleanupTimeoutMs: 60000
-    reporters:
-      - use: "@openuji/journey-observer-axe/reporter"
   page-own:
     timeoutMs: 600000
     services:
@@ -1774,8 +1766,6 @@ tests:
               status:
                 - 404
         cleanupTimeoutMs: 60000
-    reporters:
-      - use: "@openuji/journey-observer-axe/reporter"
   page-member:
     timeoutMs: 600000
     services:
@@ -2023,8 +2013,6 @@ tests:
               status:
                 - 200
         cleanupTimeoutMs: 60000
-    reporters:
-      - use: "@openuji/journey-observer-axe/reporter"
   page-admin:
     timeoutMs: 600000
     services:
@@ -2303,8 +2291,6 @@ tests:
               status:
                 - 404
         cleanupTimeoutMs: 60000
-    reporters:
-      - use: "@openuji/journey-observer-axe/reporter"
   page-sharing-restricted:
     timeoutMs: 600000
     services:
@@ -2567,8 +2553,6 @@ tests:
                   excludes:
                     owner: journey-bob
         cleanupTimeoutMs: 60000
-    reporters:
-      - use: "@openuji/journey-observer-axe/reporter"
   page-editing-restricted:
     timeoutMs: 600000
     services:
@@ -2855,5 +2839,3 @@ tests:
               status:
                 - 404
         cleanupTimeoutMs: 60000
-    reporters:
-      - use: "@openuji/journey-observer-axe/reporter"

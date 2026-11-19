@@ -5,3 +5,4 @@ out/
 /journey-mesh
 .runtime/
 .tmp/
+apps/web
