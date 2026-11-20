@@ -13,13 +13,13 @@ https://openuji.github.io/journey-checks/index.json            # every job in on
   "succeeded": false,
   "finishedAt": "2026-11-18T03:21:07Z",
   "run": "https://github.com/openuji/journey-checks/actions/runs/123",
-  "journeyMesh": { "ref": "v0.2.0", "sha": "…" },
+  "journeyMesh": { "ref": "v0.3.0", "sha": "…" },
   "target": { "pullRequest": 66147, "sourceSha": "…", "version": "36.0.0 dev" },
   "error": "only present when journey-mesh produced no usable result"
 }
 ```
 
-`succeeded` is `true` only if `journey-mesh test` exited `0` **and** its completed report says `ok: true`. The runner reads `manifest.json` and decodes the summary it references, including summaries split across files. A failing check is a published result (`succeeded: false`), not a crash. The workflow run is also marked red in that case. The full report (`index.html`, `manifest.json`, `data/`, and screenshots) is the `evidence-<job>` artifact of the run.
+`succeeded` is `true` only if `journey-mesh test` exited `0` **and** its completed run record says `ok: true`. The runner uses journey-mesh's run-record reader to load `run.json` and its referenced test records. A failing check is a published result (`succeeded: false`), not a crash. The workflow run is also marked red in that case. The run record, derived report (`report/report.json`), and evidence files are the `evidence-<job>` artifact of the run.
 
 ## How a run works
 
@@ -59,6 +59,6 @@ git clone --depth 1 --branch <release-with-service-composition> https://github.c
 JOURNEY_MESH_REF=<release-with-service-composition> scripts/run-job.sh nextcloud/server/pr66147
 ```
 
-Needs Docker, Node 22, pnpm, jq, and `127.0.0.1 host.docker.internal` in `/etc/hosts`. The result lands in `site-part/<job>.json`, the report in `jobs/<job>/out/index.html`. Set `SKIP_SETUP=1` to skip install and build on repeat runs.
+Needs Docker, Node 22, pnpm, jq, and `127.0.0.1 host.docker.internal` in `/etc/hosts`. The result lands in `site-part/<job>.json`, the run record and report in `jobs/<job>/out/`. View them with `pnpm --dir journey-mesh --filter @openuji/report-renderer serve "$PWD/jobs/<job>/out"`. Set `SKIP_SETUP=1` to skip install and build on repeat runs.
 
 After building the journey-mesh checkout, run `pnpm test` to check result extraction and the runner's success and failure exit statuses.

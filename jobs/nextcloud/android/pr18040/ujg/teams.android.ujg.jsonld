@@ -1,0 +1,2485 @@
+{
+  "@context": [
+    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/graph.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/phase.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/l10n.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/observability.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/entry-binding.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/effect.context.jsonld"
+  ],
+  "@id": "urn:ujg:document:android-teams",
+  "@type": "UJGDocument",
+  "nodes": [
+    {
+      "@type": "JourneyEntryIndex",
+      "@id": "urn:index:android-teams",
+      "entryRefs": [
+        "urn:entry:alice-creates-team",
+        "urn:entry:alice-requires-acceptance",
+        "urn:entry:alice-invites-bob",
+        "urn:entry:bob-accepts-invitation",
+        "urn:entry:alice-sees-bob",
+        "urn:entry:bob-opens-team-folder"
+      ]
+    },
+    {
+      "@type": "Phase",
+      "@id": "urn:phase:create",
+      "label": "Create a team",
+      "order": 1
+    },
+    {
+      "@type": "Phase",
+      "@id": "urn:phase:invite",
+      "label": "Invite a member",
+      "order": 2
+    },
+    {
+      "@type": "Phase",
+      "@id": "urn:phase:accept",
+      "label": "Accept the invitation",
+      "order": 3
+    },
+    {
+      "@type": "Phase",
+      "@id": "urn:phase:verify",
+      "label": "Verify membership",
+      "order": 4
+    },
+    {
+      "@type": "Phase",
+      "@id": "urn:phase:access",
+      "label": "Access a team resource",
+      "order": 5
+    },
+    {
+      "@type": "CompositeState",
+      "@id": "urn:composite:alice-creates-team",
+      "label": "Alice creates a team",
+      "subjourneyRefs": [
+        "urn:journey:alice-creates-team"
+      ]
+    },
+    {
+      "@type": "Step",
+      "@id": "urn:step:alice-creates-team",
+      "order": 0,
+      "compositeStateRef": "urn:composite:alice-creates-team",
+      "phaseRef": "urn:phase:create"
+    },
+    {
+      "@type": "Journey",
+      "@id": "urn:journey:alice-creates-team",
+      "label": "Alice creates a team",
+      "defaultEntryRef": "urn:entry:alice-creates-team",
+      "entryRefs": [
+        "urn:entry:alice-creates-team"
+      ],
+      "stateRefs": [
+        "urn:state:alice-creates-team:files",
+        "urn:state:alice-creates-team:sidebar",
+        "urn:state:alice-creates-team:no-teams",
+        "urn:state:alice-creates-team:create-dialog",
+        "urn:state:alice-creates-team:name-entered",
+        "urn:state:alice-creates-team:team-listed"
+      ],
+      "transitionRefs": [
+        "urn:transition:alice-creates-team:opens-sidebar",
+        "urn:transition:alice-creates-team:opens-teams",
+        "urn:transition:alice-creates-team:opens-create-dialog",
+        "urn:transition:alice-creates-team:enters-name",
+        "urn:transition:alice-creates-team:creates-team"
+      ]
+    },
+    {
+      "@type": "JourneyEntry",
+      "@id": "urn:entry:alice-creates-team",
+      "stateRef": "urn:state:alice-creates-team:files"
+    },
+    {
+      "@type": "EntryBinding",
+      "@id": "urn:entry-binding:alice-creates-team",
+      "entryRef": "urn:entry:alice-creates-team",
+      "value": "nextcloud.android.application"
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-creates-team:files",
+      "label": "Files are shown"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-creates-team:files",
+      "graphNodeRef": "urn:state:alice-creates-team:files"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-creates-team:files",
+      "observeSurfaceRef": "urn:surface:alice-creates-team:files",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:files-sidebar"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-creates-team:sidebar",
+      "label": "Sidebar offers Teams"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-creates-team:sidebar",
+      "graphNodeRef": "urn:state:alice-creates-team:sidebar"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-creates-team:sidebar",
+      "observeSurfaceRef": "urn:surface:alice-creates-team:sidebar",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:sidebar-teams"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-creates-team:no-teams",
+      "label": "Teams lists no teams yet"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-creates-team:no-teams",
+      "graphNodeRef": "urn:state:alice-creates-team:no-teams"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-creates-team:no-teams",
+      "observeSurfaceRef": "urn:surface:alice-creates-team:no-teams",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:no-teams"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-creates-team:create-dialog",
+      "label": "Create team dialog is open"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-creates-team:create-dialog",
+      "graphNodeRef": "urn:state:alice-creates-team:create-dialog"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-creates-team:create-dialog",
+      "observeSurfaceRef": "urn:surface:alice-creates-team:create-dialog",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:create-team-title"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-creates-team:name-entered",
+      "label": "Team name is entered"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-creates-team:name-entered",
+      "graphNodeRef": "urn:state:alice-creates-team:name-entered"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-creates-team:name-entered",
+      "observeSurfaceRef": "urn:surface:alice-creates-team:name-entered",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:team-name-entered"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-creates-team:team-listed",
+      "label": "Team is listed under my teams"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-creates-team:team-listed",
+      "graphNodeRef": "urn:state:alice-creates-team:team-listed"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-creates-team:team-listed",
+      "observeSurfaceRef": "urn:surface:alice-creates-team:team-listed",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:journey-team"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-creates-team:opens-sidebar",
+      "label": "Open the sidebar"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-creates-team:opens-sidebar",
+      "label": "Open the sidebar",
+      "from": "urn:state:alice-creates-team:files",
+      "to": "urn:state:alice-creates-team:sidebar",
+      "commandRef": "urn:command:alice-creates-team:opens-sidebar"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-creates-team:opens-sidebar",
+      "graphNodeRef": "urn:command:alice-creates-team:opens-sidebar"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-creates-team:opens-sidebar",
+      "observeSurfaceRef": "urn:surface:alice-creates-team:opens-sidebar",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:files-sidebar"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-creates-team:opens-teams",
+      "label": "Open Teams"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-creates-team:opens-teams",
+      "label": "Open Teams",
+      "from": "urn:state:alice-creates-team:sidebar",
+      "to": "urn:state:alice-creates-team:no-teams",
+      "commandRef": "urn:command:alice-creates-team:opens-teams"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-creates-team:opens-teams",
+      "graphNodeRef": "urn:command:alice-creates-team:opens-teams"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-creates-team:opens-teams",
+      "observeSurfaceRef": "urn:surface:alice-creates-team:opens-teams",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:sidebar-teams"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-creates-team:opens-create-dialog",
+      "label": "Choose Create team"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-creates-team:opens-create-dialog",
+      "label": "Choose Create team",
+      "from": "urn:state:alice-creates-team:no-teams",
+      "to": "urn:state:alice-creates-team:create-dialog",
+      "commandRef": "urn:command:alice-creates-team:opens-create-dialog"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-creates-team:opens-create-dialog",
+      "graphNodeRef": "urn:command:alice-creates-team:opens-create-dialog"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-creates-team:opens-create-dialog",
+      "observeSurfaceRef": "urn:surface:alice-creates-team:opens-create-dialog",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:create-team-button"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-creates-team:enters-name",
+      "label": "Enter the team name"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-creates-team:enters-name",
+      "label": "Enter the team name",
+      "from": "urn:state:alice-creates-team:create-dialog",
+      "to": "urn:state:alice-creates-team:name-entered",
+      "commandRef": "urn:command:alice-creates-team:enters-name"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-creates-team:enters-name",
+      "graphNodeRef": "urn:command:alice-creates-team:enters-name"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-creates-team:enters-name",
+      "observeSurfaceRef": "urn:surface:alice-creates-team:enters-name",
+      "observationEventRef": "urn:observation-event:android-text",
+      "locatorRefs": [
+        "urn:locator:team-name-field"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-creates-team:creates-team",
+      "label": "Create the team"
+    },
+    {
+      "@type": "Effect",
+      "@id": "urn:effect:alice-creates-team:creates-team",
+      "label": "Alice owns the new team"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-creates-team:creates-team",
+      "label": "Create the team",
+      "from": "urn:state:alice-creates-team:name-entered",
+      "to": "urn:state:alice-creates-team:team-listed",
+      "commandRef": "urn:command:alice-creates-team:creates-team",
+      "effectRef": "urn:effect:alice-creates-team:creates-team"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-creates-team:creates-team",
+      "graphNodeRef": "urn:command:alice-creates-team:creates-team"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-creates-team:creates-team",
+      "observeSurfaceRef": "urn:surface:alice-creates-team:creates-team",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:create-confirm"
+      ]
+    },
+    {
+      "@type": "CompositeState",
+      "@id": "urn:composite:alice-requires-acceptance",
+      "label": "Alice requires invitations to be accepted",
+      "subjourneyRefs": [
+        "urn:journey:alice-requires-acceptance"
+      ]
+    },
+    {
+      "@type": "Step",
+      "@id": "urn:step:alice-requires-acceptance",
+      "order": 1,
+      "compositeStateRef": "urn:composite:alice-requires-acceptance",
+      "phaseRef": "urn:phase:invite"
+    },
+    {
+      "@type": "Journey",
+      "@id": "urn:journey:alice-requires-acceptance",
+      "label": "Alice requires invitations to be accepted",
+      "defaultEntryRef": "urn:entry:alice-requires-acceptance",
+      "entryRefs": [
+        "urn:entry:alice-requires-acceptance"
+      ],
+      "stateRefs": [
+        "urn:state:alice-requires-acceptance:files",
+        "urn:state:alice-requires-acceptance:sidebar",
+        "urn:state:alice-requires-acceptance:teams",
+        "urn:state:alice-requires-acceptance:team",
+        "urn:state:alice-requires-acceptance:settings-page",
+        "urn:state:alice-requires-acceptance:settings-navigation",
+        "urn:state:alice-requires-acceptance:settings-dialog",
+        "urn:state:alice-requires-acceptance:acceptance-required"
+      ],
+      "transitionRefs": [
+        "urn:transition:alice-requires-acceptance:opens-sidebar",
+        "urn:transition:alice-requires-acceptance:opens-teams",
+        "urn:transition:alice-requires-acceptance:opens-team",
+        "urn:transition:alice-requires-acceptance:opens-settings",
+        "urn:transition:alice-requires-acceptance:opens-navigation",
+        "urn:transition:alice-requires-acceptance:opens-team-settings",
+        "urn:transition:alice-requires-acceptance:requires-acceptance"
+      ]
+    },
+    {
+      "@type": "JourneyEntry",
+      "@id": "urn:entry:alice-requires-acceptance",
+      "stateRef": "urn:state:alice-requires-acceptance:files"
+    },
+    {
+      "@type": "EntryBinding",
+      "@id": "urn:entry-binding:alice-requires-acceptance",
+      "entryRef": "urn:entry:alice-requires-acceptance",
+      "value": "nextcloud.android.application"
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-requires-acceptance:files",
+      "label": "Files are shown"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-requires-acceptance:files",
+      "graphNodeRef": "urn:state:alice-requires-acceptance:files"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-requires-acceptance:files",
+      "observeSurfaceRef": "urn:surface:alice-requires-acceptance:files",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:files-sidebar"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-requires-acceptance:sidebar",
+      "label": "Sidebar offers Teams"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-requires-acceptance:sidebar",
+      "graphNodeRef": "urn:state:alice-requires-acceptance:sidebar"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-requires-acceptance:sidebar",
+      "observeSurfaceRef": "urn:surface:alice-requires-acceptance:sidebar",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:sidebar-teams"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-requires-acceptance:teams",
+      "label": "Teams lists the team"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-requires-acceptance:teams",
+      "graphNodeRef": "urn:state:alice-requires-acceptance:teams"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-requires-acceptance:teams",
+      "observeSurfaceRef": "urn:surface:alice-requires-acceptance:teams",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:journey-team"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-requires-acceptance:team",
+      "label": "Team is open"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-requires-acceptance:team",
+      "graphNodeRef": "urn:state:alice-requires-acceptance:team"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-requires-acceptance:team",
+      "observeSurfaceRef": "urn:surface:alice-requires-acceptance:team",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:team-settings-action"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-requires-acceptance:settings-page",
+      "label": "Team settings web page is shown"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-requires-acceptance:settings-page",
+      "graphNodeRef": "urn:state:alice-requires-acceptance:settings-page"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-requires-acceptance:settings-page",
+      "observeSurfaceRef": "urn:surface:alice-requires-acceptance:settings-page",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:web-open-navigation"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-requires-acceptance:settings-navigation",
+      "label": "Team sections are shown"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-requires-acceptance:settings-navigation",
+      "graphNodeRef": "urn:state:alice-requires-acceptance:settings-navigation"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-requires-acceptance:settings-navigation",
+      "observeSurfaceRef": "urn:surface:alice-requires-acceptance:settings-navigation",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:web-close-navigation"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-requires-acceptance:settings-dialog",
+      "label": "Team settings dialog is open"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-requires-acceptance:settings-dialog",
+      "graphNodeRef": "urn:state:alice-requires-acceptance:settings-dialog"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-requires-acceptance:settings-dialog",
+      "observeSurfaceRef": "urn:surface:alice-requires-acceptance:settings-dialog",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:web-settings-dialog"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-requires-acceptance:acceptance-required",
+      "label": "Members need to accept invitations"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-requires-acceptance:acceptance-required",
+      "graphNodeRef": "urn:state:alice-requires-acceptance:acceptance-required"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-requires-acceptance:acceptance-required",
+      "observeSurfaceRef": "urn:surface:alice-requires-acceptance:acceptance-required",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:web-acceptance-setting"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-requires-acceptance:opens-sidebar",
+      "label": "Open the sidebar"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-requires-acceptance:opens-sidebar",
+      "label": "Open the sidebar",
+      "from": "urn:state:alice-requires-acceptance:files",
+      "to": "urn:state:alice-requires-acceptance:sidebar",
+      "commandRef": "urn:command:alice-requires-acceptance:opens-sidebar"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-requires-acceptance:opens-sidebar",
+      "graphNodeRef": "urn:command:alice-requires-acceptance:opens-sidebar"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-requires-acceptance:opens-sidebar",
+      "observeSurfaceRef": "urn:surface:alice-requires-acceptance:opens-sidebar",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:files-sidebar"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-requires-acceptance:opens-teams",
+      "label": "Open Teams"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-requires-acceptance:opens-teams",
+      "label": "Open Teams",
+      "from": "urn:state:alice-requires-acceptance:sidebar",
+      "to": "urn:state:alice-requires-acceptance:teams",
+      "commandRef": "urn:command:alice-requires-acceptance:opens-teams"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-requires-acceptance:opens-teams",
+      "graphNodeRef": "urn:command:alice-requires-acceptance:opens-teams"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-requires-acceptance:opens-teams",
+      "observeSurfaceRef": "urn:surface:alice-requires-acceptance:opens-teams",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:sidebar-teams"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-requires-acceptance:opens-team",
+      "label": "Open the team"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-requires-acceptance:opens-team",
+      "label": "Open the team",
+      "from": "urn:state:alice-requires-acceptance:teams",
+      "to": "urn:state:alice-requires-acceptance:team",
+      "commandRef": "urn:command:alice-requires-acceptance:opens-team"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-requires-acceptance:opens-team",
+      "graphNodeRef": "urn:command:alice-requires-acceptance:opens-team"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-requires-acceptance:opens-team",
+      "observeSurfaceRef": "urn:surface:alice-requires-acceptance:opens-team",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:journey-team"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-requires-acceptance:opens-settings",
+      "label": "Open team settings"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-requires-acceptance:opens-settings",
+      "label": "Open team settings",
+      "from": "urn:state:alice-requires-acceptance:team",
+      "to": "urn:state:alice-requires-acceptance:settings-page",
+      "commandRef": "urn:command:alice-requires-acceptance:opens-settings"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-requires-acceptance:opens-settings",
+      "graphNodeRef": "urn:command:alice-requires-acceptance:opens-settings"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-requires-acceptance:opens-settings",
+      "observeSurfaceRef": "urn:surface:alice-requires-acceptance:opens-settings",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:team-settings-action"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-requires-acceptance:opens-navigation",
+      "label": "Open the team sections"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-requires-acceptance:opens-navigation",
+      "label": "Open the team sections",
+      "from": "urn:state:alice-requires-acceptance:settings-page",
+      "to": "urn:state:alice-requires-acceptance:settings-navigation",
+      "commandRef": "urn:command:alice-requires-acceptance:opens-navigation"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-requires-acceptance:opens-navigation",
+      "graphNodeRef": "urn:command:alice-requires-acceptance:opens-navigation"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-requires-acceptance:opens-navigation",
+      "observeSurfaceRef": "urn:surface:alice-requires-acceptance:opens-navigation",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:web-open-navigation"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-requires-acceptance:opens-team-settings",
+      "label": "Choose Team settings"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-requires-acceptance:opens-team-settings",
+      "label": "Choose Team settings",
+      "from": "urn:state:alice-requires-acceptance:settings-navigation",
+      "to": "urn:state:alice-requires-acceptance:settings-dialog",
+      "commandRef": "urn:command:alice-requires-acceptance:opens-team-settings"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-requires-acceptance:opens-team-settings",
+      "graphNodeRef": "urn:command:alice-requires-acceptance:opens-team-settings"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-requires-acceptance:opens-team-settings",
+      "observeSurfaceRef": "urn:surface:alice-requires-acceptance:opens-team-settings",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:web-team-settings-item"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-requires-acceptance:requires-acceptance",
+      "label": "Require members to accept invitations"
+    },
+    {
+      "@type": "Effect",
+      "@id": "urn:effect:alice-requires-acceptance:requires-acceptance",
+      "label": "Joining the team requires accepting an invitation"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-requires-acceptance:requires-acceptance",
+      "label": "Require members to accept invitations",
+      "from": "urn:state:alice-requires-acceptance:settings-dialog",
+      "to": "urn:state:alice-requires-acceptance:acceptance-required",
+      "commandRef": "urn:command:alice-requires-acceptance:requires-acceptance",
+      "effectRef": "urn:effect:alice-requires-acceptance:requires-acceptance"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-requires-acceptance:requires-acceptance",
+      "graphNodeRef": "urn:command:alice-requires-acceptance:requires-acceptance"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-requires-acceptance:requires-acceptance",
+      "observeSurfaceRef": "urn:surface:alice-requires-acceptance:requires-acceptance",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:web-acceptance-setting"
+      ]
+    },
+    {
+      "@type": "CompositeState",
+      "@id": "urn:composite:alice-invites-bob",
+      "label": "Alice invites Bob",
+      "subjourneyRefs": [
+        "urn:journey:alice-invites-bob"
+      ]
+    },
+    {
+      "@type": "Step",
+      "@id": "urn:step:alice-invites-bob",
+      "order": 2,
+      "compositeStateRef": "urn:composite:alice-invites-bob",
+      "phaseRef": "urn:phase:invite"
+    },
+    {
+      "@type": "Journey",
+      "@id": "urn:journey:alice-invites-bob",
+      "label": "Alice invites Bob",
+      "defaultEntryRef": "urn:entry:alice-invites-bob",
+      "entryRefs": [
+        "urn:entry:alice-invites-bob"
+      ],
+      "stateRefs": [
+        "urn:state:alice-invites-bob:files",
+        "urn:state:alice-invites-bob:sidebar",
+        "urn:state:alice-invites-bob:teams",
+        "urn:state:alice-invites-bob:team",
+        "urn:state:alice-invites-bob:members",
+        "urn:state:alice-invites-bob:add-dialog",
+        "urn:state:alice-invites-bob:bob-suggested",
+        "urn:state:alice-invites-bob:bob-listed"
+      ],
+      "transitionRefs": [
+        "urn:transition:alice-invites-bob:opens-sidebar",
+        "urn:transition:alice-invites-bob:opens-teams",
+        "urn:transition:alice-invites-bob:opens-team",
+        "urn:transition:alice-invites-bob:opens-members",
+        "urn:transition:alice-invites-bob:opens-add-member",
+        "urn:transition:alice-invites-bob:enters-query",
+        "urn:transition:alice-invites-bob:invites-bob"
+      ]
+    },
+    {
+      "@type": "JourneyEntry",
+      "@id": "urn:entry:alice-invites-bob",
+      "stateRef": "urn:state:alice-invites-bob:files"
+    },
+    {
+      "@type": "EntryBinding",
+      "@id": "urn:entry-binding:alice-invites-bob",
+      "entryRef": "urn:entry:alice-invites-bob",
+      "value": "nextcloud.android.application"
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-invites-bob:files",
+      "label": "Files are shown"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-invites-bob:files",
+      "graphNodeRef": "urn:state:alice-invites-bob:files"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-invites-bob:files",
+      "observeSurfaceRef": "urn:surface:alice-invites-bob:files",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:files-sidebar"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-invites-bob:sidebar",
+      "label": "Sidebar offers Teams"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-invites-bob:sidebar",
+      "graphNodeRef": "urn:state:alice-invites-bob:sidebar"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-invites-bob:sidebar",
+      "observeSurfaceRef": "urn:surface:alice-invites-bob:sidebar",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:sidebar-teams"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-invites-bob:teams",
+      "label": "Teams lists the team"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-invites-bob:teams",
+      "graphNodeRef": "urn:state:alice-invites-bob:teams"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-invites-bob:teams",
+      "observeSurfaceRef": "urn:surface:alice-invites-bob:teams",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:journey-team"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-invites-bob:team",
+      "label": "Team is open"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-invites-bob:team",
+      "graphNodeRef": "urn:state:alice-invites-bob:team"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-invites-bob:team",
+      "observeSurfaceRef": "urn:surface:alice-invites-bob:team",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:team-settings-action"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-invites-bob:members",
+      "label": "Members lists the owner"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-invites-bob:members",
+      "graphNodeRef": "urn:state:alice-invites-bob:members"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-invites-bob:members",
+      "observeSurfaceRef": "urn:surface:alice-invites-bob:members",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:owner-role"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-invites-bob:add-dialog",
+      "label": "Add member dialog is open"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-invites-bob:add-dialog",
+      "graphNodeRef": "urn:state:alice-invites-bob:add-dialog"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-invites-bob:add-dialog",
+      "observeSurfaceRef": "urn:surface:alice-invites-bob:add-dialog",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:add-member-title"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-invites-bob:bob-suggested",
+      "label": "Bob is suggested"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-invites-bob:bob-suggested",
+      "graphNodeRef": "urn:state:alice-invites-bob:bob-suggested"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-invites-bob:bob-suggested",
+      "observeSurfaceRef": "urn:surface:alice-invites-bob:bob-suggested",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:bob"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-invites-bob:bob-listed",
+      "label": "Bob is listed among the members"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-invites-bob:bob-listed",
+      "graphNodeRef": "urn:state:alice-invites-bob:bob-listed"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-invites-bob:bob-listed",
+      "observeSurfaceRef": "urn:surface:alice-invites-bob:bob-listed",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:bob"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-invites-bob:opens-sidebar",
+      "label": "Open the sidebar"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-invites-bob:opens-sidebar",
+      "label": "Open the sidebar",
+      "from": "urn:state:alice-invites-bob:files",
+      "to": "urn:state:alice-invites-bob:sidebar",
+      "commandRef": "urn:command:alice-invites-bob:opens-sidebar"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-invites-bob:opens-sidebar",
+      "graphNodeRef": "urn:command:alice-invites-bob:opens-sidebar"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-invites-bob:opens-sidebar",
+      "observeSurfaceRef": "urn:surface:alice-invites-bob:opens-sidebar",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:files-sidebar"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-invites-bob:opens-teams",
+      "label": "Open Teams"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-invites-bob:opens-teams",
+      "label": "Open Teams",
+      "from": "urn:state:alice-invites-bob:sidebar",
+      "to": "urn:state:alice-invites-bob:teams",
+      "commandRef": "urn:command:alice-invites-bob:opens-teams"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-invites-bob:opens-teams",
+      "graphNodeRef": "urn:command:alice-invites-bob:opens-teams"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-invites-bob:opens-teams",
+      "observeSurfaceRef": "urn:surface:alice-invites-bob:opens-teams",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:sidebar-teams"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-invites-bob:opens-team",
+      "label": "Open the team"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-invites-bob:opens-team",
+      "label": "Open the team",
+      "from": "urn:state:alice-invites-bob:teams",
+      "to": "urn:state:alice-invites-bob:team",
+      "commandRef": "urn:command:alice-invites-bob:opens-team"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-invites-bob:opens-team",
+      "graphNodeRef": "urn:command:alice-invites-bob:opens-team"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-invites-bob:opens-team",
+      "observeSurfaceRef": "urn:surface:alice-invites-bob:opens-team",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:journey-team"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-invites-bob:opens-members",
+      "label": "Show members"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-invites-bob:opens-members",
+      "label": "Show members",
+      "from": "urn:state:alice-invites-bob:team",
+      "to": "urn:state:alice-invites-bob:members",
+      "commandRef": "urn:command:alice-invites-bob:opens-members"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-invites-bob:opens-members",
+      "graphNodeRef": "urn:command:alice-invites-bob:opens-members"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-invites-bob:opens-members",
+      "observeSurfaceRef": "urn:surface:alice-invites-bob:opens-members",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:members-tab"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-invites-bob:opens-add-member",
+      "label": "Choose Add member"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-invites-bob:opens-add-member",
+      "label": "Choose Add member",
+      "from": "urn:state:alice-invites-bob:members",
+      "to": "urn:state:alice-invites-bob:add-dialog",
+      "commandRef": "urn:command:alice-invites-bob:opens-add-member"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-invites-bob:opens-add-member",
+      "graphNodeRef": "urn:command:alice-invites-bob:opens-add-member"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-invites-bob:opens-add-member",
+      "observeSurfaceRef": "urn:surface:alice-invites-bob:opens-add-member",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:add-member-button"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-invites-bob:enters-query",
+      "label": "Search for Bob"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-invites-bob:enters-query",
+      "label": "Search for Bob",
+      "from": "urn:state:alice-invites-bob:add-dialog",
+      "to": "urn:state:alice-invites-bob:bob-suggested",
+      "commandRef": "urn:command:alice-invites-bob:enters-query"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-invites-bob:enters-query",
+      "graphNodeRef": "urn:command:alice-invites-bob:enters-query"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-invites-bob:enters-query",
+      "observeSurfaceRef": "urn:surface:alice-invites-bob:enters-query",
+      "observationEventRef": "urn:observation-event:android-text",
+      "locatorRefs": [
+        "urn:locator:member-search-field"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-invites-bob:invites-bob",
+      "label": "Invite Bob"
+    },
+    {
+      "@type": "Effect",
+      "@id": "urn:effect:alice-invites-bob:invites-bob",
+      "label": "Bob is invited to the team"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-invites-bob:invites-bob",
+      "label": "Invite Bob",
+      "from": "urn:state:alice-invites-bob:bob-suggested",
+      "to": "urn:state:alice-invites-bob:bob-listed",
+      "commandRef": "urn:command:alice-invites-bob:invites-bob",
+      "effectRef": "urn:effect:alice-invites-bob:invites-bob"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-invites-bob:invites-bob",
+      "graphNodeRef": "urn:command:alice-invites-bob:invites-bob"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-invites-bob:invites-bob",
+      "observeSurfaceRef": "urn:surface:alice-invites-bob:invites-bob",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:bob"
+      ]
+    },
+    {
+      "@type": "CompositeState",
+      "@id": "urn:composite:bob-accepts-invitation",
+      "label": "Bob accepts the invitation",
+      "subjourneyRefs": [
+        "urn:journey:bob-accepts-invitation"
+      ]
+    },
+    {
+      "@type": "Step",
+      "@id": "urn:step:bob-accepts-invitation",
+      "order": 3,
+      "compositeStateRef": "urn:composite:bob-accepts-invitation",
+      "phaseRef": "urn:phase:accept"
+    },
+    {
+      "@type": "Journey",
+      "@id": "urn:journey:bob-accepts-invitation",
+      "label": "Bob accepts the invitation",
+      "defaultEntryRef": "urn:entry:bob-accepts-invitation",
+      "entryRefs": [
+        "urn:entry:bob-accepts-invitation"
+      ],
+      "stateRefs": [
+        "urn:state:bob-accepts-invitation:files",
+        "urn:state:bob-accepts-invitation:sidebar",
+        "urn:state:bob-accepts-invitation:invitation",
+        "urn:state:bob-accepts-invitation:joined"
+      ],
+      "transitionRefs": [
+        "urn:transition:bob-accepts-invitation:opens-sidebar",
+        "urn:transition:bob-accepts-invitation:opens-teams",
+        "urn:transition:bob-accepts-invitation:accepts"
+      ]
+    },
+    {
+      "@type": "JourneyEntry",
+      "@id": "urn:entry:bob-accepts-invitation",
+      "stateRef": "urn:state:bob-accepts-invitation:files"
+    },
+    {
+      "@type": "EntryBinding",
+      "@id": "urn:entry-binding:bob-accepts-invitation",
+      "entryRef": "urn:entry:bob-accepts-invitation",
+      "value": "nextcloud.android.application"
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:bob-accepts-invitation:files",
+      "label": "Files are shown"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:bob-accepts-invitation:files",
+      "graphNodeRef": "urn:state:bob-accepts-invitation:files"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:bob-accepts-invitation:files",
+      "observeSurfaceRef": "urn:surface:bob-accepts-invitation:files",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:files-sidebar"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:bob-accepts-invitation:sidebar",
+      "label": "Sidebar offers Teams"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:bob-accepts-invitation:sidebar",
+      "graphNodeRef": "urn:state:bob-accepts-invitation:sidebar"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:bob-accepts-invitation:sidebar",
+      "observeSurfaceRef": "urn:surface:bob-accepts-invitation:sidebar",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:sidebar-teams"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:bob-accepts-invitation:invitation",
+      "label": "Teams shows the invitation"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:bob-accepts-invitation:invitation",
+      "graphNodeRef": "urn:state:bob-accepts-invitation:invitation"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:bob-accepts-invitation:invitation",
+      "observeSurfaceRef": "urn:surface:bob-accepts-invitation:invitation",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:invitations-section"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:bob-accepts-invitation:joined",
+      "label": "Team is listed under my teams"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:bob-accepts-invitation:joined",
+      "graphNodeRef": "urn:state:bob-accepts-invitation:joined"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:bob-accepts-invitation:joined",
+      "observeSurfaceRef": "urn:surface:bob-accepts-invitation:joined",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:my-teams-section"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:bob-accepts-invitation:opens-sidebar",
+      "label": "Open the sidebar"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:bob-accepts-invitation:opens-sidebar",
+      "label": "Open the sidebar",
+      "from": "urn:state:bob-accepts-invitation:files",
+      "to": "urn:state:bob-accepts-invitation:sidebar",
+      "commandRef": "urn:command:bob-accepts-invitation:opens-sidebar"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:bob-accepts-invitation:opens-sidebar",
+      "graphNodeRef": "urn:command:bob-accepts-invitation:opens-sidebar"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:bob-accepts-invitation:opens-sidebar",
+      "observeSurfaceRef": "urn:surface:bob-accepts-invitation:opens-sidebar",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:files-sidebar"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:bob-accepts-invitation:opens-teams",
+      "label": "Open Teams"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:bob-accepts-invitation:opens-teams",
+      "label": "Open Teams",
+      "from": "urn:state:bob-accepts-invitation:sidebar",
+      "to": "urn:state:bob-accepts-invitation:invitation",
+      "commandRef": "urn:command:bob-accepts-invitation:opens-teams"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:bob-accepts-invitation:opens-teams",
+      "graphNodeRef": "urn:command:bob-accepts-invitation:opens-teams"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:bob-accepts-invitation:opens-teams",
+      "observeSurfaceRef": "urn:surface:bob-accepts-invitation:opens-teams",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:sidebar-teams"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:bob-accepts-invitation:accepts",
+      "label": "Accept the invitation"
+    },
+    {
+      "@type": "Effect",
+      "@id": "urn:effect:bob-accepts-invitation:accepts",
+      "label": "Bob is a member of the team"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:bob-accepts-invitation:accepts",
+      "label": "Accept the invitation",
+      "from": "urn:state:bob-accepts-invitation:invitation",
+      "to": "urn:state:bob-accepts-invitation:joined",
+      "commandRef": "urn:command:bob-accepts-invitation:accepts",
+      "effectRef": "urn:effect:bob-accepts-invitation:accepts"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:bob-accepts-invitation:accepts",
+      "graphNodeRef": "urn:command:bob-accepts-invitation:accepts"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:bob-accepts-invitation:accepts",
+      "observeSurfaceRef": "urn:surface:bob-accepts-invitation:accepts",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:accept-invitation"
+      ]
+    },
+    {
+      "@type": "CompositeState",
+      "@id": "urn:composite:alice-sees-bob",
+      "label": "Alice sees Bob among the members",
+      "subjourneyRefs": [
+        "urn:journey:alice-sees-bob"
+      ]
+    },
+    {
+      "@type": "Step",
+      "@id": "urn:step:alice-sees-bob",
+      "order": 4,
+      "compositeStateRef": "urn:composite:alice-sees-bob",
+      "phaseRef": "urn:phase:verify"
+    },
+    {
+      "@type": "Journey",
+      "@id": "urn:journey:alice-sees-bob",
+      "label": "Alice sees Bob among the members",
+      "defaultEntryRef": "urn:entry:alice-sees-bob",
+      "entryRefs": [
+        "urn:entry:alice-sees-bob"
+      ],
+      "stateRefs": [
+        "urn:state:alice-sees-bob:files",
+        "urn:state:alice-sees-bob:sidebar",
+        "urn:state:alice-sees-bob:teams",
+        "urn:state:alice-sees-bob:team",
+        "urn:state:alice-sees-bob:members-with-bob"
+      ],
+      "transitionRefs": [
+        "urn:transition:alice-sees-bob:opens-sidebar",
+        "urn:transition:alice-sees-bob:opens-teams",
+        "urn:transition:alice-sees-bob:opens-team",
+        "urn:transition:alice-sees-bob:opens-members"
+      ]
+    },
+    {
+      "@type": "JourneyEntry",
+      "@id": "urn:entry:alice-sees-bob",
+      "stateRef": "urn:state:alice-sees-bob:files"
+    },
+    {
+      "@type": "EntryBinding",
+      "@id": "urn:entry-binding:alice-sees-bob",
+      "entryRef": "urn:entry:alice-sees-bob",
+      "value": "nextcloud.android.application"
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-sees-bob:files",
+      "label": "Files are shown"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-sees-bob:files",
+      "graphNodeRef": "urn:state:alice-sees-bob:files"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-sees-bob:files",
+      "observeSurfaceRef": "urn:surface:alice-sees-bob:files",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:files-sidebar"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-sees-bob:sidebar",
+      "label": "Sidebar offers Teams"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-sees-bob:sidebar",
+      "graphNodeRef": "urn:state:alice-sees-bob:sidebar"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-sees-bob:sidebar",
+      "observeSurfaceRef": "urn:surface:alice-sees-bob:sidebar",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:sidebar-teams"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-sees-bob:teams",
+      "label": "Teams lists the team"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-sees-bob:teams",
+      "graphNodeRef": "urn:state:alice-sees-bob:teams"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-sees-bob:teams",
+      "observeSurfaceRef": "urn:surface:alice-sees-bob:teams",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:journey-team"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-sees-bob:team",
+      "label": "Team is open"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-sees-bob:team",
+      "graphNodeRef": "urn:state:alice-sees-bob:team"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-sees-bob:team",
+      "observeSurfaceRef": "urn:surface:alice-sees-bob:team",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:team-settings-action"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:alice-sees-bob:members-with-bob",
+      "label": "Members lists Bob"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-sees-bob:members-with-bob",
+      "graphNodeRef": "urn:state:alice-sees-bob:members-with-bob"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-sees-bob:members-with-bob",
+      "observeSurfaceRef": "urn:surface:alice-sees-bob:members-with-bob",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:bob"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-sees-bob:opens-sidebar",
+      "label": "Open the sidebar"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-sees-bob:opens-sidebar",
+      "label": "Open the sidebar",
+      "from": "urn:state:alice-sees-bob:files",
+      "to": "urn:state:alice-sees-bob:sidebar",
+      "commandRef": "urn:command:alice-sees-bob:opens-sidebar"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-sees-bob:opens-sidebar",
+      "graphNodeRef": "urn:command:alice-sees-bob:opens-sidebar"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-sees-bob:opens-sidebar",
+      "observeSurfaceRef": "urn:surface:alice-sees-bob:opens-sidebar",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:files-sidebar"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-sees-bob:opens-teams",
+      "label": "Open Teams"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-sees-bob:opens-teams",
+      "label": "Open Teams",
+      "from": "urn:state:alice-sees-bob:sidebar",
+      "to": "urn:state:alice-sees-bob:teams",
+      "commandRef": "urn:command:alice-sees-bob:opens-teams"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-sees-bob:opens-teams",
+      "graphNodeRef": "urn:command:alice-sees-bob:opens-teams"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-sees-bob:opens-teams",
+      "observeSurfaceRef": "urn:surface:alice-sees-bob:opens-teams",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:sidebar-teams"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-sees-bob:opens-team",
+      "label": "Open the team"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-sees-bob:opens-team",
+      "label": "Open the team",
+      "from": "urn:state:alice-sees-bob:teams",
+      "to": "urn:state:alice-sees-bob:team",
+      "commandRef": "urn:command:alice-sees-bob:opens-team"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-sees-bob:opens-team",
+      "graphNodeRef": "urn:command:alice-sees-bob:opens-team"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-sees-bob:opens-team",
+      "observeSurfaceRef": "urn:surface:alice-sees-bob:opens-team",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:journey-team"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:alice-sees-bob:opens-members",
+      "label": "Show members"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:alice-sees-bob:opens-members",
+      "label": "Show members",
+      "from": "urn:state:alice-sees-bob:team",
+      "to": "urn:state:alice-sees-bob:members-with-bob",
+      "commandRef": "urn:command:alice-sees-bob:opens-members"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:alice-sees-bob:opens-members",
+      "graphNodeRef": "urn:command:alice-sees-bob:opens-members"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:alice-sees-bob:opens-members",
+      "observeSurfaceRef": "urn:surface:alice-sees-bob:opens-members",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:members-tab"
+      ]
+    },
+    {
+      "@type": "CompositeState",
+      "@id": "urn:composite:bob-opens-team-folder",
+      "label": "Bob opens the team folder",
+      "subjourneyRefs": [
+        "urn:journey:bob-opens-team-folder"
+      ]
+    },
+    {
+      "@type": "Step",
+      "@id": "urn:step:bob-opens-team-folder",
+      "order": 5,
+      "compositeStateRef": "urn:composite:bob-opens-team-folder",
+      "phaseRef": "urn:phase:access"
+    },
+    {
+      "@type": "Journey",
+      "@id": "urn:journey:bob-opens-team-folder",
+      "label": "Bob opens the team folder",
+      "defaultEntryRef": "urn:entry:bob-opens-team-folder",
+      "entryRefs": [
+        "urn:entry:bob-opens-team-folder"
+      ],
+      "stateRefs": [
+        "urn:state:bob-opens-team-folder:files",
+        "urn:state:bob-opens-team-folder:sidebar",
+        "urn:state:bob-opens-team-folder:teams",
+        "urn:state:bob-opens-team-folder:resources",
+        "urn:state:bob-opens-team-folder:folder"
+      ],
+      "transitionRefs": [
+        "urn:transition:bob-opens-team-folder:opens-sidebar",
+        "urn:transition:bob-opens-team-folder:opens-teams",
+        "urn:transition:bob-opens-team-folder:opens-team",
+        "urn:transition:bob-opens-team-folder:opens-folder"
+      ]
+    },
+    {
+      "@type": "JourneyEntry",
+      "@id": "urn:entry:bob-opens-team-folder",
+      "stateRef": "urn:state:bob-opens-team-folder:files"
+    },
+    {
+      "@type": "EntryBinding",
+      "@id": "urn:entry-binding:bob-opens-team-folder",
+      "entryRef": "urn:entry:bob-opens-team-folder",
+      "value": "nextcloud.android.application"
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:bob-opens-team-folder:files",
+      "label": "Files are shown"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:bob-opens-team-folder:files",
+      "graphNodeRef": "urn:state:bob-opens-team-folder:files"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:bob-opens-team-folder:files",
+      "observeSurfaceRef": "urn:surface:bob-opens-team-folder:files",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:files-sidebar"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:bob-opens-team-folder:sidebar",
+      "label": "Sidebar offers Teams"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:bob-opens-team-folder:sidebar",
+      "graphNodeRef": "urn:state:bob-opens-team-folder:sidebar"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:bob-opens-team-folder:sidebar",
+      "observeSurfaceRef": "urn:surface:bob-opens-team-folder:sidebar",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:sidebar-teams"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:bob-opens-team-folder:teams",
+      "label": "Teams lists the team"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:bob-opens-team-folder:teams",
+      "graphNodeRef": "urn:state:bob-opens-team-folder:teams"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:bob-opens-team-folder:teams",
+      "observeSurfaceRef": "urn:surface:bob-opens-team-folder:teams",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:journey-team"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:bob-opens-team-folder:resources",
+      "label": "Team resources offer the team folder"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:bob-opens-team-folder:resources",
+      "graphNodeRef": "urn:state:bob-opens-team-folder:resources"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:bob-opens-team-folder:resources",
+      "observeSurfaceRef": "urn:surface:bob-opens-team-folder:resources",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:team-folder-resource"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:bob-opens-team-folder:folder",
+      "label": "Team folder is open in Files"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:bob-opens-team-folder:folder",
+      "graphNodeRef": "urn:state:bob-opens-team-folder:folder"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:bob-opens-team-folder:folder",
+      "observeSurfaceRef": "urn:surface:bob-opens-team-folder:folder",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:team-folder-title"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:bob-opens-team-folder:opens-sidebar",
+      "label": "Open the sidebar"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:bob-opens-team-folder:opens-sidebar",
+      "label": "Open the sidebar",
+      "from": "urn:state:bob-opens-team-folder:files",
+      "to": "urn:state:bob-opens-team-folder:sidebar",
+      "commandRef": "urn:command:bob-opens-team-folder:opens-sidebar"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:bob-opens-team-folder:opens-sidebar",
+      "graphNodeRef": "urn:command:bob-opens-team-folder:opens-sidebar"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:bob-opens-team-folder:opens-sidebar",
+      "observeSurfaceRef": "urn:surface:bob-opens-team-folder:opens-sidebar",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:files-sidebar"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:bob-opens-team-folder:opens-teams",
+      "label": "Open Teams"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:bob-opens-team-folder:opens-teams",
+      "label": "Open Teams",
+      "from": "urn:state:bob-opens-team-folder:sidebar",
+      "to": "urn:state:bob-opens-team-folder:teams",
+      "commandRef": "urn:command:bob-opens-team-folder:opens-teams"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:bob-opens-team-folder:opens-teams",
+      "graphNodeRef": "urn:command:bob-opens-team-folder:opens-teams"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:bob-opens-team-folder:opens-teams",
+      "observeSurfaceRef": "urn:surface:bob-opens-team-folder:opens-teams",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:sidebar-teams"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:bob-opens-team-folder:opens-team",
+      "label": "Open the team"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:bob-opens-team-folder:opens-team",
+      "label": "Open the team",
+      "from": "urn:state:bob-opens-team-folder:teams",
+      "to": "urn:state:bob-opens-team-folder:resources",
+      "commandRef": "urn:command:bob-opens-team-folder:opens-team"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:bob-opens-team-folder:opens-team",
+      "graphNodeRef": "urn:command:bob-opens-team-folder:opens-team"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:bob-opens-team-folder:opens-team",
+      "observeSurfaceRef": "urn:surface:bob-opens-team-folder:opens-team",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:journey-team"
+      ]
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:command:bob-opens-team-folder:opens-folder",
+      "label": "Open the team folder"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:bob-opens-team-folder:opens-folder",
+      "label": "Open the team folder",
+      "from": "urn:state:bob-opens-team-folder:resources",
+      "to": "urn:state:bob-opens-team-folder:folder",
+      "commandRef": "urn:command:bob-opens-team-folder:opens-folder"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:bob-opens-team-folder:opens-folder",
+      "graphNodeRef": "urn:command:bob-opens-team-folder:opens-folder"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:bob-opens-team-folder:opens-folder",
+      "observeSurfaceRef": "urn:surface:bob-opens-team-folder:opens-folder",
+      "observationEventRef": "urn:observation-event:android-touch",
+      "locatorRefs": [
+        "urn:locator:team-folder-resource"
+      ]
+    },
+    {
+      "@type": "Touchpoint",
+      "@id": "urn:touchpoint:android-alice",
+      "journeyRefs": [
+        "urn:journey:alice-creates-team",
+        "urn:journey:alice-requires-acceptance",
+        "urn:journey:alice-invites-bob",
+        "urn:journey:alice-sees-bob"
+      ]
+    },
+    {
+      "@type": "Touchpoint",
+      "@id": "urn:touchpoint:android-bob",
+      "journeyRefs": [
+        "urn:journey:bob-accepts-invitation",
+        "urn:journey:bob-opens-team-folder"
+      ]
+    },
+    {
+      "@type": "Persona",
+      "@id": "urn:user:alice",
+      "touchpointRefs": [
+        "urn:touchpoint:android-alice"
+      ],
+      "label": "Alice"
+    },
+    {
+      "@type": "Persona",
+      "@id": "urn:user:bob",
+      "touchpointRefs": [
+        "urn:touchpoint:android-bob"
+      ],
+      "label": "Bob"
+    },
+    {
+      "@type": "Locale",
+      "@id": "urn:locale:en",
+      "localeCode": "en"
+    },
+    {
+      "@type": "AccessibleFeature",
+      "@id": "urn:feature:files-sidebar:0",
+      "accessibleFeatureName": "resource-id",
+      "accessibleFeatureValue": "com.nextcloud.client:id/menu_button"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:files-sidebar",
+      "accessibleFeatureRefs": [
+        "urn:feature:files-sidebar:0"
+      ]
+    },
+    {
+      "@type": "AccessibleFeature",
+      "@id": "urn:feature:sidebar-teams:0",
+      "accessibleFeatureName": "resource-id",
+      "accessibleFeatureValue": "com.nextcloud.client:id/drawer_ecosystem_teams"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:sidebar-teams",
+      "accessibleFeatureRefs": [
+        "urn:feature:sidebar-teams:0"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:no-teams",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:no-teams:en",
+      "messageMetaRef": "urn:message:no-teams",
+      "localeRef": "urn:locale:en",
+      "value": "No teams yet"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:no-teams",
+      "role": "text",
+      "accessibleNameRef": "urn:message:no-teams"
+    },
+    {
+      "@type": "AccessibleFeature",
+      "@id": "urn:feature:compose-content:0",
+      "accessibleFeatureName": "resource-id",
+      "accessibleFeatureValue": "com.nextcloud.client:id/compose_view"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:compose-content",
+      "accessibleFeatureRefs": [
+        "urn:feature:compose-content:0"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:create-team-button",
+      "label": "Create team button. It exposes no accessible name, so it is located as the only button of the Teams content.",
+      "role": "button",
+      "contextLocatorRefs": [
+        "urn:locator:compose-content"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:create-team-title",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:create-team-title:en",
+      "messageMetaRef": "urn:message:create-team-title",
+      "localeRef": "urn:locale:en",
+      "value": "Create team"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:create-team-title",
+      "role": "text",
+      "accessibleNameRef": "urn:message:create-team-title"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:team-name-field",
+      "role": "textbox"
+    },
+    {
+      "@type": "AccessibleFeature",
+      "@id": "urn:feature:team-name-entered:0",
+      "accessibleFeatureName": "text",
+      "accessibleFeatureValue": "Journey Team"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:team-name-entered",
+      "role": "textbox",
+      "accessibleFeatureRefs": [
+        "urn:feature:team-name-entered:0"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:create-confirm",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:create-confirm:en",
+      "messageMetaRef": "urn:message:create-confirm",
+      "localeRef": "urn:locale:en",
+      "value": "Create"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:create-confirm",
+      "role": "text",
+      "accessibleNameRef": "urn:message:create-confirm"
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:journey-team",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:journey-team:en",
+      "messageMetaRef": "urn:message:journey-team",
+      "localeRef": "urn:locale:en",
+      "value": "Journey Team"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:journey-team",
+      "role": "text",
+      "accessibleNameRef": "urn:message:journey-team"
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:team-settings-action",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:team-settings-action:en",
+      "messageMetaRef": "urn:message:team-settings-action",
+      "localeRef": "urn:locale:en",
+      "value": "Team settings"
+    },
+    {
+      "@type": "AccessibleFeature",
+      "@id": "urn:feature:team-settings-action:0",
+      "accessibleFeatureName": "class",
+      "accessibleFeatureValue": "android.view.View"
+    },
+    {
+      "@type": "AccessibleFeature",
+      "@id": "urn:feature:team-settings-action:1",
+      "accessibleFeatureName": "clickable",
+      "accessibleFeatureValue": "false"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:team-settings-action",
+      "accessibleNameRef": "urn:message:team-settings-action",
+      "accessibleFeatureRefs": [
+        "urn:feature:team-settings-action:0",
+        "urn:feature:team-settings-action:1"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:web-open-navigation",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:web-open-navigation:en",
+      "messageMetaRef": "urn:message:web-open-navigation",
+      "localeRef": "urn:locale:en",
+      "value": "Open navigation"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:web-open-navigation",
+      "role": "button",
+      "accessibleNameRef": "urn:message:web-open-navigation"
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:web-close-navigation",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:web-close-navigation:en",
+      "messageMetaRef": "urn:message:web-close-navigation",
+      "localeRef": "urn:locale:en",
+      "value": "Close navigation"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:web-close-navigation",
+      "role": "button",
+      "accessibleNameRef": "urn:message:web-close-navigation"
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:web-team-settings-item",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:web-team-settings-item:en",
+      "messageMetaRef": "urn:message:web-team-settings-item",
+      "localeRef": "urn:locale:en",
+      "value": "Team settings"
+    },
+    {
+      "@type": "AccessibleFeature",
+      "@id": "urn:feature:web-team-settings-item:0",
+      "accessibleFeatureName": "class",
+      "accessibleFeatureValue": "android.view.View"
+    },
+    {
+      "@type": "AccessibleFeature",
+      "@id": "urn:feature:web-team-settings-item:1",
+      "accessibleFeatureName": "clickable",
+      "accessibleFeatureValue": "true"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:web-team-settings-item",
+      "accessibleNameRef": "urn:message:web-team-settings-item",
+      "accessibleFeatureRefs": [
+        "urn:feature:web-team-settings-item:0",
+        "urn:feature:web-team-settings-item:1"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:web-settings-dialog",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:web-settings-dialog:en",
+      "messageMetaRef": "urn:message:web-settings-dialog",
+      "localeRef": "urn:locale:en",
+      "value": "Team settings"
+    },
+    {
+      "@type": "AccessibleFeature",
+      "@id": "urn:feature:web-settings-dialog:0",
+      "accessibleFeatureName": "class",
+      "accessibleFeatureValue": "android.app.Dialog"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:web-settings-dialog",
+      "accessibleNameRef": "urn:message:web-settings-dialog",
+      "accessibleFeatureRefs": [
+        "urn:feature:web-settings-dialog:0"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:web-acceptance-setting",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:web-acceptance-setting:en",
+      "messageMetaRef": "urn:message:web-acceptance-setting",
+      "localeRef": "urn:locale:en",
+      "value": "Members need to accept invitation"
+    },
+    {
+      "@type": "AccessibleFeature",
+      "@id": "urn:feature:web-acceptance-setting:0",
+      "accessibleFeatureName": "class",
+      "accessibleFeatureValue": "android.view.View"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:web-acceptance-setting",
+      "accessibleNameRef": "urn:message:web-acceptance-setting",
+      "accessibleFeatureRefs": [
+        "urn:feature:web-acceptance-setting:0"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:members-tab",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:members-tab:en",
+      "messageMetaRef": "urn:message:members-tab",
+      "localeRef": "urn:locale:en",
+      "value": "Members"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:members-tab",
+      "role": "text",
+      "accessibleNameRef": "urn:message:members-tab"
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:owner-role",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:owner-role:en",
+      "messageMetaRef": "urn:message:owner-role",
+      "localeRef": "urn:locale:en",
+      "value": "Owner"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:owner-role",
+      "role": "text",
+      "accessibleNameRef": "urn:message:owner-role"
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:add-member-button",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:add-member-button:en",
+      "messageMetaRef": "urn:message:add-member-button",
+      "localeRef": "urn:locale:en",
+      "value": "Add member"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:add-member-button",
+      "role": "button",
+      "accessibleNameRef": "urn:message:add-member-button"
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:add-member-title",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:add-member-title:en",
+      "messageMetaRef": "urn:message:add-member-title",
+      "localeRef": "urn:locale:en",
+      "value": "Add member"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:add-member-title",
+      "role": "text",
+      "accessibleNameRef": "urn:message:add-member-title"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:member-search-field",
+      "role": "textbox"
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:bob",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:bob:en",
+      "messageMetaRef": "urn:message:bob",
+      "localeRef": "urn:locale:en",
+      "value": "Bob Journey"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:bob",
+      "role": "text",
+      "accessibleNameRef": "urn:message:bob"
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:invitations-section",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:invitations-section:en",
+      "messageMetaRef": "urn:message:invitations-section",
+      "localeRef": "urn:locale:en",
+      "value": "Invitations"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:invitations-section",
+      "role": "text",
+      "accessibleNameRef": "urn:message:invitations-section"
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:accept-invitation",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:accept-invitation:en",
+      "messageMetaRef": "urn:message:accept-invitation",
+      "localeRef": "urn:locale:en",
+      "value": "Accept"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:accept-invitation",
+      "role": "text",
+      "accessibleNameRef": "urn:message:accept-invitation"
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:my-teams-section",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:my-teams-section:en",
+      "messageMetaRef": "urn:message:my-teams-section",
+      "localeRef": "urn:locale:en",
+      "value": "My teams"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:my-teams-section",
+      "role": "text",
+      "accessibleNameRef": "urn:message:my-teams-section"
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:team-folder-resource",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:team-folder-resource:en",
+      "messageMetaRef": "urn:message:team-folder-resource",
+      "localeRef": "urn:locale:en",
+      "value": "Team folder"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:team-folder-resource",
+      "role": "text",
+      "accessibleNameRef": "urn:message:team-folder-resource"
+    },
+    {
+      "@type": "AccessibleFeature",
+      "@id": "urn:feature:files-toolbar:0",
+      "accessibleFeatureName": "resource-id",
+      "accessibleFeatureValue": "com.nextcloud.client:id/toolbar"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:files-toolbar",
+      "accessibleFeatureRefs": [
+        "urn:feature:files-toolbar:0"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:team-folder-title",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:team-folder-title:en",
+      "messageMetaRef": "urn:message:team-folder-title",
+      "localeRef": "urn:locale:en",
+      "value": "Journey Team"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:team-folder-title",
+      "role": "text",
+      "accessibleNameRef": "urn:message:team-folder-title",
+      "contextLocatorRefs": [
+        "urn:locator:files-toolbar"
+      ]
+    },
+    {
+      "@type": "InputModality",
+      "@id": "observability:keyboard-text-entry"
+    },
+    {
+      "@type": "InputModality",
+      "@id": "urn:openuji:input:touch-tap"
+    },
+    {
+      "@type": "InputModalityProfile",
+      "@id": "urn:input-profile:android-text",
+      "inputModalityRefs": [
+        "observability:keyboard-text-entry"
+      ]
+    },
+    {
+      "@type": "InputModalityProfile",
+      "@id": "urn:input-profile:android-touch",
+      "inputModalityRefs": [
+        "urn:openuji:input:touch-tap"
+      ]
+    },
+    {
+      "@type": "ObservationEvent",
+      "@id": "urn:observation-event:presence"
+    },
+    {
+      "@type": "ObservationEvent",
+      "@id": "urn:observation-event:android-text",
+      "requiredInputModalityProfileRefs": [
+        "urn:input-profile:android-text"
+      ]
+    },
+    {
+      "@type": "ObservationEvent",
+      "@id": "urn:observation-event:android-touch",
+      "requiredInputModalityProfileRefs": [
+        "urn:input-profile:android-touch"
+      ]
+    }
+  ]
+}

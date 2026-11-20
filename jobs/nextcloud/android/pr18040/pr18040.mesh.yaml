@@ -1,0 +1,390 @@
+kind: suite
+label: Nextcloud Android Teams
+outputDir: out
+report:
+  excludedPhaseIds:
+    - urn:phase:setup
+  interpreters:
+    - use: "@openuji/journey-report-android"
+# The tested subject is the APK built from the app PR together with the library PR it includes.
+target:
+  service: app-build
+  output: identity
+model:
+  use: "@openuji/journey-model-ujg/plugin"
+services:
+  app-source:
+    use: "@openuji/journey-service-git/plugin"
+    options:
+      repository: https://github.com/nextcloud/android.git
+      pullRequest: 18040
+      directory: .tmp/android-source
+  library-source:
+    use: "@openuji/journey-service-git/plugin"
+    options:
+      repository: https://github.com/nextcloud/android-library.git
+      pullRequest: 2209
+      directory: .tmp/android-library-source
+  app-build:
+    use: "@openuji/journey-driver-android/apk-build/service"
+    inputs:
+      source:
+        service: app-source
+        output: source
+      # The app PR's settings.gradle.kts includes ../android-library as a composite build.
+      sibling:
+        service: library-source
+        output: source
+    options:
+      directory: .runtime/apk
+      sourceDirectory: android
+      siblingDirectory: android-library
+      task: assembleGenericDebug
+      output: app/build/outputs/apk/generic/debug
+      javaVersion: 21
+      toolchains:
+        - 17
+      arguments:
+        - -Dorg.gradle.jvmargs=-Xmx4g -XX:MaxMetaspaceSize=1g
+  groupfolders-source:
+    use: "@openuji/journey-service-git/plugin"
+    options:
+      repository: https://github.com/nextcloud/groupfolders.git
+      # v23.0.1, the release for Nextcloud 35; it provides team folders.
+      sha: 7ac7bafbbed54a3b7e188668787c5394cb25d0be
+      directory: .tmp/groupfolders-source
+  groupfolders-build:
+    use: "@openuji/journey-driver-nextcloud/app-build/service"
+    inputs:
+      source:
+        service: groupfolders-source
+        output: source
+    options:
+      directory: .runtime/groupfolders-build
+      image: journey-mesh/groupfolders
+      nodeImage: node:24.11.1-bookworm-slim@sha256:48abc13a19400ca3985071e287bd405a1d99306770eb81d61202fb6b65cf0b57
+      composerImage: composer:2.8.12@sha256:5248900ab8b5f7f880c2d62180e40960cd87f60149ec9a1abfd62ac72a02577c
+  stack:
+    use: "@openuji/journey-driver-nextcloud/stack/service"
+    options:
+      project: journey-android-teams
+      composeFiles:
+        - deployment/compose.yaml
+      directory: .runtime/stack
+      image: nextcloud:35.0.2-apache@sha256:786c102155d2717ba0f53a62b3fdd7a1354edc48e800b94dbe32294d9a5752a2
+      expectedVersion: 35.0.2
+      systemConfig:
+        auth.bruteforce.protection.enabled: false
+        # The emulator image's Android System WebView (124) is older than Nextcloud 35's
+        # supported browsers; without this the in-app team settings page is replaced by a warning.
+        no_unsupported_browser_warning: true
+      environment:
+        NEXTCLOUD_TEAMS_PORT: ${NEXTCLOUD_TEAMS_PORT:-18447}
+      services:
+        nextcloud:
+          baseURL: http://localhost:${NEXTCLOUD_TEAMS_PORT:-18447}
+          username: admin
+          password: JourneyAdmin2026!
+      enabledApps:
+        - circles
+        - files_sharing
+  groupfolders-install:
+    use: "@openuji/journey-driver-nextcloud/app-install/service"
+    inputs:
+      app:
+        service: groupfolders-build
+        output: app
+      stack:
+        service: stack
+        output: stack
+    options:
+      directory: .runtime/groupfolders-install
+      services:
+        - nextcloud
+      enable: true
+  devices:
+    use: "@openuji/journey-driver-android/service"
+    options:
+      api: 35
+      image: system-images;android-35;google_apis;x86_64
+      localImages:
+        darwin-arm64: system-images;android-35;google_apis;arm64-v8a
+        darwin-x64: system-images;android-35;google_apis;x86_64
+        linux-x64: system-images;android-35;google_apis;x86_64
+      profile: pixel_6
+      locale: en-US
+      requiredPackages:
+        - com.android.chrome
+      # Each device reaches the stack as its own localhost, the same URL the server generates.
+      reversePorts:
+        - ${NEXTCLOUD_TEAMS_PORT:-18447}
+      devices:
+        alice:
+          avd: journey-teams-alice
+        bob:
+          avd: journey-teams-bob
+  appium:
+    use: "@openuji/journey-adapter-appium/service"
+    inputs:
+      devices:
+        service: devices
+        output: devices
+    options:
+      port: ${APPIUM_PORT:-4724}
+adapters:
+  android:
+    use: "@openuji/journey-adapter-appium/plugin"
+    inputs:
+      application:
+        service: app-build
+        output: apk
+      server:
+        service: appium
+        output: server
+      devices:
+        service: devices
+        output: devices
+    options:
+      assertionTimeoutMs: 60000
+      application:
+        package: com.nextcloud.client
+        activity: com.owncloud.android.ui.activity.FileDisplayActivity
+      # The team settings web page keeps its displayed "Open navigation" toggle under an
+      # off-screen ancestor; Appium's default traversal skips such nodes. Locators still
+      # require @displayed='true'.
+      devices:
+        urn:touchpoint:android-alice:
+          device: alice
+          capabilities: &a11yTraversal
+            appium:settings[allowInvisibleElements]: true
+        urn:touchpoint:android-bob:
+          device: bob
+          capabilities: *a11yTraversal
+    driver:
+      use: "@openuji/journey-driver-nextcloud/android/plugin"
+      options:
+        touchpoints:
+          urn:touchpoint:android-alice:
+            baseURL: http://localhost:${NEXTCLOUD_TEAMS_PORT:-18447}
+          urn:touchpoint:android-bob:
+            baseURL: http://localhost:${NEXTCLOUD_TEAMS_PORT:-18447}
+        users:
+          urn:user:alice:
+            label: Alice
+            username: journey-alice
+            password: JourneyFixture2026!
+          urn:user:bob:
+            label: Bob
+            username: journey-bob
+            password: JourneyFixture2026!
+        entries:
+          nextcloud.android.application: application
+        transitionValues:
+          urn:transition:alice-enters-server:
+            source: touchpoint.baseURL
+          urn:transition:alice-enters-username:
+            source: user.username
+          urn:transition:alice-enters-password:
+            source: user.password
+          urn:transition:bob-enters-server:
+            source: touchpoint.baseURL
+          urn:transition:bob-enters-username:
+            source: user.username
+          urn:transition:bob-enters-password:
+            source: user.password
+          urn:transition:alice-creates-team:enters-name: Journey Team
+          urn:transition:alice-invites-bob:enters-query: Bob
+    observers:
+      - use: "@openuji/journey-observer-android-accessibility/plugin"
+        options:
+          reportId: android-teams.android-accessibility
+          screenshots: true
+          strict: false
+          excludedPhaseIds:
+            - urn:phase:setup
+profiles:
+  touch:
+    use: "@openuji/journey-profiles/plugin"
+    options:
+      id: touch
+      modalityPreference:
+        - observability:keyboard-text-entry
+        - urn:openuji:input:touch-tap
+tests:
+  teams:
+    timeoutMs: 1800000
+    services:
+      - groupfolders-install
+    journeys:
+      - id: alice-setup
+        source: ujg/setup.android.ujg.jsonld
+        select: urn:journey:alice-android-setup
+        adapter: android
+      - id: bob-setup
+        source: ujg/setup.android.ujg.jsonld
+        select: urn:journey:bob-android-setup
+        adapter: android
+      - id: alice-creates-team
+        source: ujg/teams.android.ujg.jsonld
+        select: urn:journey:alice-creates-team
+        adapter: android
+      - id: alice-requires-acceptance
+        source: ujg/teams.android.ujg.jsonld
+        select: urn:journey:alice-requires-acceptance
+        adapter: android
+      - id: alice-invites-bob
+        source: ujg/teams.android.ujg.jsonld
+        select: urn:journey:alice-invites-bob
+        adapter: android
+      - id: bob-accepts-invitation
+        source: ujg/teams.android.ujg.jsonld
+        select: urn:journey:bob-accepts-invitation
+        adapter: android
+      - id: alice-sees-bob
+        source: ujg/teams.android.ujg.jsonld
+        select: urn:journey:alice-sees-bob
+        adapter: android
+      - id: bob-opens-team-folder
+        source: ujg/teams.android.ujg.jsonld
+        select: urn:journey:bob-opens-team-folder
+        adapter: android
+    profiles:
+      - id: touch
+        journeys:
+          alice-setup: touch
+          bob-setup: touch
+          alice-creates-team: touch
+          alice-requires-acceptance: touch
+          alice-invites-bob: touch
+          bob-accepts-invitation: touch
+          alice-sees-bob: touch
+          bob-opens-team-folder: touch
+    environment:
+      use: "@openuji/journey-environment-http/plugin"
+      options:
+        clients:
+          provisioner:
+            baseURL: http://localhost:${NEXTCLOUD_TEAMS_PORT:-18447}
+            headers:
+              OCS-APIRequest: "true"
+              Accept: application/json
+            auth:
+              username: admin
+              password: JourneyAdmin2026!
+          alice:
+            baseURL: http://localhost:${NEXTCLOUD_TEAMS_PORT:-18447}
+            headers:
+              OCS-APIRequest: "true"
+              Accept: application/json
+            auth:
+              username: journey-alice
+              password: JourneyFixture2026!
+          bob:
+            baseURL: http://localhost:${NEXTCLOUD_TEAMS_PORT:-18447}
+            headers:
+              OCS-APIRequest: "true"
+              Accept: application/json
+            auth:
+              username: journey-bob
+              password: JourneyFixture2026!
+        setup:
+          - id: create-alice
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-alice
+              password: JourneyFixture2026!
+              displayName: Alice Journey
+            cleanup:
+              - id: delete-alice
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-alice
+                status:
+                  - 200
+                  - 404
+          - id: create-bob
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            status:
+              - 200
+            json:
+              userid: journey-bob
+              password: JourneyFixture2026!
+              displayName: Bob Journey
+            cleanup:
+              - id: delete-bob
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-bob
+                status:
+                  - 200
+                  - 404
+        # Read back each modeled effect from the server: what the app shows must agree with it.
+        effects:
+          urn:effect:alice-creates-team:creates-team:
+            - id: alice-owns-team
+              client: alice
+              method: GET
+              path: /ocs/v2.php/apps/circles/circles
+              status:
+                - 200
+              poll: {}
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    displayName: Journey Team
+                    config: 0
+                    initiator:
+                      userId: journey-alice
+                      level: 9
+                      status: Member
+          urn:effect:alice-requires-acceptance:requires-acceptance:
+            - id: invitation-required
+              client: alice
+              method: GET
+              path: /ocs/v2.php/apps/circles/circles
+              status:
+                - 200
+              poll: {}
+              assertions:
+                # Circles CFG_INVITE: adding a member creates an invitation.
+                - pointer: /ocs/data
+                  includes:
+                    displayName: Journey Team
+                    config: 32
+          urn:effect:alice-invites-bob:invites-bob:
+            - id: bob-invited
+              client: bob
+              method: GET
+              path: /ocs/v2.php/apps/circles/circles
+              status:
+                - 200
+              poll: {}
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    displayName: Journey Team
+                    initiator:
+                      userId: journey-bob
+                      status: Invited
+          urn:effect:bob-accepts-invitation:accepts:
+            - id: bob-member
+              client: bob
+              method: GET
+              path: /ocs/v2.php/apps/circles/circles
+              status:
+                - 200
+              poll: {}
+              assertions:
+                - pointer: /ocs/data
+                  includes:
+                    displayName: Journey Team
+                    initiator:
+                      userId: journey-bob
+                      level: 1
+                      status: Member

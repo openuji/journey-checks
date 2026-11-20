@@ -48,7 +48,8 @@ jobs:
   check:
     needs: plan
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    # Native jobs build an APK and boot emulators before their journeys run.
+    timeout-minutes: 120
     strategy:
       fail-fast: false
       matrix:
@@ -74,6 +75,37 @@ jobs:
       - run: corepack enable
       - name: Register the canonical web hostname
         run: echo "127.0.0.1 host.docker.internal" | sudo tee -a /etc/hosts
+      # Jobs whose mesh uses Android services build an APK with the host SDK and boot
+      # emulators, which need KVM, the JDKs their Gradle builds pin, and SDK licenses.
+      - name: Detect native requirements
+        id: native
+        run: |
+          if grep -q '@openuji/journey-driver-android' "jobs/$JOB"/*.mesh.yaml; then echo "android=true" >> "$GITHUB_OUTPUT"; fi
+      - name: Enable KVM for the Android emulator
+        if: steps.native.outputs.android == 'true'
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      # JAVA_HOME is the last version (21); JAVA_HOME_17_X64 serves Gradle toolchains.
+      - uses: actions/setup-java@v4
+        if: steps.native.outputs.android == 'true'
+        with:
+          distribution: temurin
+          java-version: |
+            17
+            21
+      - name: Accept Android SDK licenses
+        if: steps.native.outputs.android == 'true'
+        run: yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null
+      - uses: actions/cache@v4
+        if: steps.native.outputs.android == 'true'
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ steps.names.outputs.slug }}-${{ github.run_id }}
+          restore-keys: gradle-${{ steps.names.outputs.slug }}-
       # Builds journey-mesh (the tool), runs the job's mesh in place and always writes the
       # result. Exits nonzero when the job did not succeed, which turns this run red; the
       # steps below still run so the result is published either way.

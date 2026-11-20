@@ -8,12 +8,18 @@ importers:
 
   .:
     devDependencies:
+      '@openuji/journey-adapter-appium':
+        specifier: link:./journey-mesh/packages/journey-adapter-appium
+        version: link:journey-mesh/packages/journey-adapter-appium
       '@openuji/journey-adapter-playwright':
         specifier: link:./journey-mesh/packages/journey-adapter-playwright
         version: link:journey-mesh/packages/journey-adapter-playwright
       '@openuji/journey-cli':
         specifier: link:./journey-mesh/packages/journey-cli
         version: link:journey-mesh/packages/journey-cli
+      '@openuji/journey-driver-android':
+        specifier: link:./journey-mesh/packages/journey-driver-android
+        version: link:journey-mesh/packages/journey-driver-android
       '@openuji/journey-driver-nextcloud':
         specifier: link:./journey-mesh/packages/journey-driver-nextcloud
         version: link:journey-mesh/packages/journey-driver-nextcloud
@@ -23,6 +29,9 @@ importers:
       '@openuji/journey-model-ujg':
         specifier: link:./journey-mesh/packages/journey-model-ujg
         version: link:journey-mesh/packages/journey-model-ujg
+      '@openuji/journey-observer-android-accessibility':
+        specifier: link:./journey-mesh/packages/journey-observer-android-accessibility
+        version: link:journey-mesh/packages/journey-observer-android-accessibility
       '@openuji/journey-observer-axe':
         specifier: link:./journey-mesh/packages/journey-observer-axe
         version: link:journey-mesh/packages/journey-observer-axe
@@ -32,6 +41,9 @@ importers:
       '@openuji/journey-profiles':
         specifier: link:./journey-mesh/packages/journey-profiles
         version: link:journey-mesh/packages/journey-profiles
+      '@openuji/journey-report-android':
+        specifier: link:./journey-mesh/packages/journey-report-android
+        version: link:journey-mesh/packages/journey-report-android
       '@openuji/journey-service-git':
         specifier: link:./journey-mesh/packages/journey-service-git
         version: link:journey-mesh/packages/journey-service-git
