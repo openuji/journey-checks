@@ -97,6 +97,9 @@ adapters:
             source: user.password
           urn:transition:alice-enters-remote-bob: bob@http://host.docker.internal:18382
     observers:
+      - use: "@openuji/journey-observer-operability/plugin"
+        options:
+          id: input-steps
       - use: "@openuji/journey-observer-ux/plugin"
         options:
           id: recipient-ux
@@ -148,6 +151,7 @@ report:
     - urn:phase:setup
   interpreters:
     - use: "@openuji/journey-report-axe"
+    - use: "@openuji/journey-report-operability"
 label: "PR #66147"
 services:
   server-source:

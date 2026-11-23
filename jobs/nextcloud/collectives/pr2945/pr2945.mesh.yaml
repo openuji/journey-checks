@@ -4,6 +4,7 @@ report:
     - urn:phase:setup
   interpreters:
     - use: "@openuji/journey-report-axe"
+    - use: "@openuji/journey-report-operability"
 label: Collectives sharing permissions
 outputDir: out
 target:
@@ -142,6 +143,9 @@ adapters:
           urn:journey:page-editing-restricted:login:transition:1:
             source: user.password
     observers:
+      - use: "@openuji/journey-observer-operability/plugin"
+        options:
+          id: input-steps
       - use: "@openuji/journey-observer-axe/plugin"
         options:
           reportId: collectives-sharing.axe

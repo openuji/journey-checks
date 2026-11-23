@@ -31,7 +31,19 @@ https://openuji.github.io/journey-checks/index.json            # every job in on
 
 The mesh composes the subject from reusable services: Git source → build → installation. Each source declares its repository and PR once; every run resolves the current head and passes the same identity to its dependents. `target` selects a verified installed identity for the published result. This works for both the Nextcloud server PR and the Collectives app PR.
 
-These composed jobs require the journey-mesh service-input/output, HTTP-environment, and report updates included in [journey-mesh PR #16](https://github.com/openuji/journey-mesh/pull/16). All browser behavior comes from the UJG JSON-LD models; HTTP effect checks only read back their declared effects. Report phase exclusions are declared explicitly in each mesh.
+The jobs need a journey-mesh release with all of the following:
+- UJG 1.0 RC4 models
+- declared Operability steps
+- the operability observer and report (`@openuji/journey-observer-operability`, `@openuji/journey-report-operability`)
+- the app-build options `composerScripts` and `composerIgnorePlatformReqs`, which the Tables job uses
+
+All browser behavior comes from the UJG JSON-LD models. HTTP effect checks only read back their declared effects. Each mesh declares its report phase exclusions explicitly.
+
+**Keyboard and pointer paths are declared, not inferred.** Every keyboard or pointer transition in a web model carries a `TransitionMaterialization`:
+- the Tab, Shift+Tab or arrow-key stops, or the pointer target, leading to the control
+- then the activation
+
+The Playwright adapter performs exactly these steps, and the report's **Input steps** page shows them. A profile fails before any service starts when a transition it runs has no steps. Find the stops on a running stack and declare them in the model; see the [Playwright adapter](https://github.com/openuji/journey-mesh/blob/main/packages/journey-adapter-playwright/README.md). Android models declare none, and their touch profile sets `requireMaterialization: false`.
 
 ## Add a job
 

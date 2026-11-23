@@ -1,13 +1,14 @@
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/graph.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/surface.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/phase.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/l10n.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/observability.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/entry-binding.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/effect.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/graph.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/phase.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/l10n.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/observability.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/operability.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/entry-binding.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/effect.context.jsonld"
   ],
   "@type": "UJGDocument",
   "@id": "urn:document:page-sharing-restricted",
@@ -38,10 +39,6 @@
       "order": 1
     },
     {
-      "@type": "InputModality",
-      "@id": "observability:pointer"
-    },
-    {
       "@type": "InputModalityProfile",
       "@id": "urn:profile:pointer",
       "inputModalityRefs": [
@@ -49,25 +46,22 @@
       ]
     },
     {
-      "@type": "InputModality",
-      "@id": "observability:keyboard-enter"
-    },
-    {
       "@type": "InputModalityProfile",
       "@id": "urn:profile:keyboard-enter",
       "inputModalityRefs": [
-        "observability:keyboard-enter"
+        "observability:keyboard"
       ]
     },
     {
       "@type": "InputModality",
-      "@id": "observability:keyboard-text-entry"
+      "@id": "urn:openuji:input-modality:keyboard-text-entry",
+      "label": "Keyboard text entry"
     },
     {
       "@type": "InputModalityProfile",
       "@id": "urn:profile:keyboard-text-entry",
       "inputModalityRefs": [
-        "observability:keyboard-text-entry"
+        "urn:openuji:input-modality:keyboard-text-entry"
       ]
     },
     {
@@ -201,7 +195,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:page-sharing-restricted:4",
       "extensions": {
-        "urn:openuji:playwright:css": "input[type=\"password\"]"
+        "urn:openuji:playwright:css": {
+          "selector": "input[type=\"password\"]"
+        }
       }
     },
     {
@@ -335,7 +331,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:page-sharing-restricted:10",
       "extensions": {
-        "urn:openuji:playwright:css": "input[type=\"password\"]"
+        "urn:openuji:playwright:css": {
+          "selector": "input[type=\"password\"]"
+        }
       }
     },
     {
@@ -361,7 +359,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:page-sharing-restricted:12",
       "extensions": {
-        "urn:openuji:playwright:css": "#content"
+        "urn:openuji:playwright:css": {
+          "selector": "#content"
+        }
       }
     },
     {
@@ -492,7 +492,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:page-sharing-restricted:16",
       "extensions": {
-        "urn:openuji:playwright:css": "#app-navigation-vue"
+        "urn:openuji:playwright:css": {
+          "selector": "#app-navigation-vue"
+        }
       }
     },
     {
@@ -519,7 +521,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:page-sharing-restricted:18",
       "extensions": {
-        "urn:openuji:playwright:css": ".collective-selector-list"
+        "urn:openuji:playwright:css": {
+          "selector": ".collective-selector-list"
+        }
       }
     },
     {
@@ -553,7 +557,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:page-sharing-restricted:20",
       "extensions": {
-        "urn:openuji:playwright:css": ".collective-selector-trigger"
+        "urn:openuji:playwright:css": {
+          "selector": ".collective-selector-trigger"
+        }
       }
     },
     {
@@ -579,7 +585,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:page-sharing-restricted:22",
       "extensions": {
-        "urn:openuji:playwright:css": "[data-cy-collectives=\"reader\"] .ProseMirror:visible, [data-cy-collectives=\"editor\"] .ProseMirror:visible"
+        "urn:openuji:playwright:css": {
+          "selector": "[data-cy-collectives=\"reader\"] .ProseMirror:visible, [data-cy-collectives=\"editor\"] .ProseMirror:visible"
+        }
       }
     },
     {
@@ -613,7 +621,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:page-sharing-restricted:24",
       "extensions": {
-        "urn:openuji:playwright:css": ".collective-selector-list a:has-text(\"Journey page-sharing-restricted\")"
+        "urn:openuji:playwright:css": {
+          "selector": ".collective-selector-list a:has-text(\"Journey page-sharing-restricted\")"
+        }
       }
     },
     {
@@ -639,7 +649,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:page-sharing-restricted:26",
       "extensions": {
-        "urn:openuji:playwright:css": "[data-cy-collectives=\"reader\"] .ProseMirror:visible, [data-cy-collectives=\"editor\"] .ProseMirror:visible"
+        "urn:openuji:playwright:css": {
+          "selector": "[data-cy-collectives=\"reader\"] .ProseMirror:visible, [data-cy-collectives=\"editor\"] .ProseMirror:visible"
+        }
       }
     },
     {
@@ -719,7 +731,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:page-sharing-restricted:30",
       "extensions": {
-        "urn:openuji:playwright:css": ".app-sidebar"
+        "urn:openuji:playwright:css": {
+          "selector": ".app-sidebar"
+        }
       }
     },
     {
@@ -859,7 +873,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:page-sharing-restricted:36",
       "extensions": {
-        "urn:openuji:playwright:css": ".app-sidebar"
+        "urn:openuji:playwright:css": {
+          "selector": ".app-sidebar"
+        }
       }
     },
     {
@@ -886,6 +902,138 @@
       "label": "Alice Journey",
       "touchpointRefs": [
         "urn:touchpoint:collectives"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:page-sharing-restricted:login:transition:2:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:page-sharing-restricted:14"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:urn:journey:page-sharing-restricted:login:transition:2:pointer:2",
+      "stepPreviousRef": "urn:step:urn:journey:page-sharing-restricted:login:transition:2:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:urn:journey:page-sharing-restricted:login:transition:2:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:journey:page-sharing-restricted:login:transition:2",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:urn:journey:page-sharing-restricted:login:transition:2:pointer:1",
+        "urn:step:urn:journey:page-sharing-restricted:login:transition:2:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:page-sharing-restricted:sharing:transition:0:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:page-sharing-restricted:20"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:urn:journey:page-sharing-restricted:sharing:transition:0:pointer:2",
+      "stepPreviousRef": "urn:step:urn:journey:page-sharing-restricted:sharing:transition:0:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:urn:journey:page-sharing-restricted:sharing:transition:0:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:journey:page-sharing-restricted:sharing:transition:0",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:urn:journey:page-sharing-restricted:sharing:transition:0:pointer:1",
+        "urn:step:urn:journey:page-sharing-restricted:sharing:transition:0:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:page-sharing-restricted:sharing:transition:1:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:page-sharing-restricted:24"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:urn:journey:page-sharing-restricted:sharing:transition:1:pointer:2",
+      "stepPreviousRef": "urn:step:urn:journey:page-sharing-restricted:sharing:transition:1:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:urn:journey:page-sharing-restricted:sharing:transition:1:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:journey:page-sharing-restricted:sharing:transition:1",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:urn:journey:page-sharing-restricted:sharing:transition:1:pointer:1",
+        "urn:step:urn:journey:page-sharing-restricted:sharing:transition:1:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:page-sharing-restricted:sharing:transition:2:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:page-sharing-restricted:28"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:urn:journey:page-sharing-restricted:sharing:transition:2:pointer:2",
+      "stepPreviousRef": "urn:step:urn:journey:page-sharing-restricted:sharing:transition:2:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:urn:journey:page-sharing-restricted:sharing:transition:2:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:journey:page-sharing-restricted:sharing:transition:2",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:urn:journey:page-sharing-restricted:sharing:transition:2:pointer:1",
+        "urn:step:urn:journey:page-sharing-restricted:sharing:transition:2:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:page-sharing-restricted:sharing:transition:3:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:page-sharing-restricted:32"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:urn:journey:page-sharing-restricted:sharing:transition:3:pointer:2",
+      "stepPreviousRef": "urn:step:urn:journey:page-sharing-restricted:sharing:transition:3:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:urn:journey:page-sharing-restricted:sharing:transition:3:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:journey:page-sharing-restricted:sharing:transition:3",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:urn:journey:page-sharing-restricted:sharing:transition:3:pointer:1",
+        "urn:step:urn:journey:page-sharing-restricted:sharing:transition:3:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:page-sharing-restricted:sharing:transition:4:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:page-sharing-restricted:36"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:urn:journey:page-sharing-restricted:sharing:transition:4:pointer:2",
+      "stepPreviousRef": "urn:step:urn:journey:page-sharing-restricted:sharing:transition:4:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:urn:journey:page-sharing-restricted:sharing:transition:4:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:journey:page-sharing-restricted:sharing:transition:4",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:urn:journey:page-sharing-restricted:sharing:transition:4:pointer:1",
+        "urn:step:urn:journey:page-sharing-restricted:sharing:transition:4:pointer:2"
       ]
     }
   ]

@@ -6,3 +6,5 @@ out/
 .runtime/
 .tmp/
 apps/web
+out-
+discover.local.yaml
