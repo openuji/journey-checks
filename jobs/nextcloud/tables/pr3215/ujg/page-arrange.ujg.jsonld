@@ -2478,13 +2478,19 @@
       "@type": "MoveStep",
       "@id": "urn:step:page-arrange:pages:make-narrower:keyboard:3",
       "stepMoveKindRef": "operability:nextItem",
-      "stepPreviousRef": "urn:step:page-arrange:pages:make-narrower:keyboard:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:make-narrower:keyboard:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:make-narrower:keyboard:4",
+      "stepMoveKindRef": "operability:nextItem",
+      "stepPreviousRef": "urn:step:page-arrange:pages:make-narrower:keyboard:3",
       "stepLocatorRef": "urn:locator:menu-make-narrower"
     },
     {
       "@type": "ActivationStep",
-      "@id": "urn:step:page-arrange:pages:make-narrower:keyboard:4",
-      "stepPreviousRef": "urn:step:page-arrange:pages:make-narrower:keyboard:3"
+      "@id": "urn:step:page-arrange:pages:make-narrower:keyboard:5",
+      "stepPreviousRef": "urn:step:page-arrange:pages:make-narrower:keyboard:4"
     },
     {
       "@type": "TransitionMaterialization",
@@ -2496,7 +2502,8 @@
         "urn:step:page-arrange:pages:make-narrower:keyboard:1",
         "urn:step:page-arrange:pages:make-narrower:keyboard:2",
         "urn:step:page-arrange:pages:make-narrower:keyboard:3",
-        "urn:step:page-arrange:pages:make-narrower:keyboard:4"
+        "urn:step:page-arrange:pages:make-narrower:keyboard:4",
+        "urn:step:page-arrange:pages:make-narrower:keyboard:5"
       ]
     },
     {
@@ -2563,13 +2570,19 @@
       "@type": "MoveStep",
       "@id": "urn:step:page-arrange:pages:move-right:keyboard:3",
       "stepMoveKindRef": "operability:previousItem",
-      "stepPreviousRef": "urn:step:page-arrange:pages:move-right:keyboard:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:move-right:keyboard:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:move-right:keyboard:4",
+      "stepMoveKindRef": "operability:previousItem",
+      "stepPreviousRef": "urn:step:page-arrange:pages:move-right:keyboard:3",
       "stepLocatorRef": "urn:locator:menu-move-right"
     },
     {
       "@type": "ActivationStep",
-      "@id": "urn:step:page-arrange:pages:move-right:keyboard:4",
-      "stepPreviousRef": "urn:step:page-arrange:pages:move-right:keyboard:3"
+      "@id": "urn:step:page-arrange:pages:move-right:keyboard:5",
+      "stepPreviousRef": "urn:step:page-arrange:pages:move-right:keyboard:4"
     },
     {
       "@type": "TransitionMaterialization",
@@ -2581,7 +2594,8 @@
         "urn:step:page-arrange:pages:move-right:keyboard:1",
         "urn:step:page-arrange:pages:move-right:keyboard:2",
         "urn:step:page-arrange:pages:move-right:keyboard:3",
-        "urn:step:page-arrange:pages:move-right:keyboard:4"
+        "urn:step:page-arrange:pages:move-right:keyboard:4",
+        "urn:step:page-arrange:pages:move-right:keyboard:5"
       ]
     },
     {
@@ -2711,13 +2725,19 @@
     {
       "@type": "MoveStep",
       "@id": "urn:step:page-arrange:pages:save:keyboard:1",
+      "stepMoveKindRef": "operability:previousStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:save:keyboard:2",
       "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:save:keyboard:1",
       "stepLocatorRef": "urn:locator:drafts-save"
     },
     {
       "@type": "ActivationStep",
-      "@id": "urn:step:page-arrange:pages:save:keyboard:2",
-      "stepPreviousRef": "urn:step:page-arrange:pages:save:keyboard:1"
+      "@id": "urn:step:page-arrange:pages:save:keyboard:3",
+      "stepPreviousRef": "urn:step:page-arrange:pages:save:keyboard:2"
     },
     {
       "@type": "TransitionMaterialization",
@@ -2727,7 +2747,8 @@
       "materializationModalityRef": "observability:keyboard",
       "materializationStepRefs": [
         "urn:step:page-arrange:pages:save:keyboard:1",
-        "urn:step:page-arrange:pages:save:keyboard:2"
+        "urn:step:page-arrange:pages:save:keyboard:2",
+        "urn:step:page-arrange:pages:save:keyboard:3"
       ]
     },
     {

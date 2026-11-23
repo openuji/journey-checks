@@ -1078,6 +1078,120 @@
         "urn:step:bob-accepts-share:pointer:1",
         "urn:step:bob-accepts-share:pointer:2"
       ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:4",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:3"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:5",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:4"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:6",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:5"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:7",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:6"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:8",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:7"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:9",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:8"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:10",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:9"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:11",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:10"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:12",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:11"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:13",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:12"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:14",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:13"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:15",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:14",
+      "stepLocatorRef": "urn:locator:remote-recipient-input"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:alice-enters-remote-bob:text-entry",
+      "label": "Focus moves to the field",
+      "materializationTransitionRef": "urn:transition:alice-enters-remote-bob",
+      "materializationModalityRef": "urn:openuji:input-modality:keyboard-text-entry",
+      "materializationStepRefs": [
+        "urn:step:alice-enters-remote-bob:text-entry:1",
+        "urn:step:alice-enters-remote-bob:text-entry:2",
+        "urn:step:alice-enters-remote-bob:text-entry:3",
+        "urn:step:alice-enters-remote-bob:text-entry:4",
+        "urn:step:alice-enters-remote-bob:text-entry:5",
+        "urn:step:alice-enters-remote-bob:text-entry:6",
+        "urn:step:alice-enters-remote-bob:text-entry:7",
+        "urn:step:alice-enters-remote-bob:text-entry:8",
+        "urn:step:alice-enters-remote-bob:text-entry:9",
+        "urn:step:alice-enters-remote-bob:text-entry:10",
+        "urn:step:alice-enters-remote-bob:text-entry:11",
+        "urn:step:alice-enters-remote-bob:text-entry:12",
+        "urn:step:alice-enters-remote-bob:text-entry:13",
+        "urn:step:alice-enters-remote-bob:text-entry:14",
+        "urn:step:alice-enters-remote-bob:text-entry:15"
+      ]
     }
   ]
 }

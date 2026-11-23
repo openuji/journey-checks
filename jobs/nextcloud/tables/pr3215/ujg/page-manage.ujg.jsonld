@@ -1608,6 +1608,28 @@
       ]
     },
     {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:open-page-actions-again:keyboard:1",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepLocatorRef": "urn:locator:drafts-archive-page-actions"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:pages:open-page-actions-again:keyboard:2",
+      "stepPreviousRef": "urn:step:page-manage:pages:open-page-actions-again:keyboard:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:pages:open-page-actions-again:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-manage:pages:open-page-actions-again",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-manage:pages:open-page-actions-again:keyboard:1",
+        "urn:step:page-manage:pages:open-page-actions-again:keyboard:2"
+      ]
+    },
+    {
       "@type": "Transition",
       "@id": "urn:transition:page-manage:pages:delete-page",
       "label": "Delete the page",

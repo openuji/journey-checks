@@ -2593,6 +2593,28 @@
       ]
     },
     {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-missing-source:pages:open-application-actions:keyboard:1",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepLocatorRef": "urn:locator:application-actions"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-missing-source:pages:open-application-actions:keyboard:2",
+      "stepPreviousRef": "urn:step:page-missing-source:pages:open-application-actions:keyboard:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-missing-source:pages:open-application-actions:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-missing-source:pages:open-application-actions",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-missing-source:pages:open-application-actions:keyboard:1",
+        "urn:step:page-missing-source:pages:open-application-actions:keyboard:2"
+      ]
+    },
+    {
       "@type": "Transition",
       "@id": "urn:transition:page-missing-source:pages:edit-application",
       "label": "Edit the application",
@@ -2706,6 +2728,56 @@
       ]
     },
     {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-missing-source:pages:remove-tasks:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-missing-source:pages:remove-tasks:keyboard:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-missing-source:pages:remove-tasks:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-missing-source:pages:remove-tasks:keyboard:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-missing-source:pages:remove-tasks:keyboard:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-missing-source:pages:remove-tasks:keyboard:4",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-missing-source:pages:remove-tasks:keyboard:3"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-missing-source:pages:remove-tasks:keyboard:5",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-missing-source:pages:remove-tasks:keyboard:4",
+      "stepLocatorRef": "urn:locator:resource-delete"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-missing-source:pages:remove-tasks:keyboard:6",
+      "stepPreviousRef": "urn:step:page-missing-source:pages:remove-tasks:keyboard:5"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-missing-source:pages:remove-tasks:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-missing-source:pages:remove-tasks",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-missing-source:pages:remove-tasks:keyboard:1",
+        "urn:step:page-missing-source:pages:remove-tasks:keyboard:2",
+        "urn:step:page-missing-source:pages:remove-tasks:keyboard:3",
+        "urn:step:page-missing-source:pages:remove-tasks:keyboard:4",
+        "urn:step:page-missing-source:pages:remove-tasks:keyboard:5",
+        "urn:step:page-missing-source:pages:remove-tasks:keyboard:6"
+      ]
+    },
+    {
       "@type": "Effect",
       "@id": "urn:effect:page-missing-source:source-cleared",
       "label": "The widget keeps its title and loses its source"
@@ -2761,6 +2833,35 @@
       ]
     },
     {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-missing-source:pages:save-application:keyboard:1",
+      "stepMoveKindRef": "operability:previousStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-missing-source:pages:save-application:keyboard:2",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-missing-source:pages:save-application:keyboard:1",
+      "stepLocatorRef": "urn:locator:edit-application-save"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-missing-source:pages:save-application:keyboard:3",
+      "stepPreviousRef": "urn:step:page-missing-source:pages:save-application:keyboard:2"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-missing-source:pages:save-application:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-missing-source:pages:save-application",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-missing-source:pages:save-application:keyboard:1",
+        "urn:step:page-missing-source:pages:save-application:keyboard:2",
+        "urn:step:page-missing-source:pages:save-application:keyboard:3"
+      ]
+    },
+    {
       "@type": "Transition",
       "@id": "urn:transition:page-missing-source:pages:edit-page",
       "label": "Edit the page",
@@ -2807,6 +2908,35 @@
       "materializationStepRefs": [
         "urn:step:page-missing-source:pages:edit-page:pointer:1",
         "urn:step:page-missing-source:pages:edit-page:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-missing-source:pages:edit-page:keyboard:1",
+      "stepMoveKindRef": "operability:previousStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-missing-source:pages:edit-page:keyboard:2",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-missing-source:pages:edit-page:keyboard:1",
+      "stepLocatorRef": "urn:locator:board-edit-page"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-missing-source:pages:edit-page:keyboard:3",
+      "stepPreviousRef": "urn:step:page-missing-source:pages:edit-page:keyboard:2"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-missing-source:pages:edit-page:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-missing-source:pages:edit-page",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-missing-source:pages:edit-page:keyboard:1",
+        "urn:step:page-missing-source:pages:edit-page:keyboard:2",
+        "urn:step:page-missing-source:pages:edit-page:keyboard:3"
       ]
     },
     {
