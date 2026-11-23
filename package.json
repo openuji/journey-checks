@@ -16,9 +16,12 @@
     "@openuji/journey-model-ujg": "link:./journey-mesh/packages/journey-model-ujg",
     "@openuji/journey-observer-android-accessibility": "link:./journey-mesh/packages/journey-observer-android-accessibility",
     "@openuji/journey-observer-axe": "link:./journey-mesh/packages/journey-observer-axe",
+    "@openuji/journey-observer-operability": "link:./journey-mesh/packages/journey-observer-operability",
     "@openuji/journey-observer-ux": "link:./journey-mesh/packages/journey-observer-ux",
     "@openuji/journey-profiles": "link:./journey-mesh/packages/journey-profiles",
     "@openuji/journey-report-android": "link:./journey-mesh/packages/journey-report-android",
+    "@openuji/journey-report-axe": "link:./journey-mesh/packages/journey-report-axe",
+    "@openuji/journey-report-operability": "link:./journey-mesh/packages/journey-report-operability",
     "@openuji/journey-service-git": "link:./journey-mesh/packages/journey-service-git",
     "yaml": "^2.9.1"
   }

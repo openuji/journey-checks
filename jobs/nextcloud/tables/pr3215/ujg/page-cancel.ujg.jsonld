@@ -1,0 +1,2468 @@
+{
+  "@context": [
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/graph.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/phase.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/l10n.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/observability.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/operability.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/entry-binding.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/effect.context.jsonld"
+  ],
+  "@type": "UJGDocument",
+  "@id": "urn:ujg:document:tables-pr3215:page-cancel",
+  "nodes": [
+    {
+      "@type": "Locale",
+      "@id": "urn:locale:en",
+      "localeCode": "en"
+    },
+    {
+      "@type": "InputModality",
+      "@id": "urn:openuji:input-modality:keyboard-text-entry",
+      "label": "Keyboard text entry"
+    },
+    {
+      "@type": "InputModalityProfile",
+      "@id": "urn:input-profile:keyboard",
+      "inputModalityRefs": [
+        "observability:keyboard"
+      ]
+    },
+    {
+      "@type": "InputModalityProfile",
+      "@id": "urn:input-profile:pointer",
+      "inputModalityRefs": [
+        "observability:pointer"
+      ]
+    },
+    {
+      "@type": "InputModalityProfile",
+      "@id": "urn:input-profile:text-entry",
+      "inputModalityRefs": [
+        "urn:openuji:input-modality:keyboard-text-entry"
+      ]
+    },
+    {
+      "@type": "ObservationEvent",
+      "@id": "urn:observation-event:presence"
+    },
+    {
+      "@type": "ObservationEvent",
+      "@id": "urn:observation-event:absence"
+    },
+    {
+      "@type": "ObservationEvent",
+      "@id": "urn:observation-event:activate",
+      "label": "Activate",
+      "requiredInputModalityProfileRefs": [
+        "urn:input-profile:keyboard",
+        "urn:input-profile:pointer"
+      ]
+    },
+    {
+      "@type": "ObservationEvent",
+      "@id": "urn:observation-event:text-entry",
+      "label": "Enter text",
+      "requiredInputModalityProfileRefs": [
+        "urn:input-profile:text-entry"
+      ]
+    },
+    {
+      "@type": "Phase",
+      "@id": "urn:phase:setup",
+      "label": "Setup",
+      "order": 0
+    },
+    {
+      "@type": "Phase",
+      "@id": "urn:phase:pages",
+      "label": "Grid pages",
+      "order": 1
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:account-name-or-email",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:account-name-or-email:en",
+      "messageMetaRef": "urn:message:account-name-or-email",
+      "localeRef": "urn:locale:en",
+      "value": "Account name or email"
+    },
+    {
+      "@type": "AccessibleFeature",
+      "@id": "urn:feature:exact-name",
+      "accessibleFeatureName": "accessible-name-exact",
+      "accessibleFeatureValue": "true"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:login-account",
+      "role": "textbox",
+      "accessibleNameRef": "urn:message:account-name-or-email",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:password",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:password:en",
+      "messageMetaRef": "urn:message:password",
+      "localeRef": "urn:locale:en",
+      "value": "Password"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:login-password",
+      "role": "textbox",
+      "accessibleNameRef": "urn:message:password",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:log-in",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:log-in:en",
+      "messageMetaRef": "urn:message:log-in",
+      "localeRef": "urn:locale:en",
+      "value": "Log in"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:login-submit",
+      "role": "button",
+      "accessibleNameRef": "urn:message:log-in",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:go-to-dashboard",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:go-to-dashboard:en",
+      "messageMetaRef": "urn:message:go-to-dashboard",
+      "localeRef": "urn:locale:en",
+      "value": "Go to Dashboard"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:dashboard-link",
+      "role": "link",
+      "accessibleNameRef": "urn:message:go-to-dashboard",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:app-navigation",
+      "role": "navigation"
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:team-board",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:team-board:en",
+      "messageMetaRef": "urn:message:team-board",
+      "localeRef": "urn:locale:en",
+      "value": "Team board"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:team-board-link",
+      "role": "link",
+      "accessibleNameRef": "urn:message:team-board",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:app-navigation"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:home",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:home:en",
+      "messageMetaRef": "urn:message:home",
+      "localeRef": "urn:locale:en",
+      "value": "Home"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:home-panel",
+      "role": "tabpanel",
+      "accessibleNameRef": "urn:message:home",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:tasks",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:tasks:en",
+      "messageMetaRef": "urn:message:tasks",
+      "localeRef": "urn:locale:en",
+      "value": "Tasks"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:home-tasks",
+      "role": "heading",
+      "accessibleNameRef": "urn:message:tasks",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:home-panel"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:drafts",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:drafts:en",
+      "messageMetaRef": "urn:message:drafts",
+      "localeRef": "urn:locale:en",
+      "value": "Drafts"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:panel-drafts",
+      "role": "tabpanel",
+      "accessibleNameRef": "urn:message:drafts",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:this-page-is-empty",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:this-page-is-empty:en",
+      "messageMetaRef": "urn:message:this-page-is-empty",
+      "localeRef": "urn:locale:en",
+      "value": "This page is empty"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:drafts-empty-note",
+      "role": "note",
+      "accessibleNameRef": "urn:message:this-page-is-empty",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:panel-drafts"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:pages-of-this-application",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:pages-of-this-application:en",
+      "messageMetaRef": "urn:message:pages-of-this-application",
+      "localeRef": "urn:locale:en",
+      "value": "Pages of this application"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:page-bar",
+      "role": "tablist",
+      "accessibleNameRef": "urn:message:pages-of-this-application",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:tab-drafts",
+      "role": "tab",
+      "accessibleNameRef": "urn:message:drafts",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:page-bar"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:tab-home",
+      "role": "tab",
+      "accessibleNameRef": "urn:message:home",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:page-bar"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:edit-page",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:edit-page:en",
+      "messageMetaRef": "urn:message:edit-page",
+      "localeRef": "urn:locale:en",
+      "value": "Edit page"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:drafts-edit-page",
+      "role": "button",
+      "accessibleNameRef": "urn:message:edit-page",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:panel-drafts"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:save",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:save:en",
+      "messageMetaRef": "urn:message:save",
+      "localeRef": "urn:locale:en",
+      "value": "Save"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:drafts-save",
+      "role": "button",
+      "accessibleNameRef": "urn:message:save",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:panel-drafts"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:add-widget",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:add-widget:en",
+      "messageMetaRef": "urn:message:add-widget",
+      "localeRef": "urn:locale:en",
+      "value": "Add widget"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:drafts-empty-add-widget",
+      "role": "button",
+      "accessibleNameRef": "urn:message:add-widget",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:drafts-empty-note"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:dialog-add-widget",
+      "role": "dialog",
+      "accessibleNameRef": "urn:message:add-widget",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:heading",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:heading:en",
+      "messageMetaRef": "urn:message:heading",
+      "localeRef": "urn:locale:en",
+      "value": "Heading *"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:add-widget-heading",
+      "role": "textbox",
+      "accessibleNameRef": "urn:message:heading",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:dialog-add-widget"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:add-widget-submit",
+      "role": "button",
+      "accessibleNameRef": "urn:message:add-widget",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:dialog-add-widget"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:actions-for-header",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:actions-for-header:en",
+      "messageMetaRef": "urn:message:actions-for-header",
+      "localeRef": "urn:locale:en",
+      "value": "Actions for Header"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:header-widget-actions",
+      "role": "button",
+      "accessibleNameRef": "urn:message:actions-for-header",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:cancel",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:cancel:en",
+      "messageMetaRef": "urn:message:cancel",
+      "localeRef": "urn:locale:en",
+      "value": "Cancel"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:drafts-cancel",
+      "role": "button",
+      "accessibleNameRef": "urn:message:cancel",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:panel-drafts"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:discard-unsaved-changes",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:discard-unsaved-changes:en",
+      "messageMetaRef": "urn:message:discard-unsaved-changes",
+      "localeRef": "urn:locale:en",
+      "value": "Discard unsaved changes?"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:dialog-discard-unsaved-changes",
+      "role": "dialog",
+      "accessibleNameRef": "urn:message:discard-unsaved-changes",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:keep-editing",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:keep-editing:en",
+      "messageMetaRef": "urn:message:keep-editing",
+      "localeRef": "urn:locale:en",
+      "value": "Keep editing"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:discard-unsaved-changes-keep",
+      "role": "button",
+      "accessibleNameRef": "urn:message:keep-editing",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:dialog-discard-unsaved-changes"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:discard-changes",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:discard-changes:en",
+      "messageMetaRef": "urn:message:discard-changes",
+      "localeRef": "urn:locale:en",
+      "value": "Discard changes"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:discard-unsaved-changes-discard",
+      "role": "button",
+      "accessibleNameRef": "urn:message:discard-changes",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:dialog-discard-unsaved-changes"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:panel-home",
+      "role": "tabpanel",
+      "accessibleNameRef": "urn:message:home",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "CompositeState",
+      "@id": "urn:composite:page-cancel:login",
+      "label": "Application owner signs in",
+      "subjourneyRefs": [
+        "urn:journey:page-cancel:login"
+      ]
+    },
+    {
+      "@type": "Journey",
+      "@id": "urn:journey:page-cancel:login",
+      "label": "Application owner signs in",
+      "defaultEntryRef": "urn:entry:page-cancel:login",
+      "entryRefs": [
+        "urn:entry:page-cancel:login"
+      ],
+      "stateRefs": [
+        "urn:state:page-cancel:login:ready",
+        "urn:state:page-cancel:login:username-entered",
+        "urn:state:page-cancel:login:password-entered",
+        "urn:state:page-cancel:login:signed-in"
+      ],
+      "transitionRefs": [
+        "urn:transition:page-cancel:login:enter-username",
+        "urn:transition:page-cancel:login:enter-password",
+        "urn:transition:page-cancel:login:submit"
+      ]
+    },
+    {
+      "@type": "JourneyEntry",
+      "@id": "urn:entry:page-cancel:login",
+      "stateRef": "urn:state:page-cancel:login:ready"
+    },
+    {
+      "@type": "EntryBinding",
+      "@id": "urn:entry-binding:page-cancel:login",
+      "entryRef": "urn:entry:page-cancel:login",
+      "value": "login"
+    },
+    {
+      "@type": "Step",
+      "@id": "urn:journey-step:page-cancel:login",
+      "label": "Application owner signs in",
+      "order": 0,
+      "compositeStateRef": "urn:composite:page-cancel:login",
+      "phaseRef": "urn:phase:setup"
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:login:ready",
+      "label": "Login form is ready"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:login:ready",
+      "graphNodeRef": "urn:state:page-cancel:login:ready"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:login:ready",
+      "observeSurfaceRef": "urn:surface:page-cancel:login:ready",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:login-account"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:login:username-entered",
+      "label": "Account name is entered"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:login:username-entered",
+      "graphNodeRef": "urn:state:page-cancel:login:username-entered"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:login:username-entered",
+      "observeSurfaceRef": "urn:surface:page-cancel:login:username-entered",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:login-password"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:login:password-entered",
+      "label": "Password is entered"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:login:password-entered",
+      "graphNodeRef": "urn:state:page-cancel:login:password-entered"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:login:password-entered",
+      "observeSurfaceRef": "urn:surface:page-cancel:login:password-entered",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:login-submit"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:login:signed-in",
+      "label": "Signed in"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:login:signed-in",
+      "graphNodeRef": "urn:state:page-cancel:login:signed-in"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:login:signed-in",
+      "observeSurfaceRef": "urn:surface:page-cancel:login:signed-in",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:dashboard-link"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:login:enter-username",
+      "label": "Enter the account name",
+      "from": "urn:state:page-cancel:login:ready",
+      "to": "urn:state:page-cancel:login:username-entered",
+      "commandRef": "urn:transition:page-cancel:login:enter-username:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:login:enter-username:command",
+      "label": "Enter the account name"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:login:enter-username:command",
+      "graphNodeRef": "urn:transition:page-cancel:login:enter-username:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:login:enter-username:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:login:enter-username:command",
+      "observationEventRef": "urn:observation-event:text-entry",
+      "locatorRefs": [
+        "urn:locator:login-account"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:login:enter-password",
+      "label": "Enter the password",
+      "from": "urn:state:page-cancel:login:username-entered",
+      "to": "urn:state:page-cancel:login:password-entered",
+      "commandRef": "urn:transition:page-cancel:login:enter-password:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:login:enter-password:command",
+      "label": "Enter the password"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:login:enter-password:command",
+      "graphNodeRef": "urn:transition:page-cancel:login:enter-password:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:login:enter-password:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:login:enter-password:command",
+      "observationEventRef": "urn:observation-event:text-entry",
+      "locatorRefs": [
+        "urn:locator:login-password"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:login:enter-password:text-entry:1",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepLocatorRef": "urn:locator:login-password"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:login:enter-password:text-entry",
+      "label": "Focus moves to the field",
+      "materializationTransitionRef": "urn:transition:page-cancel:login:enter-password",
+      "materializationModalityRef": "urn:openuji:input-modality:keyboard-text-entry",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:login:enter-password:text-entry:1"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:login:submit",
+      "label": "Log in",
+      "from": "urn:state:page-cancel:login:password-entered",
+      "to": "urn:state:page-cancel:login:signed-in",
+      "commandRef": "urn:transition:page-cancel:login:submit:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:login:submit:command",
+      "label": "Log in"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:login:submit:command",
+      "graphNodeRef": "urn:transition:page-cancel:login:submit:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:login:submit:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:login:submit:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:login-submit"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:login:submit:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:login-submit"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:login:submit:pointer:2",
+      "stepPreviousRef": "urn:step:page-cancel:login:submit:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:login:submit:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-cancel:login:submit",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:login:submit:pointer:1",
+        "urn:step:page-cancel:login:submit:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:login:submit:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:login:submit:keyboard:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:login:submit:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:login:submit:keyboard:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:login:submit:keyboard:2",
+      "stepLocatorRef": "urn:locator:login-submit"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:login:submit:keyboard:4",
+      "stepPreviousRef": "urn:step:page-cancel:login:submit:keyboard:3"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:login:submit:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-cancel:login:submit",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:login:submit:keyboard:1",
+        "urn:step:page-cancel:login:submit:keyboard:2",
+        "urn:step:page-cancel:login:submit:keyboard:3",
+        "urn:step:page-cancel:login:submit:keyboard:4"
+      ]
+    },
+    {
+      "@type": "CompositeState",
+      "@id": "urn:composite:page-cancel:pages",
+      "label": "The owner cancels and discards edits",
+      "subjourneyRefs": [
+        "urn:journey:page-cancel:pages"
+      ]
+    },
+    {
+      "@type": "Journey",
+      "@id": "urn:journey:page-cancel:pages",
+      "label": "The owner cancels and discards edits",
+      "defaultEntryRef": "urn:entry:page-cancel:pages",
+      "entryRefs": [
+        "urn:entry:page-cancel:pages"
+      ],
+      "stateRefs": [
+        "urn:state:page-cancel:pages:tables",
+        "urn:state:page-cancel:pages:home",
+        "urn:state:page-cancel:pages:drafts-empty",
+        "urn:state:page-cancel:pages:editing",
+        "urn:state:page-cancel:pages:add-widget",
+        "urn:state:page-cancel:pages:heading-entered",
+        "urn:state:page-cancel:pages:header-added",
+        "urn:state:page-cancel:pages:cancelled",
+        "urn:state:page-cancel:pages:editing-again",
+        "urn:state:page-cancel:pages:add-widget-again",
+        "urn:state:page-cancel:pages:heading-entered-again",
+        "urn:state:page-cancel:pages:header-added-again",
+        "urn:state:page-cancel:pages:discard-asked",
+        "urn:state:page-cancel:pages:still-editing",
+        "urn:state:page-cancel:pages:discard-asked-again",
+        "urn:state:page-cancel:pages:home-after-discard"
+      ],
+      "transitionRefs": [
+        "urn:transition:page-cancel:pages:open-application",
+        "urn:transition:page-cancel:pages:select-drafts",
+        "urn:transition:page-cancel:pages:edit-page",
+        "urn:transition:page-cancel:pages:open-add-widget",
+        "urn:transition:page-cancel:pages:enter-heading",
+        "urn:transition:page-cancel:pages:add-header",
+        "urn:transition:page-cancel:pages:cancel",
+        "urn:transition:page-cancel:pages:edit-page-again",
+        "urn:transition:page-cancel:pages:open-add-widget-again",
+        "urn:transition:page-cancel:pages:enter-heading-again",
+        "urn:transition:page-cancel:pages:add-header-again",
+        "urn:transition:page-cancel:pages:leave-for-home",
+        "urn:transition:page-cancel:pages:keep-editing",
+        "urn:transition:page-cancel:pages:leave-for-home-again",
+        "urn:transition:page-cancel:pages:discard"
+      ]
+    },
+    {
+      "@type": "JourneyEntry",
+      "@id": "urn:entry:page-cancel:pages",
+      "stateRef": "urn:state:page-cancel:pages:tables"
+    },
+    {
+      "@type": "EntryBinding",
+      "@id": "urn:entry-binding:page-cancel:pages",
+      "entryRef": "urn:entry:page-cancel:pages",
+      "value": "tables"
+    },
+    {
+      "@type": "Step",
+      "@id": "urn:journey-step:page-cancel:pages",
+      "label": "The owner cancels and discards edits",
+      "order": 1,
+      "compositeStateRef": "urn:composite:page-cancel:pages",
+      "phaseRef": "urn:phase:pages"
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:pages:tables",
+      "label": "Tables is open"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:tables",
+      "graphNodeRef": "urn:state:page-cancel:pages:tables"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:tables",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:tables",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:team-board-link"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:pages:home",
+      "label": "The start page is shown with its table"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:home",
+      "graphNodeRef": "urn:state:page-cancel:pages:home"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:home",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:home",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:home-tasks"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:pages:drafts-empty",
+      "label": "Drafts is selected and empty"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:drafts-empty",
+      "graphNodeRef": "urn:state:page-cancel:pages:drafts-empty"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:drafts-empty",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:drafts-empty",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:drafts-empty-note"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:pages:editing",
+      "label": "The page is in edit mode"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:editing",
+      "graphNodeRef": "urn:state:page-cancel:pages:editing"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:editing",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:editing",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:drafts-save"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:pages:add-widget",
+      "label": "Add widget is open"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:add-widget",
+      "graphNodeRef": "urn:state:page-cancel:pages:add-widget"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:add-widget",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:add-widget",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:dialog-add-widget"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:pages:heading-entered",
+      "label": "The heading is entered"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:heading-entered",
+      "graphNodeRef": "urn:state:page-cancel:pages:heading-entered"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:heading-entered",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:heading-entered",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:dialog-add-widget"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:pages:header-added",
+      "label": "The header widget is on the page"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:header-added",
+      "graphNodeRef": "urn:state:page-cancel:pages:header-added"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:header-added",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:header-added",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:header-widget-actions"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:pages:cancelled",
+      "label": "The page is empty again"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:cancelled",
+      "graphNodeRef": "urn:state:page-cancel:pages:cancelled"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:cancelled",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:cancelled",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:drafts-empty-note"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:pages:editing-again",
+      "label": "The page is in edit mode again"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:editing-again",
+      "graphNodeRef": "urn:state:page-cancel:pages:editing-again"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:editing-again",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:editing-again",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:drafts-save"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:pages:add-widget-again",
+      "label": "Add widget is open"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:add-widget-again",
+      "graphNodeRef": "urn:state:page-cancel:pages:add-widget-again"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:add-widget-again",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:add-widget-again",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:dialog-add-widget"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:pages:heading-entered-again",
+      "label": "The heading is entered"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:heading-entered-again",
+      "graphNodeRef": "urn:state:page-cancel:pages:heading-entered-again"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:heading-entered-again",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:heading-entered-again",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:dialog-add-widget"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:pages:header-added-again",
+      "label": "The header widget is on the page"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:header-added-again",
+      "graphNodeRef": "urn:state:page-cancel:pages:header-added-again"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:header-added-again",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:header-added-again",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:header-widget-actions"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:pages:discard-asked",
+      "label": "Leaving asks to discard the changes"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:discard-asked",
+      "graphNodeRef": "urn:state:page-cancel:pages:discard-asked"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:discard-asked",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:discard-asked",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:dialog-discard-unsaved-changes"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:pages:still-editing",
+      "label": "The page is still in edit mode"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:still-editing",
+      "graphNodeRef": "urn:state:page-cancel:pages:still-editing"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:still-editing",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:still-editing",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:header-widget-actions"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:pages:discard-asked-again",
+      "label": "Leaving asks again"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:discard-asked-again",
+      "graphNodeRef": "urn:state:page-cancel:pages:discard-asked-again"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:discard-asked-again",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:discard-asked-again",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:dialog-discard-unsaved-changes"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-cancel:pages:home-after-discard",
+      "label": "The start page is shown"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:home-after-discard",
+      "graphNodeRef": "urn:state:page-cancel:pages:home-after-discard"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:home-after-discard",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:home-after-discard",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:home-tasks"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:pages:open-application",
+      "label": "Open the application",
+      "from": "urn:state:page-cancel:pages:tables",
+      "to": "urn:state:page-cancel:pages:home",
+      "commandRef": "urn:transition:page-cancel:pages:open-application:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:pages:open-application:command",
+      "label": "Open the application"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:open-application:command",
+      "graphNodeRef": "urn:transition:page-cancel:pages:open-application:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:open-application:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:open-application:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:team-board-link"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:open-application:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:team-board-link"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:open-application:pointer:2",
+      "stepPreviousRef": "urn:step:page-cancel:pages:open-application:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:open-application:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:open-application",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:open-application:pointer:1",
+        "urn:step:page-cancel:pages:open-application:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:open-application:keyboard:1",
+      "stepMoveKindRef": "operability:previousStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:open-application:keyboard:2",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:open-application:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:open-application:keyboard:3",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:open-application:keyboard:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:open-application:keyboard:4",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:open-application:keyboard:3",
+      "stepLocatorRef": "urn:locator:team-board-link"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:open-application:keyboard:5",
+      "stepPreviousRef": "urn:step:page-cancel:pages:open-application:keyboard:4"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:open-application:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:open-application",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:open-application:keyboard:1",
+        "urn:step:page-cancel:pages:open-application:keyboard:2",
+        "urn:step:page-cancel:pages:open-application:keyboard:3",
+        "urn:step:page-cancel:pages:open-application:keyboard:4",
+        "urn:step:page-cancel:pages:open-application:keyboard:5"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:pages:select-drafts",
+      "label": "Select Drafts",
+      "from": "urn:state:page-cancel:pages:home",
+      "to": "urn:state:page-cancel:pages:drafts-empty",
+      "commandRef": "urn:transition:page-cancel:pages:select-drafts:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:pages:select-drafts:command",
+      "label": "Select Drafts"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:select-drafts:command",
+      "graphNodeRef": "urn:transition:page-cancel:pages:select-drafts:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:select-drafts:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:select-drafts:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:tab-drafts"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:select-drafts:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:tab-drafts"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:select-drafts:pointer:2",
+      "stepPreviousRef": "urn:step:page-cancel:pages:select-drafts:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:select-drafts:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:select-drafts",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:select-drafts:pointer:1",
+        "urn:step:page-cancel:pages:select-drafts:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:select-drafts:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepLocatorRef": "urn:locator:tab-home"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:select-drafts:keyboard:2",
+      "stepMoveKindRef": "operability:nextItem",
+      "stepPreviousRef": "urn:step:page-cancel:pages:select-drafts:keyboard:1",
+      "stepLocatorRef": "urn:locator:tab-drafts"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:select-drafts:keyboard:3",
+      "stepPreviousRef": "urn:step:page-cancel:pages:select-drafts:keyboard:2"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:select-drafts:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:select-drafts",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:select-drafts:keyboard:1",
+        "urn:step:page-cancel:pages:select-drafts:keyboard:2",
+        "urn:step:page-cancel:pages:select-drafts:keyboard:3"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:pages:edit-page",
+      "label": "Edit the page",
+      "from": "urn:state:page-cancel:pages:drafts-empty",
+      "to": "urn:state:page-cancel:pages:editing",
+      "commandRef": "urn:transition:page-cancel:pages:edit-page:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:pages:edit-page:command",
+      "label": "Edit the page"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:edit-page:command",
+      "graphNodeRef": "urn:transition:page-cancel:pages:edit-page:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:edit-page:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:edit-page:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:drafts-edit-page"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:edit-page:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:drafts-edit-page"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:edit-page:pointer:2",
+      "stepPreviousRef": "urn:step:page-cancel:pages:edit-page:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:edit-page:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:edit-page",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:edit-page:pointer:1",
+        "urn:step:page-cancel:pages:edit-page:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:edit-page:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:edit-page:keyboard:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:edit-page:keyboard:1",
+      "stepLocatorRef": "urn:locator:drafts-edit-page"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:edit-page:keyboard:3",
+      "stepPreviousRef": "urn:step:page-cancel:pages:edit-page:keyboard:2"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:edit-page:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:edit-page",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:edit-page:keyboard:1",
+        "urn:step:page-cancel:pages:edit-page:keyboard:2",
+        "urn:step:page-cancel:pages:edit-page:keyboard:3"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:pages:open-add-widget",
+      "label": "Open Add widget",
+      "from": "urn:state:page-cancel:pages:editing",
+      "to": "urn:state:page-cancel:pages:add-widget",
+      "commandRef": "urn:transition:page-cancel:pages:open-add-widget:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:pages:open-add-widget:command",
+      "label": "Open Add widget"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:open-add-widget:command",
+      "graphNodeRef": "urn:transition:page-cancel:pages:open-add-widget:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:open-add-widget:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:open-add-widget:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:drafts-empty-add-widget"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:open-add-widget:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:drafts-empty-add-widget"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:open-add-widget:pointer:2",
+      "stepPreviousRef": "urn:step:page-cancel:pages:open-add-widget:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:open-add-widget:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:open-add-widget",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:open-add-widget:pointer:1",
+        "urn:step:page-cancel:pages:open-add-widget:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:open-add-widget:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:open-add-widget:keyboard:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:open-add-widget:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:open-add-widget:keyboard:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:open-add-widget:keyboard:2",
+      "stepLocatorRef": "urn:locator:drafts-empty-add-widget"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:open-add-widget:keyboard:4",
+      "stepPreviousRef": "urn:step:page-cancel:pages:open-add-widget:keyboard:3"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:open-add-widget:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:open-add-widget",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:open-add-widget:keyboard:1",
+        "urn:step:page-cancel:pages:open-add-widget:keyboard:2",
+        "urn:step:page-cancel:pages:open-add-widget:keyboard:3",
+        "urn:step:page-cancel:pages:open-add-widget:keyboard:4"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:pages:enter-heading",
+      "label": "Enter the heading Never saved",
+      "from": "urn:state:page-cancel:pages:add-widget",
+      "to": "urn:state:page-cancel:pages:heading-entered",
+      "commandRef": "urn:transition:page-cancel:pages:enter-heading:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:pages:enter-heading:command",
+      "label": "Enter the heading Never saved"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:enter-heading:command",
+      "graphNodeRef": "urn:transition:page-cancel:pages:enter-heading:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:enter-heading:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:enter-heading:command",
+      "observationEventRef": "urn:observation-event:text-entry",
+      "locatorRefs": [
+        "urn:locator:add-widget-heading"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:enter-heading:text-entry:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:enter-heading:text-entry:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:enter-heading:text-entry:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:enter-heading:text-entry:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:enter-heading:text-entry:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:enter-heading:text-entry:4",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:enter-heading:text-entry:3",
+      "stepLocatorRef": "urn:locator:add-widget-heading"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:enter-heading:text-entry",
+      "label": "Focus moves to the field",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:enter-heading",
+      "materializationModalityRef": "urn:openuji:input-modality:keyboard-text-entry",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:enter-heading:text-entry:1",
+        "urn:step:page-cancel:pages:enter-heading:text-entry:2",
+        "urn:step:page-cancel:pages:enter-heading:text-entry:3",
+        "urn:step:page-cancel:pages:enter-heading:text-entry:4"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:pages:add-header",
+      "label": "Add the header widget",
+      "from": "urn:state:page-cancel:pages:heading-entered",
+      "to": "urn:state:page-cancel:pages:header-added",
+      "commandRef": "urn:transition:page-cancel:pages:add-header:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:pages:add-header:command",
+      "label": "Add the header widget"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:add-header:command",
+      "graphNodeRef": "urn:transition:page-cancel:pages:add-header:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:add-header:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:add-header:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:add-widget-submit"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:add-header:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:add-widget-submit"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:add-header:pointer:2",
+      "stepPreviousRef": "urn:step:page-cancel:pages:add-header:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:add-header:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:add-header",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:add-header:pointer:1",
+        "urn:step:page-cancel:pages:add-header:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:add-header:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:add-header:keyboard:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:add-header:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:add-header:keyboard:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:add-header:keyboard:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:add-header:keyboard:4",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:add-header:keyboard:3",
+      "stepLocatorRef": "urn:locator:add-widget-submit"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:add-header:keyboard:5",
+      "stepPreviousRef": "urn:step:page-cancel:pages:add-header:keyboard:4"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:add-header:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:add-header",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:add-header:keyboard:1",
+        "urn:step:page-cancel:pages:add-header:keyboard:2",
+        "urn:step:page-cancel:pages:add-header:keyboard:3",
+        "urn:step:page-cancel:pages:add-header:keyboard:4",
+        "urn:step:page-cancel:pages:add-header:keyboard:5"
+      ]
+    },
+    {
+      "@type": "Effect",
+      "@id": "urn:effect:page-cancel:nothing-saved",
+      "label": "No widget is stored"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:pages:cancel",
+      "label": "Cancel the edits",
+      "from": "urn:state:page-cancel:pages:header-added",
+      "to": "urn:state:page-cancel:pages:cancelled",
+      "commandRef": "urn:transition:page-cancel:pages:cancel:command",
+      "effectRef": "urn:effect:page-cancel:nothing-saved"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:pages:cancel:command",
+      "label": "Cancel the edits"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:cancel:command",
+      "graphNodeRef": "urn:transition:page-cancel:pages:cancel:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:cancel:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:cancel:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:drafts-cancel"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:cancel:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:drafts-cancel"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:cancel:pointer:2",
+      "stepPreviousRef": "urn:step:page-cancel:pages:cancel:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:cancel:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:cancel",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:cancel:pointer:1",
+        "urn:step:page-cancel:pages:cancel:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:cancel:keyboard:1",
+      "stepMoveKindRef": "operability:previousStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:cancel:keyboard:2",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:cancel:keyboard:1",
+      "stepLocatorRef": "urn:locator:drafts-cancel"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:cancel:keyboard:3",
+      "stepPreviousRef": "urn:step:page-cancel:pages:cancel:keyboard:2"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:cancel:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:cancel",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:cancel:keyboard:1",
+        "urn:step:page-cancel:pages:cancel:keyboard:2",
+        "urn:step:page-cancel:pages:cancel:keyboard:3"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:pages:edit-page-again",
+      "label": "Edit the page again",
+      "from": "urn:state:page-cancel:pages:cancelled",
+      "to": "urn:state:page-cancel:pages:editing-again",
+      "commandRef": "urn:transition:page-cancel:pages:edit-page-again:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:pages:edit-page-again:command",
+      "label": "Edit the page again"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:edit-page-again:command",
+      "graphNodeRef": "urn:transition:page-cancel:pages:edit-page-again:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:edit-page-again:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:edit-page-again:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:drafts-edit-page"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:edit-page-again:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:drafts-edit-page"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:edit-page-again:pointer:2",
+      "stepPreviousRef": "urn:step:page-cancel:pages:edit-page-again:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:edit-page-again:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:edit-page-again",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:edit-page-again:pointer:1",
+        "urn:step:page-cancel:pages:edit-page-again:pointer:2"
+      ]
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:edit-page-again:keyboard:1",
+      "stepLocatorRef": "urn:locator:drafts-edit-page"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:edit-page-again:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:edit-page-again",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:edit-page-again:keyboard:1"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:pages:open-add-widget-again",
+      "label": "Open Add widget",
+      "from": "urn:state:page-cancel:pages:editing-again",
+      "to": "urn:state:page-cancel:pages:add-widget-again",
+      "commandRef": "urn:transition:page-cancel:pages:open-add-widget-again:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:pages:open-add-widget-again:command",
+      "label": "Open Add widget"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:open-add-widget-again:command",
+      "graphNodeRef": "urn:transition:page-cancel:pages:open-add-widget-again:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:open-add-widget-again:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:open-add-widget-again:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:drafts-empty-add-widget"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:open-add-widget-again:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:drafts-empty-add-widget"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:open-add-widget-again:pointer:2",
+      "stepPreviousRef": "urn:step:page-cancel:pages:open-add-widget-again:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:open-add-widget-again:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:open-add-widget-again",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:open-add-widget-again:pointer:1",
+        "urn:step:page-cancel:pages:open-add-widget-again:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:open-add-widget-again:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:open-add-widget-again:keyboard:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:open-add-widget-again:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:open-add-widget-again:keyboard:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:open-add-widget-again:keyboard:2",
+      "stepLocatorRef": "urn:locator:drafts-empty-add-widget"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:open-add-widget-again:keyboard:4",
+      "stepPreviousRef": "urn:step:page-cancel:pages:open-add-widget-again:keyboard:3"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:open-add-widget-again:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:open-add-widget-again",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:open-add-widget-again:keyboard:1",
+        "urn:step:page-cancel:pages:open-add-widget-again:keyboard:2",
+        "urn:step:page-cancel:pages:open-add-widget-again:keyboard:3",
+        "urn:step:page-cancel:pages:open-add-widget-again:keyboard:4"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:pages:enter-heading-again",
+      "label": "Enter the heading Draft change",
+      "from": "urn:state:page-cancel:pages:add-widget-again",
+      "to": "urn:state:page-cancel:pages:heading-entered-again",
+      "commandRef": "urn:transition:page-cancel:pages:enter-heading-again:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:pages:enter-heading-again:command",
+      "label": "Enter the heading Draft change"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:enter-heading-again:command",
+      "graphNodeRef": "urn:transition:page-cancel:pages:enter-heading-again:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:enter-heading-again:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:enter-heading-again:command",
+      "observationEventRef": "urn:observation-event:text-entry",
+      "locatorRefs": [
+        "urn:locator:add-widget-heading"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:enter-heading-again:text-entry:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:enter-heading-again:text-entry:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:enter-heading-again:text-entry:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:enter-heading-again:text-entry:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:enter-heading-again:text-entry:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:enter-heading-again:text-entry:4",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:enter-heading-again:text-entry:3",
+      "stepLocatorRef": "urn:locator:add-widget-heading"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:enter-heading-again:text-entry",
+      "label": "Focus moves to the field",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:enter-heading-again",
+      "materializationModalityRef": "urn:openuji:input-modality:keyboard-text-entry",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:enter-heading-again:text-entry:1",
+        "urn:step:page-cancel:pages:enter-heading-again:text-entry:2",
+        "urn:step:page-cancel:pages:enter-heading-again:text-entry:3",
+        "urn:step:page-cancel:pages:enter-heading-again:text-entry:4"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:pages:add-header-again",
+      "label": "Add the header widget",
+      "from": "urn:state:page-cancel:pages:heading-entered-again",
+      "to": "urn:state:page-cancel:pages:header-added-again",
+      "commandRef": "urn:transition:page-cancel:pages:add-header-again:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:pages:add-header-again:command",
+      "label": "Add the header widget"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:add-header-again:command",
+      "graphNodeRef": "urn:transition:page-cancel:pages:add-header-again:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:add-header-again:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:add-header-again:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:add-widget-submit"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:add-header-again:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:add-widget-submit"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:add-header-again:pointer:2",
+      "stepPreviousRef": "urn:step:page-cancel:pages:add-header-again:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:add-header-again:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:add-header-again",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:add-header-again:pointer:1",
+        "urn:step:page-cancel:pages:add-header-again:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:add-header-again:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:add-header-again:keyboard:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:add-header-again:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:add-header-again:keyboard:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:add-header-again:keyboard:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:add-header-again:keyboard:4",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:add-header-again:keyboard:3",
+      "stepLocatorRef": "urn:locator:add-widget-submit"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:add-header-again:keyboard:5",
+      "stepPreviousRef": "urn:step:page-cancel:pages:add-header-again:keyboard:4"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:add-header-again:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:add-header-again",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:add-header-again:keyboard:1",
+        "urn:step:page-cancel:pages:add-header-again:keyboard:2",
+        "urn:step:page-cancel:pages:add-header-again:keyboard:3",
+        "urn:step:page-cancel:pages:add-header-again:keyboard:4",
+        "urn:step:page-cancel:pages:add-header-again:keyboard:5"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:pages:leave-for-home",
+      "label": "Select Home with unsaved changes",
+      "from": "urn:state:page-cancel:pages:header-added-again",
+      "to": "urn:state:page-cancel:pages:discard-asked",
+      "commandRef": "urn:transition:page-cancel:pages:leave-for-home:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:pages:leave-for-home:command",
+      "label": "Select Home with unsaved changes"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:leave-for-home:command",
+      "graphNodeRef": "urn:transition:page-cancel:pages:leave-for-home:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:leave-for-home:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:leave-for-home:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:tab-home"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:leave-for-home:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:tab-home"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:leave-for-home:pointer:2",
+      "stepPreviousRef": "urn:step:page-cancel:pages:leave-for-home:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:leave-for-home:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:leave-for-home",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:leave-for-home:pointer:1",
+        "urn:step:page-cancel:pages:leave-for-home:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:leave-for-home:keyboard:1",
+      "stepMoveKindRef": "operability:previousStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:leave-for-home:keyboard:2",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:leave-for-home:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:leave-for-home:keyboard:3",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:leave-for-home:keyboard:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:leave-for-home:keyboard:4",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:leave-for-home:keyboard:3"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:leave-for-home:keyboard:5",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-cancel:pages:leave-for-home:keyboard:4",
+      "stepLocatorRef": "urn:locator:tab-drafts"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:leave-for-home:keyboard:6",
+      "stepMoveKindRef": "operability:firstItem",
+      "stepPreviousRef": "urn:step:page-cancel:pages:leave-for-home:keyboard:5",
+      "stepLocatorRef": "urn:locator:tab-home"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:leave-for-home:keyboard:7",
+      "stepPreviousRef": "urn:step:page-cancel:pages:leave-for-home:keyboard:6"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:leave-for-home:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:leave-for-home",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:leave-for-home:keyboard:1",
+        "urn:step:page-cancel:pages:leave-for-home:keyboard:2",
+        "urn:step:page-cancel:pages:leave-for-home:keyboard:3",
+        "urn:step:page-cancel:pages:leave-for-home:keyboard:4",
+        "urn:step:page-cancel:pages:leave-for-home:keyboard:5",
+        "urn:step:page-cancel:pages:leave-for-home:keyboard:6",
+        "urn:step:page-cancel:pages:leave-for-home:keyboard:7"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:pages:keep-editing",
+      "label": "Keep editing",
+      "from": "urn:state:page-cancel:pages:discard-asked",
+      "to": "urn:state:page-cancel:pages:still-editing",
+      "commandRef": "urn:transition:page-cancel:pages:keep-editing:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:pages:keep-editing:command",
+      "label": "Keep editing"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:keep-editing:command",
+      "graphNodeRef": "urn:transition:page-cancel:pages:keep-editing:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:keep-editing:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:keep-editing:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:discard-unsaved-changes-keep"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:keep-editing:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:discard-unsaved-changes-keep"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:keep-editing:pointer:2",
+      "stepPreviousRef": "urn:step:page-cancel:pages:keep-editing:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:keep-editing:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:keep-editing",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:keep-editing:pointer:1",
+        "urn:step:page-cancel:pages:keep-editing:pointer:2"
+      ]
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:keep-editing:keyboard:1",
+      "stepLocatorRef": "urn:locator:discard-unsaved-changes-keep"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:keep-editing:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:keep-editing",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:keep-editing:keyboard:1"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:pages:leave-for-home-again",
+      "label": "Select Home again",
+      "from": "urn:state:page-cancel:pages:still-editing",
+      "to": "urn:state:page-cancel:pages:discard-asked-again",
+      "commandRef": "urn:transition:page-cancel:pages:leave-for-home-again:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:pages:leave-for-home-again:command",
+      "label": "Select Home again"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:leave-for-home-again:command",
+      "graphNodeRef": "urn:transition:page-cancel:pages:leave-for-home-again:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:leave-for-home-again:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:leave-for-home-again:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:tab-home"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:leave-for-home-again:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:tab-home"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:leave-for-home-again:pointer:2",
+      "stepPreviousRef": "urn:step:page-cancel:pages:leave-for-home-again:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:leave-for-home-again:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:leave-for-home-again",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:leave-for-home-again:pointer:1",
+        "urn:step:page-cancel:pages:leave-for-home-again:pointer:2"
+      ]
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:leave-for-home-again:keyboard:1",
+      "stepLocatorRef": "urn:locator:tab-home"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:leave-for-home-again:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:leave-for-home-again",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:leave-for-home-again:keyboard:1"
+      ]
+    },
+    {
+      "@type": "Effect",
+      "@id": "urn:effect:page-cancel:nothing-saved-after-discard",
+      "label": "Still no widget is stored"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-cancel:pages:discard",
+      "label": "Discard the changes",
+      "from": "urn:state:page-cancel:pages:discard-asked-again",
+      "to": "urn:state:page-cancel:pages:home-after-discard",
+      "commandRef": "urn:transition:page-cancel:pages:discard:command",
+      "effectRef": "urn:effect:page-cancel:nothing-saved-after-discard"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-cancel:pages:discard:command",
+      "label": "Discard the changes"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-cancel:pages:discard:command",
+      "graphNodeRef": "urn:transition:page-cancel:pages:discard:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-cancel:pages:discard:command",
+      "observeSurfaceRef": "urn:surface:page-cancel:pages:discard:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:discard-unsaved-changes-discard"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:discard:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:discard-unsaved-changes-discard"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:discard:pointer:2",
+      "stepPreviousRef": "urn:step:page-cancel:pages:discard:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:discard:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:discard",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:discard:pointer:1",
+        "urn:step:page-cancel:pages:discard:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-cancel:pages:discard:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepLocatorRef": "urn:locator:discard-unsaved-changes-discard"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-cancel:pages:discard:keyboard:2",
+      "stepPreviousRef": "urn:step:page-cancel:pages:discard:keyboard:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-cancel:pages:discard:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-cancel:pages:discard",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-cancel:pages:discard:keyboard:1",
+        "urn:step:page-cancel:pages:discard:keyboard:2"
+      ]
+    },
+    {
+      "@type": "Touchpoint",
+      "@id": "urn:touchpoint:tables",
+      "label": "Nextcloud Tables (Application owner)",
+      "journeyRefs": [
+        "urn:journey:page-cancel:login",
+        "urn:journey:page-cancel:pages"
+      ]
+    },
+    {
+      "@type": "Persona",
+      "@id": "urn:user:owner",
+      "label": "Application owner",
+      "touchpointRefs": [
+        "urn:touchpoint:tables"
+      ]
+    },
+    {
+      "@type": "JourneyEntryIndex",
+      "@id": "urn:document:page-cancel:entries",
+      "entryRefs": [
+        "urn:entry:page-cancel:login",
+        "urn:entry:page-cancel:pages"
+      ]
+    }
+  ]
+}

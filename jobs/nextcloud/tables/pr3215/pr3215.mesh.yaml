@@ -1,0 +1,756 @@
+kind: suite
+report:
+  excludedPhaseIds:
+    - urn:phase:setup
+  interpreters:
+    - use: "@openuji/journey-report-axe"
+    - use: "@openuji/journey-report-operability"
+label: Tables grid pages
+outputDir: out
+target:
+  service: tables-install
+  output: identity
+model:
+  use: "@openuji/journey-model-ujg/plugin"
+services:
+  tables-source:
+    use: "@openuji/journey-service-git/plugin"
+    options:
+      repository: https://github.com/nextcloud/tables.git
+      pullRequest: 3215
+      directory: .tmp/tables-source
+  tables-build:
+    use: "@openuji/journey-driver-nextcloud/app-build/service"
+    inputs:
+      source:
+        service: tables-source
+        output: source
+    options:
+      directory: .runtime/builds
+      image: journey-mesh/tables
+      nodeImage: node:24.11.1-bookworm-slim@sha256:48abc13a19400ca3985071e287bd405a1d99306770eb81d61202fb6b65cf0b57
+      composerImage: composer:2.8.12@sha256:5248900ab8b5f7f880c2d62180e40960cd87f60149ec9a1abfd62ac72a02577c
+      # php-scoper writes lib/Vendor (OCA\Tables\Vendor\…) in composer post-install-cmd.
+      composerScripts: true
+      # The locked PhpSpreadsheet needs ext-gd; the Nextcloud runtime image provides it.
+      composerIgnorePlatformReqs:
+        - ext-gd
+  stack:
+    use: "@openuji/journey-driver-nextcloud/stack/service"
+    options:
+      project: journey-tables-pages
+      composeFiles:
+        - deployment/compose.yaml
+      directory: .runtime/stack
+      image: nextcloud:35.0.2-apache@sha256:786c102155d2717ba0f53a62b3fdd7a1354edc48e800b94dbe32294d9a5752a2
+      expectedVersion: 35.0.2
+      systemConfig:
+        auth.bruteforce.protection.enabled: false
+      environment:
+        NEXTCLOUD_TABLES_PORT: ${NEXTCLOUD_TABLES_PORT:-18446}
+      services:
+        nextcloud:
+          baseURL: http://host.docker.internal:${NEXTCLOUD_TABLES_PORT:-18446}
+          username: admin
+          password: JourneyAdmin2026!
+  tables-install:
+    use: "@openuji/journey-driver-nextcloud/app-install/service"
+    inputs:
+      app:
+        service: tables-build
+        output: app
+      stack:
+        service: stack
+        output: stack
+    options:
+      directory: .runtime/install
+      services:
+        - nextcloud
+      enable: true
+adapters:
+  web:
+    use: "@openuji/journey-adapter-playwright/plugin"
+    options:
+      browser: chromium
+      headless: ${HEADLESS:-true}
+      contextOptions:
+        # The grid only offers move and resize at 12 columns; the PR's own e2e uses this viewport.
+        viewport:
+          width: 1600
+          height: 1000
+        locale: en-US
+    driver:
+      use: "@openuji/journey-driver-nextcloud/web/plugin"
+      options:
+        touchpoints:
+          urn:touchpoint:tables:
+            baseURL: &base http://host.docker.internal:${NEXTCLOUD_TABLES_PORT:-18446}
+          urn:touchpoint:tables-viewer:
+            baseURL: *base
+        users:
+          urn:user:owner:
+            username: journey-owner
+            password: JourneyFixture2026!
+          urn:user:viewer:
+            username: journey-viewer
+            password: JourneyFixture2026!
+        entries:
+          login: /login
+          tables: /apps/tables
+        transitionValues:
+          urn:transition:page-add:login:enter-username: &username
+            source: user.username
+          urn:transition:page-add:login:enter-password: &password
+            source: user.password
+          urn:transition:page-add:pages:enter-title: Overview
+          urn:transition:page-add:pages:enter-slug: page_7
+          urn:transition:page-add:pages:append-slug: _overview
+          urn:transition:page-add:pages:enter-description: Weekly status
+          urn:transition:page-arrange:login:enter-username: *username
+          urn:transition:page-arrange:login:enter-password: *password
+          urn:transition:page-arrange:pages:enter-heading: Welcome
+          urn:transition:page-arrange:pages:filter-widget-type: Table or view
+          # Archive (outside the application) contains an "a" too; only Tasks may be offered.
+          urn:transition:page-arrange:pages:filter-source: a
+          urn:transition:page-cancel:login:enter-username: *username
+          urn:transition:page-cancel:login:enter-password: *password
+          urn:transition:page-cancel:pages:enter-heading: Never saved
+          urn:transition:page-cancel:pages:enter-heading-again: Draft change
+          urn:transition:page-manage:login:enter-username: *username
+          urn:transition:page-manage:login:enter-password: *password
+          # Edit page details opens with the title selected; typing replaces it.
+          urn:transition:page-manage:pages:enter-title: Drafts archive
+          urn:transition:page-viewer:login:enter-username: *username
+          urn:transition:page-viewer:login:enter-password: *password
+          urn:transition:page-viewer:seed:filter-widget-type: Table or view
+          urn:transition:page-viewer:seed:enter-widget-title: Shared tasks
+          urn:transition:page-viewer:seed:filter-source: Tasks
+          urn:transition:page-viewer:viewer-login:enter-username: *username
+          urn:transition:page-viewer:viewer-login:enter-password: *password
+          urn:transition:page-missing-source:login:enter-username: *username
+          urn:transition:page-missing-source:login:enter-password: *password
+          urn:transition:page-missing-source:seed:filter-widget-type: Table or view
+          urn:transition:page-missing-source:seed:enter-widget-title: Gone soon
+          urn:transition:page-missing-source:seed:filter-source: Tasks
+    observers:
+      - use: "@openuji/journey-observer-operability/plugin"
+        options:
+          id: input-steps
+      - use: "@openuji/journey-observer-axe/plugin"
+        options:
+          reportId: tables-grid-pages.axe
+          strict: false
+          sourceScreenshots:
+            states: true
+            fullPage: true
+          excludedPhaseIds:
+            - urn:phase:setup
+profiles:
+  default:
+    use: "@openuji/journey-profiles/plugin"
+    options:
+      preset: default
+  keyboard-only:
+    use: "@openuji/journey-profiles/plugin"
+    options:
+      preset: keyboard-only
+tests:
+  page-add:
+    timeoutMs: 600000
+    services:
+      - tables-install
+    journeys:
+      - id: login
+        source: ujg/page-add.ujg.jsonld
+        select: urn:journey:page-add:login
+        adapter: web
+      - id: pages
+        source: ujg/page-add.ujg.jsonld
+        select: urn:journey:page-add:pages
+        adapter: web
+    profiles:
+      - id: default
+        journeys: { login: default, pages: default }
+      - id: keyboard-only
+        journeys: { login: keyboard-only, pages: keyboard-only }
+    environment:
+      use: "@openuji/journey-environment-http/plugin"
+      options:
+        clients: &clients
+          provisioner:
+            baseURL: *base
+            headers: &ocs
+              OCS-APIRequest: "true"
+              Accept: application/json
+            auth:
+              username: admin
+              password: JourneyAdmin2026!
+          owner:
+            baseURL: *base
+            headers: *ocs
+            auth:
+              username: journey-owner
+              password: JourneyFixture2026!
+        setup: &application
+          - id: create-owner
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            json:
+              userid: journey-owner
+              password: JourneyFixture2026!
+              displayName: Application Owner
+            cleanup:
+              - id: delete-owner
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-owner
+                status: [200, 404]
+          - id: create-table
+            client: owner
+            method: POST
+            path: /index.php/apps/tables/api/1/tables
+            json:
+              title: Tasks
+            capture:
+              table: /id
+            cleanup:
+              - id: delete-table
+                client: owner
+                method: DELETE
+                path: /index.php/apps/tables/api/1/tables/{{table}}
+                status: [200, 404]
+          - id: create-column
+            client: owner
+            method: POST
+            path: /index.php/apps/tables/api/1/tables/{{table}}/columns
+            json:
+              title: Title
+              type: text
+              subtype: line
+              mandatory: false
+            capture:
+              column: /id
+          - id: create-row
+            client: owner
+            method: POST
+            path: /index.php/apps/tables/api/1/tables/{{table}}/rows
+            json:
+              data: '{"{{column}}": "Write the report"}'
+          - id: create-application
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/tables/api/2/contexts
+            json:
+              name: Team board
+              iconName: equalizer
+              description: ""
+              nodes:
+                - id: "{{table}}"
+                  type: 0
+                  permissions: 1
+            capture:
+              context: /ocs/data/id
+            cleanup:
+              - id: delete-application
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/tables/api/2/contexts/{{context}}
+                status: [200, 404]
+        effects:
+          urn:effect:page-add:page-created:
+            - id: read-page
+              client: owner
+              path: /ocs/v2.php/apps/tables/api/2/contexts/{{context}}/pages/page_7_overview
+              poll: {}
+              assertions:
+                - pointer: /ocs/data/title
+                  equals: Overview
+                - pointer: /ocs/data/slug
+                  equals: page_7_overview
+                - pointer: /ocs/data/description
+                  equals: Weekly status
+                - pointer: /ocs/data/icon
+                  equals: account
+  page-arrange:
+    timeoutMs: 600000
+    services:
+      - tables-install
+    journeys:
+      - id: login
+        source: ujg/page-arrange.ujg.jsonld
+        select: urn:journey:page-arrange:login
+        adapter: web
+      - id: pages
+        source: ujg/page-arrange.ujg.jsonld
+        select: urn:journey:page-arrange:pages
+        adapter: web
+    profiles:
+      - id: default
+        journeys: { login: default, pages: default }
+      - id: keyboard-only
+        journeys: { login: keyboard-only, pages: keyboard-only }
+    environment:
+      use: "@openuji/journey-environment-http/plugin"
+      options:
+        clients: *clients
+        setup:
+          - id: create-owner
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            json:
+              userid: journey-owner
+              password: JourneyFixture2026!
+              displayName: Application Owner
+            cleanup:
+              - id: delete-owner
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-owner
+                status: [200, 404]
+          - id: create-table
+            client: owner
+            method: POST
+            path: /index.php/apps/tables/api/1/tables
+            json:
+              title: Tasks
+            capture:
+              table: /id
+            cleanup:
+              - id: delete-table
+                client: owner
+                method: DELETE
+                path: /index.php/apps/tables/api/1/tables/{{table}}
+                status: [200, 404]
+          - id: create-column
+            client: owner
+            method: POST
+            path: /index.php/apps/tables/api/1/tables/{{table}}/columns
+            json: { title: Title, type: text, subtype: line, mandatory: false }
+            capture:
+              column: /id
+          - id: create-row
+            client: owner
+            method: POST
+            path: /index.php/apps/tables/api/1/tables/{{table}}/rows
+            json:
+              data: '{"{{column}}": "Write the report"}'
+          - id: create-archive
+            client: owner
+            method: POST
+            path: /index.php/apps/tables/api/1/tables
+            json:
+              title: Archive
+            capture:
+              archive: /id
+            cleanup:
+              - id: delete-archive
+                client: owner
+                method: DELETE
+                path: /index.php/apps/tables/api/1/tables/{{archive}}
+                status: [200, 404]
+          - id: create-application
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/tables/api/2/contexts
+            json:
+              name: Team board
+              iconName: equalizer
+              description: ""
+              nodes:
+                - { id: "{{table}}", type: 0, permissions: 1 }
+            capture:
+              context: /ocs/data/id
+            cleanup:
+              - id: delete-application
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/tables/api/2/contexts/{{context}}
+                status: [200, 404]
+          - id: create-drafts
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/tables/api/2/contexts/{{context}}/pages
+            json: { title: Drafts, slug: drafts }
+          - id: create-backlog
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/tables/api/2/contexts/{{context}}/pages
+            json: { title: Backlog, slug: backlog }
+        effects:
+          urn:effect:page-arrange:widgets-saved:
+            - id: read-drafts
+              client: owner
+              path: /ocs/v2.php/apps/tables/api/2/contexts/{{context}}/pages/drafts
+              poll: {}
+              assertions:
+                - pointer: /ocs/data/widgets
+                  length: 2
+                - pointer: /ocs/data/widgets
+                  includes: { type: header, settings: { heading: Welcome } }
+                - pointer: /ocs/data/widgets
+                  includes: { type: data, gridX: 1, gridWidth: 11 }
+  page-cancel:
+    timeoutMs: 600000
+    services:
+      - tables-install
+    journeys:
+      - id: login
+        source: ujg/page-cancel.ujg.jsonld
+        select: urn:journey:page-cancel:login
+        adapter: web
+      - id: pages
+        source: ujg/page-cancel.ujg.jsonld
+        select: urn:journey:page-cancel:pages
+        adapter: web
+    profiles:
+      - id: default
+        journeys: { login: default, pages: default }
+      - id: keyboard-only
+        journeys: { login: keyboard-only, pages: keyboard-only }
+    environment:
+      use: "@openuji/journey-environment-http/plugin"
+      options:
+        clients: *clients
+        setup: &drafts
+          - id: create-owner
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            json:
+              userid: journey-owner
+              password: JourneyFixture2026!
+              displayName: Application Owner
+            cleanup:
+              - id: delete-owner
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-owner
+                status: [200, 404]
+          - id: create-table
+            client: owner
+            method: POST
+            path: /index.php/apps/tables/api/1/tables
+            json:
+              title: Tasks
+            capture:
+              table: /id
+            cleanup:
+              - id: delete-table
+                client: owner
+                method: DELETE
+                path: /index.php/apps/tables/api/1/tables/{{table}}
+                status: [200, 404]
+          - id: create-column
+            client: owner
+            method: POST
+            path: /index.php/apps/tables/api/1/tables/{{table}}/columns
+            json: { title: Title, type: text, subtype: line, mandatory: false }
+            capture:
+              column: /id
+          - id: create-row
+            client: owner
+            method: POST
+            path: /index.php/apps/tables/api/1/tables/{{table}}/rows
+            json:
+              data: '{"{{column}}": "Write the report"}'
+          - id: create-application
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/tables/api/2/contexts
+            json:
+              name: Team board
+              iconName: equalizer
+              description: ""
+              nodes:
+                - { id: "{{table}}", type: 0, permissions: 1 }
+            capture:
+              context: /ocs/data/id
+            cleanup:
+              - id: delete-application
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/tables/api/2/contexts/{{context}}
+                status: [200, 404]
+          - id: create-drafts
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/tables/api/2/contexts/{{context}}/pages
+            json: { title: Drafts, slug: drafts }
+        effects:
+          urn:effect:page-cancel:nothing-saved: &no-widgets
+            - id: read-drafts
+              client: owner
+              path: /ocs/v2.php/apps/tables/api/2/contexts/{{context}}/pages/drafts
+              assertions:
+                - pointer: /ocs/data/widgets
+                  length: 0
+          urn:effect:page-cancel:nothing-saved-after-discard: *no-widgets
+  page-manage:
+    timeoutMs: 600000
+    services:
+      - tables-install
+    journeys:
+      - id: login
+        source: ujg/page-manage.ujg.jsonld
+        select: urn:journey:page-manage:login
+        adapter: web
+      - id: pages
+        source: ujg/page-manage.ujg.jsonld
+        select: urn:journey:page-manage:pages
+        adapter: web
+    profiles:
+      - id: default
+        journeys: { login: default, pages: default }
+      - id: keyboard-only
+        journeys: { login: keyboard-only, pages: keyboard-only }
+    environment:
+      use: "@openuji/journey-environment-http/plugin"
+      options:
+        clients: *clients
+        setup: *drafts
+        effects:
+          urn:effect:page-manage:renamed:
+            - id: read-drafts
+              client: owner
+              path: /ocs/v2.php/apps/tables/api/2/contexts/{{context}}/pages/drafts
+              poll: {}
+              assertions:
+                - pointer: /ocs/data/title
+                  equals: Drafts archive
+                - pointer: /ocs/data/slug
+                  equals: drafts
+          urn:effect:page-manage:deleted:
+            - id: read-drafts
+              client: owner
+              path: /ocs/v2.php/apps/tables/api/2/contexts/{{context}}/pages/drafts
+              status: 404
+            - id: read-table
+              client: owner
+              path: /index.php/apps/tables/api/1/tables/{{table}}
+  page-viewer:
+    timeoutMs: 900000
+    services:
+      - tables-install
+    journeys:
+      - id: login
+        source: ujg/page-viewer.ujg.jsonld
+        select: urn:journey:page-viewer:login
+        adapter: web
+      - id: seed
+        source: ujg/page-viewer.ujg.jsonld
+        select: urn:journey:page-viewer:seed
+        adapter: web
+      - id: viewer-login
+        source: ujg/page-viewer.ujg.jsonld
+        select: urn:journey:page-viewer:viewer-login
+        adapter: web
+      - id: pages
+        source: ujg/page-viewer.ujg.jsonld
+        select: urn:journey:page-viewer:pages
+        adapter: web
+    profiles:
+      # Seeding is setup: it always uses the default profile, so only the viewer's journey varies.
+      - id: default
+        journeys: { login: default, seed: default, viewer-login: default, pages: default }
+      - id: keyboard-only
+        journeys: { login: default, seed: default, viewer-login: keyboard-only, pages: keyboard-only }
+    environment:
+      use: "@openuji/journey-environment-http/plugin"
+      options:
+        clients: *clients
+        setup:
+          - id: create-owner
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            json:
+              userid: journey-owner
+              password: JourneyFixture2026!
+              displayName: Application Owner
+            cleanup:
+              - id: delete-owner
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-owner
+                status: [200, 404]
+          - id: create-viewer
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            json:
+              userid: journey-viewer
+              password: JourneyFixture2026!
+              displayName: Page Viewer
+            cleanup:
+              - id: delete-viewer
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-viewer
+                status: [200, 404]
+          - id: create-table
+            client: owner
+            method: POST
+            path: /index.php/apps/tables/api/1/tables
+            json:
+              title: Tasks
+            capture:
+              table: /id
+            cleanup:
+              - id: delete-table
+                client: owner
+                method: DELETE
+                path: /index.php/apps/tables/api/1/tables/{{table}}
+                status: [200, 404]
+          - id: create-column
+            client: owner
+            method: POST
+            path: /index.php/apps/tables/api/1/tables/{{table}}/columns
+            json: { title: Title, type: text, subtype: line, mandatory: false }
+            capture:
+              column: /id
+          - id: create-row
+            client: owner
+            method: POST
+            path: /index.php/apps/tables/api/1/tables/{{table}}/rows
+            json:
+              data: '{"{{column}}": "Write the report"}'
+          - id: create-application
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/tables/api/2/contexts
+            json:
+              name: Team board
+              iconName: equalizer
+              description: ""
+              nodes:
+                - { id: "{{table}}", type: 0, permissions: 1 }
+            capture:
+              context: /ocs/data/id
+            cleanup:
+              - id: delete-application
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/tables/api/2/contexts/{{context}}
+                status: [200, 404]
+          - id: create-shared-overview
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/tables/api/2/contexts/{{context}}/pages
+            json: { title: Shared overview, slug: shared_overview }
+          - id: share-read-only
+            client: owner
+            method: POST
+            path: /index.php/apps/tables/api/1/shares
+            json:
+              nodeId: "{{context}}"
+              nodeType: context
+              receiver: journey-viewer
+              receiverType: user
+              permissionRead: true
+              permissionCreate: false
+              permissionUpdate: false
+              permissionDelete: false
+              permissionManage: false
+              displayMode: 2
+  page-missing-source:
+    timeoutMs: 900000
+    services:
+      - tables-install
+    journeys:
+      - id: login
+        source: ujg/page-missing-source.ujg.jsonld
+        select: urn:journey:page-missing-source:login
+        adapter: web
+      - id: seed
+        source: ujg/page-missing-source.ujg.jsonld
+        select: urn:journey:page-missing-source:seed
+        adapter: web
+      - id: pages
+        source: ujg/page-missing-source.ujg.jsonld
+        select: urn:journey:page-missing-source:pages
+        adapter: web
+    profiles:
+      - id: default
+        journeys: { login: default, seed: default, pages: default }
+      - id: keyboard-only
+        journeys: { login: keyboard-only, seed: default, pages: keyboard-only }
+    environment:
+      use: "@openuji/journey-environment-http/plugin"
+      options:
+        clients: *clients
+        setup:
+          - id: create-owner
+            client: provisioner
+            method: POST
+            path: /ocs/v2.php/cloud/users
+            json:
+              userid: journey-owner
+              password: JourneyFixture2026!
+              displayName: Application Owner
+            cleanup:
+              - id: delete-owner
+                client: provisioner
+                method: DELETE
+                path: /ocs/v2.php/cloud/users/journey-owner
+                status: [200, 404]
+          - id: create-table
+            client: owner
+            method: POST
+            path: /index.php/apps/tables/api/1/tables
+            json:
+              title: Tasks
+            capture:
+              table: /id
+            cleanup:
+              - id: delete-table
+                client: owner
+                method: DELETE
+                path: /index.php/apps/tables/api/1/tables/{{table}}
+                status: [200, 404]
+          - id: create-column
+            client: owner
+            method: POST
+            path: /index.php/apps/tables/api/1/tables/{{table}}/columns
+            json: { title: Title, type: text, subtype: line, mandatory: false }
+            capture:
+              column: /id
+          - id: create-row
+            client: owner
+            method: POST
+            path: /index.php/apps/tables/api/1/tables/{{table}}/rows
+            json:
+              data: '{"{{column}}": "Write the report"}'
+          - id: create-application
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/tables/api/2/contexts
+            json:
+              name: Team board
+              iconName: equalizer
+              description: ""
+              nodes:
+                - { id: "{{table}}", type: 0, permissions: 1 }
+            capture:
+              context: /ocs/data/id
+            cleanup:
+              - id: delete-application
+                client: owner
+                method: DELETE
+                path: /ocs/v2.php/apps/tables/api/2/contexts/{{context}}
+                status: [200, 404]
+          - id: create-board
+            client: owner
+            method: POST
+            path: /ocs/v2.php/apps/tables/api/2/contexts/{{context}}/pages
+            json: { title: Board, slug: board }
+        effects:
+          urn:effect:page-missing-source:source-cleared:
+            - id: read-board
+              client: owner
+              path: /ocs/v2.php/apps/tables/api/2/contexts/{{context}}/pages/board
+              poll: {}
+              assertions:
+                - pointer: /ocs/data/widgets
+                  includes: { title: Gone soon, source: null }

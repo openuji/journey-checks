@@ -1,13 +1,14 @@
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/graph.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/surface.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/phase.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/l10n.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/observability.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/entry-binding.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/effect.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/graph.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/phase.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/l10n.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/observability.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/operability.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/entry-binding.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/effect.context.jsonld"
   ],
   "@type": "UJGDocument",
   "@id": "urn:document:collective-sharing-restricted",
@@ -38,10 +39,6 @@
       "order": 1
     },
     {
-      "@type": "InputModality",
-      "@id": "observability:pointer"
-    },
-    {
       "@type": "InputModalityProfile",
       "@id": "urn:profile:pointer",
       "inputModalityRefs": [
@@ -49,25 +46,22 @@
       ]
     },
     {
-      "@type": "InputModality",
-      "@id": "observability:keyboard-enter"
-    },
-    {
       "@type": "InputModalityProfile",
       "@id": "urn:profile:keyboard-enter",
       "inputModalityRefs": [
-        "observability:keyboard-enter"
+        "observability:keyboard"
       ]
     },
     {
       "@type": "InputModality",
-      "@id": "observability:keyboard-text-entry"
+      "@id": "urn:openuji:input-modality:keyboard-text-entry",
+      "label": "Keyboard text entry"
     },
     {
       "@type": "InputModalityProfile",
       "@id": "urn:profile:keyboard-text-entry",
       "inputModalityRefs": [
-        "observability:keyboard-text-entry"
+        "urn:openuji:input-modality:keyboard-text-entry"
       ]
     },
     {
@@ -201,7 +195,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:collective-sharing-restricted:4",
       "extensions": {
-        "urn:openuji:playwright:css": "input[type=\"password\"]"
+        "urn:openuji:playwright:css": {
+          "selector": "input[type=\"password\"]"
+        }
       }
     },
     {
@@ -335,7 +331,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:collective-sharing-restricted:10",
       "extensions": {
-        "urn:openuji:playwright:css": "input[type=\"password\"]"
+        "urn:openuji:playwright:css": {
+          "selector": "input[type=\"password\"]"
+        }
       }
     },
     {
@@ -361,7 +359,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:collective-sharing-restricted:12",
       "extensions": {
-        "urn:openuji:playwright:css": "#content"
+        "urn:openuji:playwright:css": {
+          "selector": "#content"
+        }
       }
     },
     {
@@ -490,7 +490,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:collective-sharing-restricted:16",
       "extensions": {
-        "urn:openuji:playwright:css": "#app-navigation-vue"
+        "urn:openuji:playwright:css": {
+          "selector": "#app-navigation-vue"
+        }
       }
     },
     {
@@ -517,7 +519,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:collective-sharing-restricted:18",
       "extensions": {
-        "urn:openuji:playwright:css": ".collective-selector-list"
+        "urn:openuji:playwright:css": {
+          "selector": ".collective-selector-list"
+        }
       }
     },
     {
@@ -551,7 +555,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:collective-sharing-restricted:20",
       "extensions": {
-        "urn:openuji:playwright:css": ".collective-selector-trigger"
+        "urn:openuji:playwright:css": {
+          "selector": ".collective-selector-trigger"
+        }
       }
     },
     {
@@ -577,7 +583,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:collective-sharing-restricted:22",
       "extensions": {
-        "urn:openuji:playwright:css": "[data-cy-collectives=\"reader\"] .ProseMirror:visible, [data-cy-collectives=\"editor\"] .ProseMirror:visible"
+        "urn:openuji:playwright:css": {
+          "selector": "[data-cy-collectives=\"reader\"] .ProseMirror:visible, [data-cy-collectives=\"editor\"] .ProseMirror:visible"
+        }
       }
     },
     {
@@ -611,7 +619,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:collective-sharing-restricted:24",
       "extensions": {
-        "urn:openuji:playwright:css": ".collective-selector-list a:has-text(\"Journey collective-sharing-restricted\")"
+        "urn:openuji:playwright:css": {
+          "selector": ".collective-selector-list a:has-text(\"Journey collective-sharing-restricted\")"
+        }
       }
     },
     {
@@ -637,7 +647,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:collective-sharing-restricted:26",
       "extensions": {
-        "urn:openuji:playwright:css": ".app-sidebar"
+        "urn:openuji:playwright:css": {
+          "selector": ".app-sidebar"
+        }
       }
     },
     {
@@ -777,7 +789,9 @@
       "@type": "CustomLocator",
       "@id": "urn:locator:collective-sharing-restricted:32",
       "extensions": {
-        "urn:openuji:playwright:css": ".app-sidebar"
+        "urn:openuji:playwright:css": {
+          "selector": ".app-sidebar"
+        }
       }
     },
     {
@@ -804,6 +818,402 @@
       "label": "Alice Journey",
       "touchpointRefs": [
         "urn:touchpoint:collectives"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:login:transition:2:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:collective-sharing-restricted:14"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:login:transition:2:pointer:2",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:login:transition:2:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:urn:journey:collective-sharing-restricted:login:transition:2:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:journey:collective-sharing-restricted:login:transition:2",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:urn:journey:collective-sharing-restricted:login:transition:2:pointer:1",
+        "urn:step:urn:journey:collective-sharing-restricted:login:transition:2:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:collective-sharing-restricted:20"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:pointer:2",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:urn:journey:collective-sharing-restricted:sharing:transition:0:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:journey:collective-sharing-restricted:sharing:transition:0",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:pointer:1",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:1:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:collective-sharing-restricted:24"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:1:pointer:2",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:1:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:urn:journey:collective-sharing-restricted:sharing:transition:1:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:journey:collective-sharing-restricted:sharing:transition:1",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:1:pointer:1",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:1:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:collective-sharing-restricted:28"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:pointer:2",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:urn:journey:collective-sharing-restricted:sharing:transition:2:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:journey:collective-sharing-restricted:sharing:transition:2",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:pointer:1",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:3:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:collective-sharing-restricted:32"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:3:pointer:2",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:3:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:urn:journey:collective-sharing-restricted:sharing:transition:3:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:journey:collective-sharing-restricted:sharing:transition:3",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:3:pointer:1",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:3:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:login:transition:1:text-entry:1",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepLocatorRef": "urn:locator:collective-sharing-restricted:10"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:urn:journey:collective-sharing-restricted:login:transition:1:text-entry",
+      "label": "Focus moves to the field",
+      "materializationTransitionRef": "urn:journey:collective-sharing-restricted:login:transition:1",
+      "materializationModalityRef": "urn:openuji:input-modality:keyboard-text-entry",
+      "materializationStepRefs": [
+        "urn:step:urn:journey:collective-sharing-restricted:login:transition:1:text-entry:1"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:login:transition:2:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:login:transition:2:keyboard:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:login:transition:2:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:login:transition:2:keyboard:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:login:transition:2:keyboard:2",
+      "stepLocatorRef": "urn:locator:collective-sharing-restricted:14"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:login:transition:2:keyboard:4",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:login:transition:2:keyboard:3"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:urn:journey:collective-sharing-restricted:login:transition:2:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:journey:collective-sharing-restricted:login:transition:2",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:urn:journey:collective-sharing-restricted:login:transition:2:keyboard:1",
+        "urn:step:urn:journey:collective-sharing-restricted:login:transition:2:keyboard:2",
+        "urn:step:urn:journey:collective-sharing-restricted:login:transition:2:keyboard:3",
+        "urn:step:urn:journey:collective-sharing-restricted:login:transition:2:keyboard:4"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:1",
+      "stepMoveKindRef": "operability:previousStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:2",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:3",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:4",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:3"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:5",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:4"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:6",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:5"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:7",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:6"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:8",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:7"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:9",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:8"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:10",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:9"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:11",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:10"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:12",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:11"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:13",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:12"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:14",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:13"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:15",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:14"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:16",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:15"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:17",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:16",
+      "stepLocatorRef": "urn:locator:collective-sharing-restricted:20"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:18",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:17"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:journey:collective-sharing-restricted:sharing:transition:0",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:1",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:2",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:3",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:4",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:5",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:6",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:7",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:8",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:9",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:10",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:11",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:12",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:13",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:14",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:15",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:16",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:17",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:0:keyboard:18"
+      ]
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:1:keyboard:1",
+      "stepLocatorRef": "urn:locator:collective-sharing-restricted:24"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:urn:journey:collective-sharing-restricted:sharing:transition:1:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:journey:collective-sharing-restricted:sharing:transition:1",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:1:keyboard:1"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:4",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:3"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:5",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:4"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:6",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:5"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:7",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:6"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:8",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:7"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:9",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:8"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:10",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:9",
+      "stepLocatorRef": "urn:locator:collective-sharing-restricted:28"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:11",
+      "stepPreviousRef": "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:10"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:journey:collective-sharing-restricted:sharing:transition:2",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:1",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:2",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:3",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:4",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:5",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:6",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:7",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:8",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:9",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:10",
+        "urn:step:urn:journey:collective-sharing-restricted:sharing:transition:2:keyboard:11"
       ]
     }
   ]

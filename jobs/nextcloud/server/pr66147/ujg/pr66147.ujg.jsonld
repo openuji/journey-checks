@@ -1,14 +1,15 @@
 {
   "@context": [
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/core.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/graph.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/surface.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/phase.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/l10n.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/observability.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/entry-binding.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/effect.context.jsonld",
-    "https://ujg.specs.openuji.org/tr/1.0-rc3/ns/artifact.context.jsonld"
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/graph.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/phase.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/l10n.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/observability.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/operability.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/entry-binding.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/effect.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/artifact.context.jsonld"
   ],
   "@type": "UJGDocument",
   "@id": "urn:ujg:document:nextcloud-acceptance:pr66147",
@@ -270,30 +271,15 @@
     },
     {
       "@type": "InputModality",
-      "@id": "observability:keyboard-text-entry",
+      "@id": "urn:openuji:input-modality:keyboard-text-entry",
       "label": "Keyboard text entry"
-    },
-    {
-      "@type": "InputModality",
-      "@id": "observability:keyboard-space",
-      "label": "Keyboard Space activation"
-    },
-    {
-      "@type": "InputModality",
-      "@id": "observability:keyboard-enter",
-      "label": "Keyboard Enter activation"
-    },
-    {
-      "@type": "InputModality",
-      "@id": "observability:pointer",
-      "label": "Pointer"
     },
     {
       "@type": "InputModalityProfile",
       "@id": "urn:input-modality-profile:keyboard-text-entry",
       "label": "Keyboard text entry",
       "inputModalityRefs": [
-        "observability:keyboard-text-entry"
+        "urn:openuji:input-modality:keyboard-text-entry"
       ]
     },
     {
@@ -301,15 +287,7 @@
       "@id": "urn:input-modality-profile:keyboard-space",
       "label": "Keyboard Space activation",
       "inputModalityRefs": [
-        "observability:keyboard-space"
-      ]
-    },
-    {
-      "@type": "InputModalityProfile",
-      "@id": "urn:input-modality-profile:keyboard-enter",
-      "label": "Keyboard Enter activation",
-      "inputModalityRefs": [
-        "observability:keyboard-enter"
+        "observability:keyboard"
       ]
     },
     {
@@ -344,7 +322,7 @@
       "@id": "urn:observation-event:option-activation",
       "label": "Option activation",
       "requiredInputModalityProfileRefs": [
-        "urn:input-modality-profile:keyboard-enter",
+        "urn:input-modality-profile:keyboard-space",
         "urn:input-modality-profile:pointer"
       ]
     },
@@ -353,7 +331,7 @@
       "@id": "urn:observation-event:link-activation",
       "label": "Link activation",
       "requiredInputModalityProfileRefs": [
-        "urn:input-modality-profile:keyboard-enter",
+        "urn:input-modality-profile:keyboard-space",
         "urn:input-modality-profile:pointer"
       ]
     },
@@ -686,7 +664,9 @@
       "@id": "urn:locator:shares-expander",
       "label": "Shares navigation disclosure",
       "extensions": {
-        "urn:openuji:playwright:css": "[data-cy-files-navigation-item=\"shareoverview\"] > .app-navigation-entry > button[aria-label=\"Open menu\"]"
+        "urn:openuji:playwright:css": {
+          "selector": "[data-cy-files-navigation-item=\"shareoverview\"] > .app-navigation-entry > button[aria-label=\"Open menu\"]"
+        }
       }
     },
     {
@@ -794,39 +774,42 @@
       "@id": "urn:transition:alice-opens-file-menu",
       "label": "Alice opens the sharing panel",
       "from": "urn:state:alice-files-ready",
-      "to": "urn:state:alice-share-panel-open"
+      "to": "urn:state:alice-share-panel-open",
+      "commandRef": "urn:transition:alice-opens-file-menu:command"
     },
     {
       "@type": "Surface",
       "@id": "urn:surface:alice-opens-file-menu",
       "label": "Alice file share action",
-      "graphNodeRef": "urn:transition:alice-opens-file-menu"
+      "graphNodeRef": "urn:transition:alice-opens-file-menu:command"
     },
     {
       "@type": "Transition",
       "@id": "urn:transition:alice-enters-remote-bob",
       "label": "Alice enters Bob's federated address",
       "from": "urn:state:alice-share-panel-open",
-      "to": "urn:state:alice-remote-recipient-entered"
+      "to": "urn:state:alice-remote-recipient-entered",
+      "commandRef": "urn:transition:alice-enters-remote-bob:command"
     },
     {
       "@type": "Surface",
       "@id": "urn:surface:alice-enters-remote-bob",
       "label": "Alice remote recipient input",
-      "graphNodeRef": "urn:transition:alice-enters-remote-bob"
+      "graphNodeRef": "urn:transition:alice-enters-remote-bob:command"
     },
     {
       "@type": "Transition",
       "@id": "urn:transition:alice-selects-remote-recipient",
       "label": "Alice selects Bob as the remote recipient",
       "from": "urn:state:alice-remote-recipient-entered",
-      "to": "urn:state:alice-share-permissions-open"
+      "to": "urn:state:alice-share-permissions-open",
+      "commandRef": "urn:transition:alice-selects-remote-recipient:command"
     },
     {
       "@type": "Surface",
       "@id": "urn:surface:alice-selects-remote-recipient",
       "label": "Alice remote recipient option",
-      "graphNodeRef": "urn:transition:alice-selects-remote-recipient"
+      "graphNodeRef": "urn:transition:alice-selects-remote-recipient:command"
     },
     {
       "@type": "Transition",
@@ -834,13 +817,14 @@
       "label": "Alice confirms the share",
       "from": "urn:state:alice-share-permissions-open",
       "to": "urn:state:alice-share-confirmed",
-      "effectRef": "urn:effect:alice-confirm-share"
+      "effectRef": "urn:effect:alice-confirm-share",
+      "commandRef": "urn:transition:alice-confirms-share:command"
     },
     {
       "@type": "Surface",
       "@id": "urn:surface:alice-confirms-share",
       "label": "Alice confirm-share action",
-      "graphNodeRef": "urn:transition:alice-confirms-share"
+      "graphNodeRef": "urn:transition:alice-confirms-share:command"
     },
     {
       "@type": "CompositeState",
@@ -926,13 +910,14 @@
       "label": "Bob accepts the file inline",
       "from": "urn:state:bob-all-files-ready",
       "to": "urn:exit:bob-share-offer-accepted",
-      "effectRef": "urn:effect:bob-accept-share"
+      "effectRef": "urn:effect:bob-accept-share",
+      "commandRef": "urn:transition:bob-accepts-share:command"
     },
     {
       "@type": "Surface",
       "@id": "urn:surface:bob-accepts-share",
       "label": "Bob accepts the file inline",
-      "graphNodeRef": "urn:transition:bob-accepts-share"
+      "graphNodeRef": "urn:transition:bob-accepts-share:command"
     },
     {
       "@type": "CompositeState",
@@ -980,6 +965,233 @@
       "fromExitRef": "urn:exit:bob-share-offer-accepted",
       "to": "urn:composite:bob-pending-share-offer-cleared",
       "toEntryRef": "urn:entry:bob-pending-share-offer-cleared"
+    },
+    {
+      "@id": "urn:transition:alice-opens-file-menu:command",
+      "@type": "Command",
+      "label": "Alice opens the sharing panel"
+    },
+    {
+      "@id": "urn:transition:alice-enters-remote-bob:command",
+      "@type": "Command",
+      "label": "Alice enters Bob's federated address"
+    },
+    {
+      "@id": "urn:transition:alice-selects-remote-recipient:command",
+      "@type": "Command",
+      "label": "Alice selects Bob as the remote recipient"
+    },
+    {
+      "@id": "urn:transition:alice-confirms-share:command",
+      "@type": "Command",
+      "label": "Alice confirms the share"
+    },
+    {
+      "@id": "urn:transition:bob-accepts-share:command",
+      "@type": "Command",
+      "label": "Bob accepts the file inline"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-opens-file-menu:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:file-share-action"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:alice-opens-file-menu:pointer:2",
+      "stepPreviousRef": "urn:step:alice-opens-file-menu:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:alice-opens-file-menu:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:alice-opens-file-menu",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:alice-opens-file-menu:pointer:1",
+        "urn:step:alice-opens-file-menu:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-selects-remote-recipient:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:remote-recipient-entry"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:alice-selects-remote-recipient:pointer:2",
+      "stepPreviousRef": "urn:step:alice-selects-remote-recipient:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:alice-selects-remote-recipient:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:alice-selects-remote-recipient",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:alice-selects-remote-recipient:pointer:1",
+        "urn:step:alice-selects-remote-recipient:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-confirms-share:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:save-share-button"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:alice-confirms-share:pointer:2",
+      "stepPreviousRef": "urn:step:alice-confirms-share:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:alice-confirms-share:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:alice-confirms-share",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:alice-confirms-share:pointer:1",
+        "urn:step:alice-confirms-share:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:bob-accepts-share:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:bob-accept-share-button"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:bob-accepts-share:pointer:2",
+      "stepPreviousRef": "urn:step:bob-accepts-share:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:bob-accepts-share:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:bob-accepts-share",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:bob-accepts-share:pointer:1",
+        "urn:step:bob-accepts-share:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:4",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:3"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:5",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:4"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:6",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:5"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:7",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:6"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:8",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:7"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:9",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:8"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:10",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:9"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:11",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:10"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:12",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:11"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:13",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:12"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:14",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:13"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:alice-enters-remote-bob:text-entry:15",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:alice-enters-remote-bob:text-entry:14",
+      "stepLocatorRef": "urn:locator:remote-recipient-input"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:alice-enters-remote-bob:text-entry",
+      "label": "Focus moves to the field",
+      "materializationTransitionRef": "urn:transition:alice-enters-remote-bob",
+      "materializationModalityRef": "urn:openuji:input-modality:keyboard-text-entry",
+      "materializationStepRefs": [
+        "urn:step:alice-enters-remote-bob:text-entry:1",
+        "urn:step:alice-enters-remote-bob:text-entry:2",
+        "urn:step:alice-enters-remote-bob:text-entry:3",
+        "urn:step:alice-enters-remote-bob:text-entry:4",
+        "urn:step:alice-enters-remote-bob:text-entry:5",
+        "urn:step:alice-enters-remote-bob:text-entry:6",
+        "urn:step:alice-enters-remote-bob:text-entry:7",
+        "urn:step:alice-enters-remote-bob:text-entry:8",
+        "urn:step:alice-enters-remote-bob:text-entry:9",
+        "urn:step:alice-enters-remote-bob:text-entry:10",
+        "urn:step:alice-enters-remote-bob:text-entry:11",
+        "urn:step:alice-enters-remote-bob:text-entry:12",
+        "urn:step:alice-enters-remote-bob:text-entry:13",
+        "urn:step:alice-enters-remote-bob:text-entry:14",
+        "urn:step:alice-enters-remote-bob:text-entry:15"
+      ]
     }
   ]
 }

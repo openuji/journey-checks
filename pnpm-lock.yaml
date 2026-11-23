@@ -35,6 +35,9 @@ importers:
       '@openuji/journey-observer-axe':
         specifier: link:./journey-mesh/packages/journey-observer-axe
         version: link:journey-mesh/packages/journey-observer-axe
+      '@openuji/journey-observer-operability':
+        specifier: link:./journey-mesh/packages/journey-observer-operability
+        version: link:journey-mesh/packages/journey-observer-operability
       '@openuji/journey-observer-ux':
         specifier: link:./journey-mesh/packages/journey-observer-ux
         version: link:journey-mesh/packages/journey-observer-ux
@@ -44,6 +47,12 @@ importers:
       '@openuji/journey-report-android':
         specifier: link:./journey-mesh/packages/journey-report-android
         version: link:journey-mesh/packages/journey-report-android
+      '@openuji/journey-report-axe':
+        specifier: link:./journey-mesh/packages/journey-report-axe
+        version: link:journey-mesh/packages/journey-report-axe
+      '@openuji/journey-report-operability':
+        specifier: link:./journey-mesh/packages/journey-report-operability
+        version: link:journey-mesh/packages/journey-report-operability
       '@openuji/journey-service-git':
         specifier: link:./journey-mesh/packages/journey-service-git
         version: link:journey-mesh/packages/journey-service-git

@@ -1,0 +1,1806 @@
+{
+  "@context": [
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/graph.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/phase.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/l10n.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/observability.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/operability.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/entry-binding.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/effect.context.jsonld"
+  ],
+  "@type": "UJGDocument",
+  "@id": "urn:ujg:document:tables-pr3215:page-manage",
+  "nodes": [
+    {
+      "@type": "Locale",
+      "@id": "urn:locale:en",
+      "localeCode": "en"
+    },
+    {
+      "@type": "InputModality",
+      "@id": "urn:openuji:input-modality:keyboard-text-entry",
+      "label": "Keyboard text entry"
+    },
+    {
+      "@type": "InputModalityProfile",
+      "@id": "urn:input-profile:keyboard",
+      "inputModalityRefs": [
+        "observability:keyboard"
+      ]
+    },
+    {
+      "@type": "InputModalityProfile",
+      "@id": "urn:input-profile:pointer",
+      "inputModalityRefs": [
+        "observability:pointer"
+      ]
+    },
+    {
+      "@type": "InputModalityProfile",
+      "@id": "urn:input-profile:text-entry",
+      "inputModalityRefs": [
+        "urn:openuji:input-modality:keyboard-text-entry"
+      ]
+    },
+    {
+      "@type": "ObservationEvent",
+      "@id": "urn:observation-event:presence"
+    },
+    {
+      "@type": "ObservationEvent",
+      "@id": "urn:observation-event:absence"
+    },
+    {
+      "@type": "ObservationEvent",
+      "@id": "urn:observation-event:activate",
+      "label": "Activate",
+      "requiredInputModalityProfileRefs": [
+        "urn:input-profile:keyboard",
+        "urn:input-profile:pointer"
+      ]
+    },
+    {
+      "@type": "ObservationEvent",
+      "@id": "urn:observation-event:text-entry",
+      "label": "Enter text",
+      "requiredInputModalityProfileRefs": [
+        "urn:input-profile:text-entry"
+      ]
+    },
+    {
+      "@type": "Phase",
+      "@id": "urn:phase:setup",
+      "label": "Setup",
+      "order": 0
+    },
+    {
+      "@type": "Phase",
+      "@id": "urn:phase:pages",
+      "label": "Grid pages",
+      "order": 1
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:account-name-or-email",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:account-name-or-email:en",
+      "messageMetaRef": "urn:message:account-name-or-email",
+      "localeRef": "urn:locale:en",
+      "value": "Account name or email"
+    },
+    {
+      "@type": "AccessibleFeature",
+      "@id": "urn:feature:exact-name",
+      "accessibleFeatureName": "accessible-name-exact",
+      "accessibleFeatureValue": "true"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:login-account",
+      "role": "textbox",
+      "accessibleNameRef": "urn:message:account-name-or-email",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:password",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:password:en",
+      "messageMetaRef": "urn:message:password",
+      "localeRef": "urn:locale:en",
+      "value": "Password"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:login-password",
+      "role": "textbox",
+      "accessibleNameRef": "urn:message:password",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:log-in",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:log-in:en",
+      "messageMetaRef": "urn:message:log-in",
+      "localeRef": "urn:locale:en",
+      "value": "Log in"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:login-submit",
+      "role": "button",
+      "accessibleNameRef": "urn:message:log-in",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:go-to-dashboard",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:go-to-dashboard:en",
+      "messageMetaRef": "urn:message:go-to-dashboard",
+      "localeRef": "urn:locale:en",
+      "value": "Go to Dashboard"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:dashboard-link",
+      "role": "link",
+      "accessibleNameRef": "urn:message:go-to-dashboard",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:app-navigation",
+      "role": "navigation"
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:team-board",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:team-board:en",
+      "messageMetaRef": "urn:message:team-board",
+      "localeRef": "urn:locale:en",
+      "value": "Team board"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:team-board-link",
+      "role": "link",
+      "accessibleNameRef": "urn:message:team-board",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:app-navigation"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:home",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:home:en",
+      "messageMetaRef": "urn:message:home",
+      "localeRef": "urn:locale:en",
+      "value": "Home"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:home-panel",
+      "role": "tabpanel",
+      "accessibleNameRef": "urn:message:home",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:tasks",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:tasks:en",
+      "messageMetaRef": "urn:message:tasks",
+      "localeRef": "urn:locale:en",
+      "value": "Tasks"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:home-tasks",
+      "role": "heading",
+      "accessibleNameRef": "urn:message:tasks",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:home-panel"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:drafts",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:drafts:en",
+      "messageMetaRef": "urn:message:drafts",
+      "localeRef": "urn:locale:en",
+      "value": "Drafts"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:panel-drafts",
+      "role": "tabpanel",
+      "accessibleNameRef": "urn:message:drafts",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:this-page-is-empty",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:this-page-is-empty:en",
+      "messageMetaRef": "urn:message:this-page-is-empty",
+      "localeRef": "urn:locale:en",
+      "value": "This page is empty"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:drafts-empty-note",
+      "role": "note",
+      "accessibleNameRef": "urn:message:this-page-is-empty",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:panel-drafts"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:pages-of-this-application",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:pages-of-this-application:en",
+      "messageMetaRef": "urn:message:pages-of-this-application",
+      "localeRef": "urn:locale:en",
+      "value": "Pages of this application"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:page-bar",
+      "role": "tablist",
+      "accessibleNameRef": "urn:message:pages-of-this-application",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:tab-drafts",
+      "role": "tab",
+      "accessibleNameRef": "urn:message:drafts",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:page-bar"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:tab-home",
+      "role": "tab",
+      "accessibleNameRef": "urn:message:home",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:page-bar"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:page-actions",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:page-actions:en",
+      "messageMetaRef": "urn:message:page-actions",
+      "localeRef": "urn:locale:en",
+      "value": "Page actions"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:drafts-page-actions",
+      "role": "button",
+      "accessibleNameRef": "urn:message:page-actions",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:panel-drafts"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:page-actions-menu",
+      "role": "menu",
+      "accessibleNameRef": "urn:message:page-actions",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:edit-page-details",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:edit-page-details:en",
+      "messageMetaRef": "urn:message:edit-page-details",
+      "localeRef": "urn:locale:en",
+      "value": "Edit page details"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:menu-edit-details",
+      "role": "menuitem",
+      "accessibleNameRef": "urn:message:edit-page-details",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:page-actions-menu"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:dialog-edit-page-details",
+      "role": "dialog",
+      "accessibleNameRef": "urn:message:edit-page-details",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:title",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:title:en",
+      "messageMetaRef": "urn:message:title",
+      "localeRef": "urn:locale:en",
+      "value": "Title"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:edit-page-details-title",
+      "role": "textbox",
+      "accessibleNameRef": "urn:message:title",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:dialog-edit-page-details"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:save",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:save:en",
+      "messageMetaRef": "urn:message:save",
+      "localeRef": "urn:locale:en",
+      "value": "Save"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:edit-page-details-save",
+      "role": "button",
+      "accessibleNameRef": "urn:message:save",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:dialog-edit-page-details"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:drafts-archive",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:drafts-archive:en",
+      "messageMetaRef": "urn:message:drafts-archive",
+      "localeRef": "urn:locale:en",
+      "value": "Drafts archive"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:panel-drafts-archive",
+      "role": "tabpanel",
+      "accessibleNameRef": "urn:message:drafts-archive",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:renamed-heading",
+      "role": "heading",
+      "accessibleNameRef": "urn:message:drafts-archive",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:panel-drafts-archive"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:drafts-archive-page-actions",
+      "role": "button",
+      "accessibleNameRef": "urn:message:page-actions",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:panel-drafts-archive"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:delete-page",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:delete-page:en",
+      "messageMetaRef": "urn:message:delete-page",
+      "localeRef": "urn:locale:en",
+      "value": "Delete page"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:menu-delete-page",
+      "role": "menuitem",
+      "accessibleNameRef": "urn:message:delete-page",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:page-actions-menu"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:dialog-delete-page",
+      "role": "dialog",
+      "accessibleNameRef": "urn:message:delete-page",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:delete-page-confirm",
+      "role": "button",
+      "accessibleNameRef": "urn:message:delete-page",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:dialog-delete-page"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:slug",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:slug:en",
+      "messageMetaRef": "urn:message:slug",
+      "localeRef": "urn:locale:en",
+      "value": "Slug"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:edit-page-details-slug",
+      "role": "textbox",
+      "accessibleNameRef": "urn:message:slug",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:dialog-edit-page-details"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:panel-home",
+      "role": "tabpanel",
+      "accessibleNameRef": "urn:message:home",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "CompositeState",
+      "@id": "urn:composite:page-manage:login",
+      "label": "Application owner signs in",
+      "subjourneyRefs": [
+        "urn:journey:page-manage:login"
+      ]
+    },
+    {
+      "@type": "Journey",
+      "@id": "urn:journey:page-manage:login",
+      "label": "Application owner signs in",
+      "defaultEntryRef": "urn:entry:page-manage:login",
+      "entryRefs": [
+        "urn:entry:page-manage:login"
+      ],
+      "stateRefs": [
+        "urn:state:page-manage:login:ready",
+        "urn:state:page-manage:login:username-entered",
+        "urn:state:page-manage:login:password-entered",
+        "urn:state:page-manage:login:signed-in"
+      ],
+      "transitionRefs": [
+        "urn:transition:page-manage:login:enter-username",
+        "urn:transition:page-manage:login:enter-password",
+        "urn:transition:page-manage:login:submit"
+      ]
+    },
+    {
+      "@type": "JourneyEntry",
+      "@id": "urn:entry:page-manage:login",
+      "stateRef": "urn:state:page-manage:login:ready"
+    },
+    {
+      "@type": "EntryBinding",
+      "@id": "urn:entry-binding:page-manage:login",
+      "entryRef": "urn:entry:page-manage:login",
+      "value": "login"
+    },
+    {
+      "@type": "Step",
+      "@id": "urn:journey-step:page-manage:login",
+      "label": "Application owner signs in",
+      "order": 0,
+      "compositeStateRef": "urn:composite:page-manage:login",
+      "phaseRef": "urn:phase:setup"
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-manage:login:ready",
+      "label": "Login form is ready"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:login:ready",
+      "graphNodeRef": "urn:state:page-manage:login:ready"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:login:ready",
+      "observeSurfaceRef": "urn:surface:page-manage:login:ready",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:login-account"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-manage:login:username-entered",
+      "label": "Account name is entered"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:login:username-entered",
+      "graphNodeRef": "urn:state:page-manage:login:username-entered"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:login:username-entered",
+      "observeSurfaceRef": "urn:surface:page-manage:login:username-entered",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:login-password"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-manage:login:password-entered",
+      "label": "Password is entered"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:login:password-entered",
+      "graphNodeRef": "urn:state:page-manage:login:password-entered"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:login:password-entered",
+      "observeSurfaceRef": "urn:surface:page-manage:login:password-entered",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:login-submit"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-manage:login:signed-in",
+      "label": "Signed in"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:login:signed-in",
+      "graphNodeRef": "urn:state:page-manage:login:signed-in"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:login:signed-in",
+      "observeSurfaceRef": "urn:surface:page-manage:login:signed-in",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:dashboard-link"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-manage:login:enter-username",
+      "label": "Enter the account name",
+      "from": "urn:state:page-manage:login:ready",
+      "to": "urn:state:page-manage:login:username-entered",
+      "commandRef": "urn:transition:page-manage:login:enter-username:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-manage:login:enter-username:command",
+      "label": "Enter the account name"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:login:enter-username:command",
+      "graphNodeRef": "urn:transition:page-manage:login:enter-username:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:login:enter-username:command",
+      "observeSurfaceRef": "urn:surface:page-manage:login:enter-username:command",
+      "observationEventRef": "urn:observation-event:text-entry",
+      "locatorRefs": [
+        "urn:locator:login-account"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-manage:login:enter-password",
+      "label": "Enter the password",
+      "from": "urn:state:page-manage:login:username-entered",
+      "to": "urn:state:page-manage:login:password-entered",
+      "commandRef": "urn:transition:page-manage:login:enter-password:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-manage:login:enter-password:command",
+      "label": "Enter the password"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:login:enter-password:command",
+      "graphNodeRef": "urn:transition:page-manage:login:enter-password:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:login:enter-password:command",
+      "observeSurfaceRef": "urn:surface:page-manage:login:enter-password:command",
+      "observationEventRef": "urn:observation-event:text-entry",
+      "locatorRefs": [
+        "urn:locator:login-password"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:login:enter-password:text-entry:1",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepLocatorRef": "urn:locator:login-password"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:login:enter-password:text-entry",
+      "label": "Focus moves to the field",
+      "materializationTransitionRef": "urn:transition:page-manage:login:enter-password",
+      "materializationModalityRef": "urn:openuji:input-modality:keyboard-text-entry",
+      "materializationStepRefs": [
+        "urn:step:page-manage:login:enter-password:text-entry:1"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-manage:login:submit",
+      "label": "Log in",
+      "from": "urn:state:page-manage:login:password-entered",
+      "to": "urn:state:page-manage:login:signed-in",
+      "commandRef": "urn:transition:page-manage:login:submit:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-manage:login:submit:command",
+      "label": "Log in"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:login:submit:command",
+      "graphNodeRef": "urn:transition:page-manage:login:submit:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:login:submit:command",
+      "observeSurfaceRef": "urn:surface:page-manage:login:submit:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:login-submit"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:login:submit:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:login-submit"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:login:submit:pointer:2",
+      "stepPreviousRef": "urn:step:page-manage:login:submit:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:login:submit:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-manage:login:submit",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-manage:login:submit:pointer:1",
+        "urn:step:page-manage:login:submit:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:login:submit:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:login:submit:keyboard:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-manage:login:submit:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:login:submit:keyboard:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-manage:login:submit:keyboard:2",
+      "stepLocatorRef": "urn:locator:login-submit"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:login:submit:keyboard:4",
+      "stepPreviousRef": "urn:step:page-manage:login:submit:keyboard:3"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:login:submit:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-manage:login:submit",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-manage:login:submit:keyboard:1",
+        "urn:step:page-manage:login:submit:keyboard:2",
+        "urn:step:page-manage:login:submit:keyboard:3",
+        "urn:step:page-manage:login:submit:keyboard:4"
+      ]
+    },
+    {
+      "@type": "CompositeState",
+      "@id": "urn:composite:page-manage:pages",
+      "label": "The owner renames and deletes a page",
+      "subjourneyRefs": [
+        "urn:journey:page-manage:pages"
+      ]
+    },
+    {
+      "@type": "Journey",
+      "@id": "urn:journey:page-manage:pages",
+      "label": "The owner renames and deletes a page",
+      "defaultEntryRef": "urn:entry:page-manage:pages",
+      "entryRefs": [
+        "urn:entry:page-manage:pages"
+      ],
+      "stateRefs": [
+        "urn:state:page-manage:pages:tables",
+        "urn:state:page-manage:pages:home",
+        "urn:state:page-manage:pages:drafts-empty",
+        "urn:state:page-manage:pages:page-actions",
+        "urn:state:page-manage:pages:details",
+        "urn:state:page-manage:pages:title-entered",
+        "urn:state:page-manage:pages:renamed",
+        "urn:state:page-manage:pages:page-actions-again",
+        "urn:state:page-manage:pages:delete-asked",
+        "urn:state:page-manage:pages:home-after-delete"
+      ],
+      "transitionRefs": [
+        "urn:transition:page-manage:pages:open-application",
+        "urn:transition:page-manage:pages:select-drafts",
+        "urn:transition:page-manage:pages:open-page-actions",
+        "urn:transition:page-manage:pages:edit-details",
+        "urn:transition:page-manage:pages:enter-title",
+        "urn:transition:page-manage:pages:save-details",
+        "urn:transition:page-manage:pages:open-page-actions-again",
+        "urn:transition:page-manage:pages:delete-page",
+        "urn:transition:page-manage:pages:confirm-delete"
+      ]
+    },
+    {
+      "@type": "JourneyEntry",
+      "@id": "urn:entry:page-manage:pages",
+      "stateRef": "urn:state:page-manage:pages:tables"
+    },
+    {
+      "@type": "EntryBinding",
+      "@id": "urn:entry-binding:page-manage:pages",
+      "entryRef": "urn:entry:page-manage:pages",
+      "value": "tables"
+    },
+    {
+      "@type": "Step",
+      "@id": "urn:journey-step:page-manage:pages",
+      "label": "The owner renames and deletes a page",
+      "order": 1,
+      "compositeStateRef": "urn:composite:page-manage:pages",
+      "phaseRef": "urn:phase:pages"
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-manage:pages:tables",
+      "label": "Tables is open"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:tables",
+      "graphNodeRef": "urn:state:page-manage:pages:tables"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:tables",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:tables",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:team-board-link"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-manage:pages:home",
+      "label": "The start page is shown with its table"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:home",
+      "graphNodeRef": "urn:state:page-manage:pages:home"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:home",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:home",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:home-tasks"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-manage:pages:drafts-empty",
+      "label": "Drafts is selected and empty"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:drafts-empty",
+      "graphNodeRef": "urn:state:page-manage:pages:drafts-empty"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:drafts-empty",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:drafts-empty",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:drafts-empty-note"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-manage:pages:page-actions",
+      "label": "Page actions is open"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:page-actions",
+      "graphNodeRef": "urn:state:page-manage:pages:page-actions"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:page-actions",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:page-actions",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:page-actions-menu"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-manage:pages:details",
+      "label": "Page details are shown with the slug read-only"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:details",
+      "graphNodeRef": "urn:state:page-manage:pages:details"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:details",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:details",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:edit-page-details-slug"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-manage:pages:title-entered",
+      "label": "The new title is entered"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:title-entered",
+      "graphNodeRef": "urn:state:page-manage:pages:title-entered"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:title-entered",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:title-entered",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:edit-page-details-save"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-manage:pages:renamed",
+      "label": "The tab and heading show the new title"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:renamed",
+      "graphNodeRef": "urn:state:page-manage:pages:renamed"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:renamed",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:renamed",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:renamed-heading"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-manage:pages:page-actions-again",
+      "label": "Page actions is open again"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:page-actions-again",
+      "graphNodeRef": "urn:state:page-manage:pages:page-actions-again"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:page-actions-again",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:page-actions-again",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:page-actions-menu"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-manage:pages:delete-asked",
+      "label": "Deleting asks for confirmation"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:delete-asked",
+      "graphNodeRef": "urn:state:page-manage:pages:delete-asked"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:delete-asked",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:delete-asked",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:dialog-delete-page"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-manage:pages:home-after-delete",
+      "label": "The start page is shown without the page"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:home-after-delete",
+      "graphNodeRef": "urn:state:page-manage:pages:home-after-delete"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:home-after-delete",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:home-after-delete",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:home-tasks"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-manage:pages:open-application",
+      "label": "Open the application",
+      "from": "urn:state:page-manage:pages:tables",
+      "to": "urn:state:page-manage:pages:home",
+      "commandRef": "urn:transition:page-manage:pages:open-application:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-manage:pages:open-application:command",
+      "label": "Open the application"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:open-application:command",
+      "graphNodeRef": "urn:transition:page-manage:pages:open-application:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:open-application:command",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:open-application:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:team-board-link"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:open-application:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:team-board-link"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:pages:open-application:pointer:2",
+      "stepPreviousRef": "urn:step:page-manage:pages:open-application:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:pages:open-application:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-manage:pages:open-application",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-manage:pages:open-application:pointer:1",
+        "urn:step:page-manage:pages:open-application:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:open-application:keyboard:1",
+      "stepMoveKindRef": "operability:previousStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:open-application:keyboard:2",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-manage:pages:open-application:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:open-application:keyboard:3",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-manage:pages:open-application:keyboard:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:open-application:keyboard:4",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-manage:pages:open-application:keyboard:3",
+      "stepLocatorRef": "urn:locator:team-board-link"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:pages:open-application:keyboard:5",
+      "stepPreviousRef": "urn:step:page-manage:pages:open-application:keyboard:4"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:pages:open-application:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-manage:pages:open-application",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-manage:pages:open-application:keyboard:1",
+        "urn:step:page-manage:pages:open-application:keyboard:2",
+        "urn:step:page-manage:pages:open-application:keyboard:3",
+        "urn:step:page-manage:pages:open-application:keyboard:4",
+        "urn:step:page-manage:pages:open-application:keyboard:5"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-manage:pages:select-drafts",
+      "label": "Select Drafts",
+      "from": "urn:state:page-manage:pages:home",
+      "to": "urn:state:page-manage:pages:drafts-empty",
+      "commandRef": "urn:transition:page-manage:pages:select-drafts:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-manage:pages:select-drafts:command",
+      "label": "Select Drafts"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:select-drafts:command",
+      "graphNodeRef": "urn:transition:page-manage:pages:select-drafts:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:select-drafts:command",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:select-drafts:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:tab-drafts"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:select-drafts:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:tab-drafts"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:pages:select-drafts:pointer:2",
+      "stepPreviousRef": "urn:step:page-manage:pages:select-drafts:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:pages:select-drafts:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-manage:pages:select-drafts",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-manage:pages:select-drafts:pointer:1",
+        "urn:step:page-manage:pages:select-drafts:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:select-drafts:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepLocatorRef": "urn:locator:tab-home"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:select-drafts:keyboard:2",
+      "stepMoveKindRef": "operability:nextItem",
+      "stepPreviousRef": "urn:step:page-manage:pages:select-drafts:keyboard:1",
+      "stepLocatorRef": "urn:locator:tab-drafts"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:pages:select-drafts:keyboard:3",
+      "stepPreviousRef": "urn:step:page-manage:pages:select-drafts:keyboard:2"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:pages:select-drafts:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-manage:pages:select-drafts",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-manage:pages:select-drafts:keyboard:1",
+        "urn:step:page-manage:pages:select-drafts:keyboard:2",
+        "urn:step:page-manage:pages:select-drafts:keyboard:3"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-manage:pages:open-page-actions",
+      "label": "Open Page actions",
+      "from": "urn:state:page-manage:pages:drafts-empty",
+      "to": "urn:state:page-manage:pages:page-actions",
+      "commandRef": "urn:transition:page-manage:pages:open-page-actions:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-manage:pages:open-page-actions:command",
+      "label": "Open Page actions"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:open-page-actions:command",
+      "graphNodeRef": "urn:transition:page-manage:pages:open-page-actions:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:open-page-actions:command",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:open-page-actions:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:drafts-page-actions"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:open-page-actions:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:drafts-page-actions"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:pages:open-page-actions:pointer:2",
+      "stepPreviousRef": "urn:step:page-manage:pages:open-page-actions:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:pages:open-page-actions:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-manage:pages:open-page-actions",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-manage:pages:open-page-actions:pointer:1",
+        "urn:step:page-manage:pages:open-page-actions:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:open-page-actions:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:open-page-actions:keyboard:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-manage:pages:open-page-actions:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:open-page-actions:keyboard:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-manage:pages:open-page-actions:keyboard:2",
+      "stepLocatorRef": "urn:locator:drafts-page-actions"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:pages:open-page-actions:keyboard:4",
+      "stepPreviousRef": "urn:step:page-manage:pages:open-page-actions:keyboard:3"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:pages:open-page-actions:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-manage:pages:open-page-actions",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-manage:pages:open-page-actions:keyboard:1",
+        "urn:step:page-manage:pages:open-page-actions:keyboard:2",
+        "urn:step:page-manage:pages:open-page-actions:keyboard:3",
+        "urn:step:page-manage:pages:open-page-actions:keyboard:4"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-manage:pages:edit-details",
+      "label": "Edit page details",
+      "from": "urn:state:page-manage:pages:page-actions",
+      "to": "urn:state:page-manage:pages:details",
+      "commandRef": "urn:transition:page-manage:pages:edit-details:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-manage:pages:edit-details:command",
+      "label": "Edit page details"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:edit-details:command",
+      "graphNodeRef": "urn:transition:page-manage:pages:edit-details:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:edit-details:command",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:edit-details:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:menu-edit-details"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:edit-details:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:menu-edit-details"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:pages:edit-details:pointer:2",
+      "stepPreviousRef": "urn:step:page-manage:pages:edit-details:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:pages:edit-details:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-manage:pages:edit-details",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-manage:pages:edit-details:pointer:1",
+        "urn:step:page-manage:pages:edit-details:pointer:2"
+      ]
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:pages:edit-details:keyboard:1",
+      "stepLocatorRef": "urn:locator:menu-edit-details"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:pages:edit-details:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-manage:pages:edit-details",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-manage:pages:edit-details:keyboard:1"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-manage:pages:enter-title",
+      "label": "Enter the title Drafts archive",
+      "from": "urn:state:page-manage:pages:details",
+      "to": "urn:state:page-manage:pages:title-entered",
+      "commandRef": "urn:transition:page-manage:pages:enter-title:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-manage:pages:enter-title:command",
+      "label": "Enter the title Drafts archive"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:enter-title:command",
+      "graphNodeRef": "urn:transition:page-manage:pages:enter-title:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:enter-title:command",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:enter-title:command",
+      "observationEventRef": "urn:observation-event:text-entry",
+      "locatorRefs": [
+        "urn:locator:edit-page-details-title"
+      ]
+    },
+    {
+      "@type": "Effect",
+      "@id": "urn:effect:page-manage:renamed",
+      "label": "The title is stored and the slug kept"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-manage:pages:save-details",
+      "label": "Save the page details",
+      "from": "urn:state:page-manage:pages:title-entered",
+      "to": "urn:state:page-manage:pages:renamed",
+      "commandRef": "urn:transition:page-manage:pages:save-details:command",
+      "effectRef": "urn:effect:page-manage:renamed"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-manage:pages:save-details:command",
+      "label": "Save the page details"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:save-details:command",
+      "graphNodeRef": "urn:transition:page-manage:pages:save-details:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:save-details:command",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:save-details:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:edit-page-details-save"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:save-details:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:edit-page-details-save"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:pages:save-details:pointer:2",
+      "stepPreviousRef": "urn:step:page-manage:pages:save-details:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:pages:save-details:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-manage:pages:save-details",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-manage:pages:save-details:pointer:1",
+        "urn:step:page-manage:pages:save-details:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:save-details:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:save-details:keyboard:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-manage:pages:save-details:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:save-details:keyboard:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-manage:pages:save-details:keyboard:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:save-details:keyboard:4",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-manage:pages:save-details:keyboard:3",
+      "stepLocatorRef": "urn:locator:edit-page-details-save"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:pages:save-details:keyboard:5",
+      "stepPreviousRef": "urn:step:page-manage:pages:save-details:keyboard:4"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:pages:save-details:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-manage:pages:save-details",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-manage:pages:save-details:keyboard:1",
+        "urn:step:page-manage:pages:save-details:keyboard:2",
+        "urn:step:page-manage:pages:save-details:keyboard:3",
+        "urn:step:page-manage:pages:save-details:keyboard:4",
+        "urn:step:page-manage:pages:save-details:keyboard:5"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-manage:pages:open-page-actions-again",
+      "label": "Open Page actions again",
+      "from": "urn:state:page-manage:pages:renamed",
+      "to": "urn:state:page-manage:pages:page-actions-again",
+      "commandRef": "urn:transition:page-manage:pages:open-page-actions-again:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-manage:pages:open-page-actions-again:command",
+      "label": "Open Page actions again"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:open-page-actions-again:command",
+      "graphNodeRef": "urn:transition:page-manage:pages:open-page-actions-again:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:open-page-actions-again:command",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:open-page-actions-again:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:drafts-archive-page-actions"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:open-page-actions-again:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:drafts-archive-page-actions"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:pages:open-page-actions-again:pointer:2",
+      "stepPreviousRef": "urn:step:page-manage:pages:open-page-actions-again:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:pages:open-page-actions-again:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-manage:pages:open-page-actions-again",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-manage:pages:open-page-actions-again:pointer:1",
+        "urn:step:page-manage:pages:open-page-actions-again:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:open-page-actions-again:keyboard:1",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepLocatorRef": "urn:locator:drafts-archive-page-actions"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:pages:open-page-actions-again:keyboard:2",
+      "stepPreviousRef": "urn:step:page-manage:pages:open-page-actions-again:keyboard:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:pages:open-page-actions-again:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-manage:pages:open-page-actions-again",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-manage:pages:open-page-actions-again:keyboard:1",
+        "urn:step:page-manage:pages:open-page-actions-again:keyboard:2"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-manage:pages:delete-page",
+      "label": "Delete the page",
+      "from": "urn:state:page-manage:pages:page-actions-again",
+      "to": "urn:state:page-manage:pages:delete-asked",
+      "commandRef": "urn:transition:page-manage:pages:delete-page:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-manage:pages:delete-page:command",
+      "label": "Delete the page"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:delete-page:command",
+      "graphNodeRef": "urn:transition:page-manage:pages:delete-page:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:delete-page:command",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:delete-page:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:menu-delete-page"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:delete-page:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:menu-delete-page"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:pages:delete-page:pointer:2",
+      "stepPreviousRef": "urn:step:page-manage:pages:delete-page:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:pages:delete-page:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-manage:pages:delete-page",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-manage:pages:delete-page:pointer:1",
+        "urn:step:page-manage:pages:delete-page:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:delete-page:keyboard:1",
+      "stepMoveKindRef": "operability:nextItem",
+      "stepLocatorRef": "urn:locator:menu-delete-page"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:pages:delete-page:keyboard:2",
+      "stepPreviousRef": "urn:step:page-manage:pages:delete-page:keyboard:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:pages:delete-page:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-manage:pages:delete-page",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-manage:pages:delete-page:keyboard:1",
+        "urn:step:page-manage:pages:delete-page:keyboard:2"
+      ]
+    },
+    {
+      "@type": "Effect",
+      "@id": "urn:effect:page-manage:deleted",
+      "label": "The page is gone and the table stays"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-manage:pages:confirm-delete",
+      "label": "Confirm the deletion",
+      "from": "urn:state:page-manage:pages:delete-asked",
+      "to": "urn:state:page-manage:pages:home-after-delete",
+      "commandRef": "urn:transition:page-manage:pages:confirm-delete:command",
+      "effectRef": "urn:effect:page-manage:deleted"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-manage:pages:confirm-delete:command",
+      "label": "Confirm the deletion"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-manage:pages:confirm-delete:command",
+      "graphNodeRef": "urn:transition:page-manage:pages:confirm-delete:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-manage:pages:confirm-delete:command",
+      "observeSurfaceRef": "urn:surface:page-manage:pages:confirm-delete:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:delete-page-confirm"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:confirm-delete:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:delete-page-confirm"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:pages:confirm-delete:pointer:2",
+      "stepPreviousRef": "urn:step:page-manage:pages:confirm-delete:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:pages:confirm-delete:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-manage:pages:confirm-delete",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-manage:pages:confirm-delete:pointer:1",
+        "urn:step:page-manage:pages:confirm-delete:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-manage:pages:confirm-delete:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepLocatorRef": "urn:locator:delete-page-confirm"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-manage:pages:confirm-delete:keyboard:2",
+      "stepPreviousRef": "urn:step:page-manage:pages:confirm-delete:keyboard:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-manage:pages:confirm-delete:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-manage:pages:confirm-delete",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-manage:pages:confirm-delete:keyboard:1",
+        "urn:step:page-manage:pages:confirm-delete:keyboard:2"
+      ]
+    },
+    {
+      "@type": "Touchpoint",
+      "@id": "urn:touchpoint:tables",
+      "label": "Nextcloud Tables (Application owner)",
+      "journeyRefs": [
+        "urn:journey:page-manage:login",
+        "urn:journey:page-manage:pages"
+      ]
+    },
+    {
+      "@type": "Persona",
+      "@id": "urn:user:owner",
+      "label": "Application owner",
+      "touchpointRefs": [
+        "urn:touchpoint:tables"
+      ]
+    },
+    {
+      "@type": "JourneyEntryIndex",
+      "@id": "urn:document:page-manage:entries",
+      "entryRefs": [
+        "urn:entry:page-manage:login",
+        "urn:entry:page-manage:pages"
+      ]
+    }
+  ]
+}

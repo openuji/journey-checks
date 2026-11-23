@@ -1,0 +1,2937 @@
+{
+  "@context": [
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/core.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/graph.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/surface.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/phase.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/l10n.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/observability.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/operability.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/entry-binding.context.jsonld",
+    "https://ujg.specs.openuji.org/tr/1.0-rc4/ns/effect.context.jsonld"
+  ],
+  "@type": "UJGDocument",
+  "@id": "urn:ujg:document:tables-pr3215:page-arrange",
+  "nodes": [
+    {
+      "@type": "Locale",
+      "@id": "urn:locale:en",
+      "localeCode": "en"
+    },
+    {
+      "@type": "InputModality",
+      "@id": "urn:openuji:input-modality:keyboard-text-entry",
+      "label": "Keyboard text entry"
+    },
+    {
+      "@type": "InputModalityProfile",
+      "@id": "urn:input-profile:keyboard",
+      "inputModalityRefs": [
+        "observability:keyboard"
+      ]
+    },
+    {
+      "@type": "InputModalityProfile",
+      "@id": "urn:input-profile:pointer",
+      "inputModalityRefs": [
+        "observability:pointer"
+      ]
+    },
+    {
+      "@type": "InputModalityProfile",
+      "@id": "urn:input-profile:text-entry",
+      "inputModalityRefs": [
+        "urn:openuji:input-modality:keyboard-text-entry"
+      ]
+    },
+    {
+      "@type": "ObservationEvent",
+      "@id": "urn:observation-event:presence"
+    },
+    {
+      "@type": "ObservationEvent",
+      "@id": "urn:observation-event:absence"
+    },
+    {
+      "@type": "ObservationEvent",
+      "@id": "urn:observation-event:activate",
+      "label": "Activate",
+      "requiredInputModalityProfileRefs": [
+        "urn:input-profile:keyboard",
+        "urn:input-profile:pointer"
+      ]
+    },
+    {
+      "@type": "ObservationEvent",
+      "@id": "urn:observation-event:text-entry",
+      "label": "Enter text",
+      "requiredInputModalityProfileRefs": [
+        "urn:input-profile:text-entry"
+      ]
+    },
+    {
+      "@type": "Phase",
+      "@id": "urn:phase:setup",
+      "label": "Setup",
+      "order": 0
+    },
+    {
+      "@type": "Phase",
+      "@id": "urn:phase:pages",
+      "label": "Grid pages",
+      "order": 1
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:account-name-or-email",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:account-name-or-email:en",
+      "messageMetaRef": "urn:message:account-name-or-email",
+      "localeRef": "urn:locale:en",
+      "value": "Account name or email"
+    },
+    {
+      "@type": "AccessibleFeature",
+      "@id": "urn:feature:exact-name",
+      "accessibleFeatureName": "accessible-name-exact",
+      "accessibleFeatureValue": "true"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:login-account",
+      "role": "textbox",
+      "accessibleNameRef": "urn:message:account-name-or-email",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:password",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:password:en",
+      "messageMetaRef": "urn:message:password",
+      "localeRef": "urn:locale:en",
+      "value": "Password"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:login-password",
+      "role": "textbox",
+      "accessibleNameRef": "urn:message:password",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:log-in",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:log-in:en",
+      "messageMetaRef": "urn:message:log-in",
+      "localeRef": "urn:locale:en",
+      "value": "Log in"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:login-submit",
+      "role": "button",
+      "accessibleNameRef": "urn:message:log-in",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:go-to-dashboard",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:go-to-dashboard:en",
+      "messageMetaRef": "urn:message:go-to-dashboard",
+      "localeRef": "urn:locale:en",
+      "value": "Go to Dashboard"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:dashboard-link",
+      "role": "link",
+      "accessibleNameRef": "urn:message:go-to-dashboard",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:app-navigation",
+      "role": "navigation"
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:team-board",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:team-board:en",
+      "messageMetaRef": "urn:message:team-board",
+      "localeRef": "urn:locale:en",
+      "value": "Team board"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:team-board-link",
+      "role": "link",
+      "accessibleNameRef": "urn:message:team-board",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:app-navigation"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:home",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:home:en",
+      "messageMetaRef": "urn:message:home",
+      "localeRef": "urn:locale:en",
+      "value": "Home"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:home-panel",
+      "role": "tabpanel",
+      "accessibleNameRef": "urn:message:home",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:tasks",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:tasks:en",
+      "messageMetaRef": "urn:message:tasks",
+      "localeRef": "urn:locale:en",
+      "value": "Tasks"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:home-tasks",
+      "role": "heading",
+      "accessibleNameRef": "urn:message:tasks",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:home-panel"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:drafts",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:drafts:en",
+      "messageMetaRef": "urn:message:drafts",
+      "localeRef": "urn:locale:en",
+      "value": "Drafts"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:panel-drafts",
+      "role": "tabpanel",
+      "accessibleNameRef": "urn:message:drafts",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:this-page-is-empty",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:this-page-is-empty:en",
+      "messageMetaRef": "urn:message:this-page-is-empty",
+      "localeRef": "urn:locale:en",
+      "value": "This page is empty"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:drafts-empty-note",
+      "role": "note",
+      "accessibleNameRef": "urn:message:this-page-is-empty",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:panel-drafts"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:pages-of-this-application",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:pages-of-this-application:en",
+      "messageMetaRef": "urn:message:pages-of-this-application",
+      "localeRef": "urn:locale:en",
+      "value": "Pages of this application"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:page-bar",
+      "role": "tablist",
+      "accessibleNameRef": "urn:message:pages-of-this-application",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:tab-drafts",
+      "role": "tab",
+      "accessibleNameRef": "urn:message:drafts",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:page-bar"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:tab-home",
+      "role": "tab",
+      "accessibleNameRef": "urn:message:home",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:page-bar"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:edit-page",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:edit-page:en",
+      "messageMetaRef": "urn:message:edit-page",
+      "localeRef": "urn:locale:en",
+      "value": "Edit page"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:drafts-edit-page",
+      "role": "button",
+      "accessibleNameRef": "urn:message:edit-page",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:panel-drafts"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:save",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:save:en",
+      "messageMetaRef": "urn:message:save",
+      "localeRef": "urn:locale:en",
+      "value": "Save"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:drafts-save",
+      "role": "button",
+      "accessibleNameRef": "urn:message:save",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:panel-drafts"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:add-widget",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:add-widget:en",
+      "messageMetaRef": "urn:message:add-widget",
+      "localeRef": "urn:locale:en",
+      "value": "Add widget"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:drafts-empty-add-widget",
+      "role": "button",
+      "accessibleNameRef": "urn:message:add-widget",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:drafts-empty-note"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:dialog-add-widget",
+      "role": "dialog",
+      "accessibleNameRef": "urn:message:add-widget",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:heading",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:heading:en",
+      "messageMetaRef": "urn:message:heading",
+      "localeRef": "urn:locale:en",
+      "value": "Heading *"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:add-widget-heading",
+      "role": "textbox",
+      "accessibleNameRef": "urn:message:heading",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:dialog-add-widget"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:add-widget-submit",
+      "role": "button",
+      "accessibleNameRef": "urn:message:add-widget",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:dialog-add-widget"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:actions-for-header",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:actions-for-header:en",
+      "messageMetaRef": "urn:message:actions-for-header",
+      "localeRef": "urn:locale:en",
+      "value": "Actions for Header"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:header-widget-actions",
+      "role": "button",
+      "accessibleNameRef": "urn:message:actions-for-header",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:drafts-add-widget",
+      "role": "button",
+      "accessibleNameRef": "urn:message:add-widget",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:panel-drafts"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:widget-type",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:widget-type:en",
+      "messageMetaRef": "urn:message:widget-type",
+      "localeRef": "urn:locale:en",
+      "value": "Widget type"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:add-widget-widget-type",
+      "role": "combobox",
+      "accessibleNameRef": "urn:message:widget-type",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:dialog-add-widget"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:table-or-view",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:table-or-view:en",
+      "messageMetaRef": "urn:message:table-or-view",
+      "localeRef": "urn:locale:en",
+      "value": "Table or view"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:option-table-or-view",
+      "role": "option",
+      "accessibleNameRef": "urn:message:table-or-view",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:add-widget-source",
+      "role": "combobox",
+      "accessibleNameRef": "urn:message:table-or-view",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:dialog-add-widget"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:any-option",
+      "role": "option"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:option-tasks",
+      "role": "option",
+      "accessibleNameRef": "urn:message:tasks",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:title",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:title:en",
+      "messageMetaRef": "urn:message:title",
+      "localeRef": "urn:locale:en",
+      "value": "Title"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:add-widget-title",
+      "role": "textbox",
+      "accessibleNameRef": "urn:message:title",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:dialog-add-widget"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:options",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:options:en",
+      "messageMetaRef": "urn:message:options",
+      "localeRef": "urn:locale:en",
+      "value": "Options"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:widget-type-options",
+      "role": "listbox",
+      "accessibleNameRef": "urn:message:options",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:actions-for-tasks",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:actions-for-tasks:en",
+      "messageMetaRef": "urn:message:actions-for-tasks",
+      "localeRef": "urn:locale:en",
+      "value": "Actions for Tasks"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:tasks-widget-actions",
+      "role": "button",
+      "accessibleNameRef": "urn:message:actions-for-tasks",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:tasks-widget-menu",
+      "role": "menu",
+      "accessibleNameRef": "urn:message:actions-for-tasks",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:make-narrower",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:make-narrower:en",
+      "messageMetaRef": "urn:message:make-narrower",
+      "localeRef": "urn:locale:en",
+      "value": "Make narrower"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:menu-make-narrower",
+      "role": "menuitem",
+      "accessibleNameRef": "urn:message:make-narrower",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:tasks-widget-menu"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:move-right",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:move-right:en",
+      "messageMetaRef": "urn:message:move-right",
+      "localeRef": "urn:locale:en",
+      "value": "Move right"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:menu-move-right",
+      "role": "menuitem",
+      "accessibleNameRef": "urn:message:move-right",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:tasks-widget-menu"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:panel-home",
+      "role": "tabpanel",
+      "accessibleNameRef": "urn:message:home",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ]
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:drafts-tasks-region",
+      "role": "region",
+      "accessibleNameRef": "urn:message:tasks",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:panel-drafts"
+      ]
+    },
+    {
+      "@type": "MessageMeta",
+      "@id": "urn:message:write-the-report",
+      "defaultLocaleRef": "urn:locale:en"
+    },
+    {
+      "@type": "Message",
+      "@id": "urn:message-value:write-the-report:en",
+      "messageMetaRef": "urn:message:write-the-report",
+      "localeRef": "urn:locale:en",
+      "value": "Write the report"
+    },
+    {
+      "@type": "AccessibleLocator",
+      "@id": "urn:locator:drafts-tasks-row",
+      "role": "cell",
+      "accessibleNameRef": "urn:message:write-the-report",
+      "accessibleFeatureRefs": [
+        "urn:feature:exact-name"
+      ],
+      "contextLocatorRefs": [
+        "urn:locator:drafts-tasks-region"
+      ]
+    },
+    {
+      "@type": "CompositeState",
+      "@id": "urn:composite:page-arrange:login",
+      "label": "Application owner signs in",
+      "subjourneyRefs": [
+        "urn:journey:page-arrange:login"
+      ]
+    },
+    {
+      "@type": "Journey",
+      "@id": "urn:journey:page-arrange:login",
+      "label": "Application owner signs in",
+      "defaultEntryRef": "urn:entry:page-arrange:login",
+      "entryRefs": [
+        "urn:entry:page-arrange:login"
+      ],
+      "stateRefs": [
+        "urn:state:page-arrange:login:ready",
+        "urn:state:page-arrange:login:username-entered",
+        "urn:state:page-arrange:login:password-entered",
+        "urn:state:page-arrange:login:signed-in"
+      ],
+      "transitionRefs": [
+        "urn:transition:page-arrange:login:enter-username",
+        "urn:transition:page-arrange:login:enter-password",
+        "urn:transition:page-arrange:login:submit"
+      ]
+    },
+    {
+      "@type": "JourneyEntry",
+      "@id": "urn:entry:page-arrange:login",
+      "stateRef": "urn:state:page-arrange:login:ready"
+    },
+    {
+      "@type": "EntryBinding",
+      "@id": "urn:entry-binding:page-arrange:login",
+      "entryRef": "urn:entry:page-arrange:login",
+      "value": "login"
+    },
+    {
+      "@type": "Step",
+      "@id": "urn:journey-step:page-arrange:login",
+      "label": "Application owner signs in",
+      "order": 0,
+      "compositeStateRef": "urn:composite:page-arrange:login",
+      "phaseRef": "urn:phase:setup"
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:login:ready",
+      "label": "Login form is ready"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:login:ready",
+      "graphNodeRef": "urn:state:page-arrange:login:ready"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:login:ready",
+      "observeSurfaceRef": "urn:surface:page-arrange:login:ready",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:login-account"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:login:username-entered",
+      "label": "Account name is entered"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:login:username-entered",
+      "graphNodeRef": "urn:state:page-arrange:login:username-entered"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:login:username-entered",
+      "observeSurfaceRef": "urn:surface:page-arrange:login:username-entered",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:login-password"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:login:password-entered",
+      "label": "Password is entered"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:login:password-entered",
+      "graphNodeRef": "urn:state:page-arrange:login:password-entered"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:login:password-entered",
+      "observeSurfaceRef": "urn:surface:page-arrange:login:password-entered",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:login-submit"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:login:signed-in",
+      "label": "Signed in"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:login:signed-in",
+      "graphNodeRef": "urn:state:page-arrange:login:signed-in"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:login:signed-in",
+      "observeSurfaceRef": "urn:surface:page-arrange:login:signed-in",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:dashboard-link"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:login:enter-username",
+      "label": "Enter the account name",
+      "from": "urn:state:page-arrange:login:ready",
+      "to": "urn:state:page-arrange:login:username-entered",
+      "commandRef": "urn:transition:page-arrange:login:enter-username:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:login:enter-username:command",
+      "label": "Enter the account name"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:login:enter-username:command",
+      "graphNodeRef": "urn:transition:page-arrange:login:enter-username:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:login:enter-username:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:login:enter-username:command",
+      "observationEventRef": "urn:observation-event:text-entry",
+      "locatorRefs": [
+        "urn:locator:login-account"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:login:enter-password",
+      "label": "Enter the password",
+      "from": "urn:state:page-arrange:login:username-entered",
+      "to": "urn:state:page-arrange:login:password-entered",
+      "commandRef": "urn:transition:page-arrange:login:enter-password:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:login:enter-password:command",
+      "label": "Enter the password"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:login:enter-password:command",
+      "graphNodeRef": "urn:transition:page-arrange:login:enter-password:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:login:enter-password:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:login:enter-password:command",
+      "observationEventRef": "urn:observation-event:text-entry",
+      "locatorRefs": [
+        "urn:locator:login-password"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:login:enter-password:text-entry:1",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepLocatorRef": "urn:locator:login-password"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:login:enter-password:text-entry",
+      "label": "Focus moves to the field",
+      "materializationTransitionRef": "urn:transition:page-arrange:login:enter-password",
+      "materializationModalityRef": "urn:openuji:input-modality:keyboard-text-entry",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:login:enter-password:text-entry:1"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:login:submit",
+      "label": "Log in",
+      "from": "urn:state:page-arrange:login:password-entered",
+      "to": "urn:state:page-arrange:login:signed-in",
+      "commandRef": "urn:transition:page-arrange:login:submit:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:login:submit:command",
+      "label": "Log in"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:login:submit:command",
+      "graphNodeRef": "urn:transition:page-arrange:login:submit:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:login:submit:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:login:submit:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:login-submit"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:login:submit:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:login-submit"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:login:submit:pointer:2",
+      "stepPreviousRef": "urn:step:page-arrange:login:submit:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:login:submit:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-arrange:login:submit",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:login:submit:pointer:1",
+        "urn:step:page-arrange:login:submit:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:login:submit:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:login:submit:keyboard:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-arrange:login:submit:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:login:submit:keyboard:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-arrange:login:submit:keyboard:2",
+      "stepLocatorRef": "urn:locator:login-submit"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:login:submit:keyboard:4",
+      "stepPreviousRef": "urn:step:page-arrange:login:submit:keyboard:3"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:login:submit:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-arrange:login:submit",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:login:submit:keyboard:1",
+        "urn:step:page-arrange:login:submit:keyboard:2",
+        "urn:step:page-arrange:login:submit:keyboard:3",
+        "urn:step:page-arrange:login:submit:keyboard:4"
+      ]
+    },
+    {
+      "@type": "CompositeState",
+      "@id": "urn:composite:page-arrange:pages",
+      "label": "The owner arranges widgets",
+      "subjourneyRefs": [
+        "urn:journey:page-arrange:pages"
+      ]
+    },
+    {
+      "@type": "Journey",
+      "@id": "urn:journey:page-arrange:pages",
+      "label": "The owner arranges widgets",
+      "defaultEntryRef": "urn:entry:page-arrange:pages",
+      "entryRefs": [
+        "urn:entry:page-arrange:pages"
+      ],
+      "stateRefs": [
+        "urn:state:page-arrange:pages:tables",
+        "urn:state:page-arrange:pages:home",
+        "urn:state:page-arrange:pages:drafts-empty",
+        "urn:state:page-arrange:pages:editing",
+        "urn:state:page-arrange:pages:add-widget",
+        "urn:state:page-arrange:pages:heading-entered",
+        "urn:state:page-arrange:pages:header-added",
+        "urn:state:page-arrange:pages:add-data-widget",
+        "urn:state:page-arrange:pages:widget-types-filtered",
+        "urn:state:page-arrange:pages:data-widget-form",
+        "urn:state:page-arrange:pages:sources-listed",
+        "urn:state:page-arrange:pages:source-chosen",
+        "urn:state:page-arrange:pages:data-widget-added",
+        "urn:state:page-arrange:pages:widget-menu",
+        "urn:state:page-arrange:pages:narrower",
+        "urn:state:page-arrange:pages:moved",
+        "urn:state:page-arrange:pages:menu-closed",
+        "urn:state:page-arrange:pages:saved",
+        "urn:state:page-arrange:pages:home-again",
+        "urn:state:page-arrange:pages:drafts-with-widgets"
+      ],
+      "transitionRefs": [
+        "urn:transition:page-arrange:pages:open-application",
+        "urn:transition:page-arrange:pages:select-drafts",
+        "urn:transition:page-arrange:pages:edit-page",
+        "urn:transition:page-arrange:pages:open-add-widget",
+        "urn:transition:page-arrange:pages:enter-heading",
+        "urn:transition:page-arrange:pages:add-header",
+        "urn:transition:page-arrange:pages:open-add-data-widget",
+        "urn:transition:page-arrange:pages:filter-widget-type",
+        "urn:transition:page-arrange:pages:choose-table-or-view",
+        "urn:transition:page-arrange:pages:filter-source",
+        "urn:transition:page-arrange:pages:choose-tasks",
+        "urn:transition:page-arrange:pages:add-data-widget",
+        "urn:transition:page-arrange:pages:open-widget-menu",
+        "urn:transition:page-arrange:pages:make-narrower",
+        "urn:transition:page-arrange:pages:move-right",
+        "urn:transition:page-arrange:pages:close-widget-menu",
+        "urn:transition:page-arrange:pages:save",
+        "urn:transition:page-arrange:pages:select-home",
+        "urn:transition:page-arrange:pages:select-drafts-again"
+      ]
+    },
+    {
+      "@type": "JourneyEntry",
+      "@id": "urn:entry:page-arrange:pages",
+      "stateRef": "urn:state:page-arrange:pages:tables"
+    },
+    {
+      "@type": "EntryBinding",
+      "@id": "urn:entry-binding:page-arrange:pages",
+      "entryRef": "urn:entry:page-arrange:pages",
+      "value": "tables"
+    },
+    {
+      "@type": "Step",
+      "@id": "urn:journey-step:page-arrange:pages",
+      "label": "The owner arranges widgets",
+      "order": 1,
+      "compositeStateRef": "urn:composite:page-arrange:pages",
+      "phaseRef": "urn:phase:pages"
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:tables",
+      "label": "Tables is open"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:tables",
+      "graphNodeRef": "urn:state:page-arrange:pages:tables"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:tables",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:tables",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:team-board-link"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:home",
+      "label": "The start page is shown with its table"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:home",
+      "graphNodeRef": "urn:state:page-arrange:pages:home"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:home",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:home",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:home-tasks"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:drafts-empty",
+      "label": "Drafts is selected and empty"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:drafts-empty",
+      "graphNodeRef": "urn:state:page-arrange:pages:drafts-empty"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:drafts-empty",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:drafts-empty",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:drafts-empty-note"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:editing",
+      "label": "The page is in edit mode"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:editing",
+      "graphNodeRef": "urn:state:page-arrange:pages:editing"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:editing",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:editing",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:drafts-save"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:add-widget",
+      "label": "Add widget is open"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:add-widget",
+      "graphNodeRef": "urn:state:page-arrange:pages:add-widget"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:add-widget",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:add-widget",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:dialog-add-widget"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:heading-entered",
+      "label": "The heading is entered"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:heading-entered",
+      "graphNodeRef": "urn:state:page-arrange:pages:heading-entered"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:heading-entered",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:heading-entered",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:dialog-add-widget"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:header-added",
+      "label": "The header widget is on the page"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:header-added",
+      "graphNodeRef": "urn:state:page-arrange:pages:header-added"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:header-added",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:header-added",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:header-widget-actions"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:add-data-widget",
+      "label": "Add widget is open for the table"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:add-data-widget",
+      "graphNodeRef": "urn:state:page-arrange:pages:add-data-widget"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:add-data-widget",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:add-data-widget",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:add-widget-widget-type"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:widget-types-filtered",
+      "label": "Matching widget types are listed"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:widget-types-filtered",
+      "graphNodeRef": "urn:state:page-arrange:pages:widget-types-filtered"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:widget-types-filtered",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:widget-types-filtered",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:widget-type-options"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:data-widget-form",
+      "label": "The table widget settings are shown"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:data-widget-form",
+      "graphNodeRef": "urn:state:page-arrange:pages:data-widget-form"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:data-widget-form",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:data-widget-form",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:add-widget-source"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:sources-listed",
+      "label": "Only the application's table is offered"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:sources-listed",
+      "graphNodeRef": "urn:state:page-arrange:pages:sources-listed"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:sources-listed",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:sources-listed",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:any-option"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:source-chosen",
+      "label": "Tasks is chosen"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:source-chosen",
+      "graphNodeRef": "urn:state:page-arrange:pages:source-chosen"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:source-chosen",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:source-chosen",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:add-widget-submit"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:data-widget-added",
+      "label": "The table widget is on the page"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:data-widget-added",
+      "graphNodeRef": "urn:state:page-arrange:pages:data-widget-added"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:data-widget-added",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:data-widget-added",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:tasks-widget-actions"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:widget-menu",
+      "label": "The widget menu is open"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:widget-menu",
+      "graphNodeRef": "urn:state:page-arrange:pages:widget-menu"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:widget-menu",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:widget-menu",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:tasks-widget-menu"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:narrower",
+      "label": "The widget is narrower"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:narrower",
+      "graphNodeRef": "urn:state:page-arrange:pages:narrower"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:narrower",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:narrower",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:menu-move-right"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:moved",
+      "label": "The widget moved right"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:moved",
+      "graphNodeRef": "urn:state:page-arrange:pages:moved"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:moved",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:moved",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:tasks-widget-menu"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:menu-closed",
+      "label": "The widget menu is closed"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:menu-closed",
+      "graphNodeRef": "urn:state:page-arrange:pages:menu-closed"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:menu-closed",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:menu-closed",
+      "observationEventRef": "urn:observation-event:absence",
+      "expectedMatchCount": 0,
+      "locatorRefs": [
+        "urn:locator:tasks-widget-menu"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:saved",
+      "label": "The page is saved and in view mode"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:saved",
+      "graphNodeRef": "urn:state:page-arrange:pages:saved"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:saved",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:saved",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:drafts-edit-page"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:home-again",
+      "label": "The start page is shown again"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:home-again",
+      "graphNodeRef": "urn:state:page-arrange:pages:home-again"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:home-again",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:home-again",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:home-tasks"
+      ]
+    },
+    {
+      "@type": "State",
+      "@id": "urn:state:page-arrange:pages:drafts-with-widgets",
+      "label": "Drafts shows both widgets with the row"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:drafts-with-widgets",
+      "graphNodeRef": "urn:state:page-arrange:pages:drafts-with-widgets"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:drafts-with-widgets",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:drafts-with-widgets",
+      "observationEventRef": "urn:observation-event:presence",
+      "expectedMatchCount": 1,
+      "locatorRefs": [
+        "urn:locator:drafts-tasks-row"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:open-application",
+      "label": "Open the application",
+      "from": "urn:state:page-arrange:pages:tables",
+      "to": "urn:state:page-arrange:pages:home",
+      "commandRef": "urn:transition:page-arrange:pages:open-application:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:open-application:command",
+      "label": "Open the application"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:open-application:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:open-application:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:open-application:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:open-application:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:team-board-link"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:open-application:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:team-board-link"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:open-application:pointer:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:open-application:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:open-application:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:open-application",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:open-application:pointer:1",
+        "urn:step:page-arrange:pages:open-application:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:open-application:keyboard:1",
+      "stepMoveKindRef": "operability:previousStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:open-application:keyboard:2",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:open-application:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:open-application:keyboard:3",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:open-application:keyboard:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:open-application:keyboard:4",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:open-application:keyboard:3",
+      "stepLocatorRef": "urn:locator:team-board-link"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:open-application:keyboard:5",
+      "stepPreviousRef": "urn:step:page-arrange:pages:open-application:keyboard:4"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:open-application:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:open-application",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:open-application:keyboard:1",
+        "urn:step:page-arrange:pages:open-application:keyboard:2",
+        "urn:step:page-arrange:pages:open-application:keyboard:3",
+        "urn:step:page-arrange:pages:open-application:keyboard:4",
+        "urn:step:page-arrange:pages:open-application:keyboard:5"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:select-drafts",
+      "label": "Select Drafts",
+      "from": "urn:state:page-arrange:pages:home",
+      "to": "urn:state:page-arrange:pages:drafts-empty",
+      "commandRef": "urn:transition:page-arrange:pages:select-drafts:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:select-drafts:command",
+      "label": "Select Drafts"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:select-drafts:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:select-drafts:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:select-drafts:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:select-drafts:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:tab-drafts"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:select-drafts:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:tab-drafts"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:select-drafts:pointer:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:select-drafts:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:select-drafts:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:select-drafts",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:select-drafts:pointer:1",
+        "urn:step:page-arrange:pages:select-drafts:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:select-drafts:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepLocatorRef": "urn:locator:tab-home"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:select-drafts:keyboard:2",
+      "stepMoveKindRef": "operability:nextItem",
+      "stepPreviousRef": "urn:step:page-arrange:pages:select-drafts:keyboard:1",
+      "stepLocatorRef": "urn:locator:tab-drafts"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:select-drafts:keyboard:3",
+      "stepPreviousRef": "urn:step:page-arrange:pages:select-drafts:keyboard:2"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:select-drafts:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:select-drafts",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:select-drafts:keyboard:1",
+        "urn:step:page-arrange:pages:select-drafts:keyboard:2",
+        "urn:step:page-arrange:pages:select-drafts:keyboard:3"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:edit-page",
+      "label": "Edit the page",
+      "from": "urn:state:page-arrange:pages:drafts-empty",
+      "to": "urn:state:page-arrange:pages:editing",
+      "commandRef": "urn:transition:page-arrange:pages:edit-page:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:edit-page:command",
+      "label": "Edit the page"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:edit-page:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:edit-page:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:edit-page:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:edit-page:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:drafts-edit-page"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:edit-page:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:drafts-edit-page"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:edit-page:pointer:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:edit-page:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:edit-page:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:edit-page",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:edit-page:pointer:1",
+        "urn:step:page-arrange:pages:edit-page:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:edit-page:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:edit-page:keyboard:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:edit-page:keyboard:1",
+      "stepLocatorRef": "urn:locator:drafts-edit-page"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:edit-page:keyboard:3",
+      "stepPreviousRef": "urn:step:page-arrange:pages:edit-page:keyboard:2"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:edit-page:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:edit-page",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:edit-page:keyboard:1",
+        "urn:step:page-arrange:pages:edit-page:keyboard:2",
+        "urn:step:page-arrange:pages:edit-page:keyboard:3"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:open-add-widget",
+      "label": "Open Add widget",
+      "from": "urn:state:page-arrange:pages:editing",
+      "to": "urn:state:page-arrange:pages:add-widget",
+      "commandRef": "urn:transition:page-arrange:pages:open-add-widget:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:open-add-widget:command",
+      "label": "Open Add widget"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:open-add-widget:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:open-add-widget:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:open-add-widget:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:open-add-widget:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:drafts-empty-add-widget"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:open-add-widget:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:drafts-empty-add-widget"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:open-add-widget:pointer:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:open-add-widget:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:open-add-widget:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:open-add-widget",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:open-add-widget:pointer:1",
+        "urn:step:page-arrange:pages:open-add-widget:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:open-add-widget:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:open-add-widget:keyboard:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:open-add-widget:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:open-add-widget:keyboard:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:open-add-widget:keyboard:2",
+      "stepLocatorRef": "urn:locator:drafts-empty-add-widget"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:open-add-widget:keyboard:4",
+      "stepPreviousRef": "urn:step:page-arrange:pages:open-add-widget:keyboard:3"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:open-add-widget:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:open-add-widget",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:open-add-widget:keyboard:1",
+        "urn:step:page-arrange:pages:open-add-widget:keyboard:2",
+        "urn:step:page-arrange:pages:open-add-widget:keyboard:3",
+        "urn:step:page-arrange:pages:open-add-widget:keyboard:4"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:enter-heading",
+      "label": "Enter the heading Welcome",
+      "from": "urn:state:page-arrange:pages:add-widget",
+      "to": "urn:state:page-arrange:pages:heading-entered",
+      "commandRef": "urn:transition:page-arrange:pages:enter-heading:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:enter-heading:command",
+      "label": "Enter the heading Welcome"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:enter-heading:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:enter-heading:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:enter-heading:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:enter-heading:command",
+      "observationEventRef": "urn:observation-event:text-entry",
+      "locatorRefs": [
+        "urn:locator:add-widget-heading"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:enter-heading:text-entry:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:enter-heading:text-entry:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:enter-heading:text-entry:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:enter-heading:text-entry:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:enter-heading:text-entry:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:enter-heading:text-entry:4",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:enter-heading:text-entry:3",
+      "stepLocatorRef": "urn:locator:add-widget-heading"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:enter-heading:text-entry",
+      "label": "Focus moves to the field",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:enter-heading",
+      "materializationModalityRef": "urn:openuji:input-modality:keyboard-text-entry",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:enter-heading:text-entry:1",
+        "urn:step:page-arrange:pages:enter-heading:text-entry:2",
+        "urn:step:page-arrange:pages:enter-heading:text-entry:3",
+        "urn:step:page-arrange:pages:enter-heading:text-entry:4"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:add-header",
+      "label": "Add the header widget",
+      "from": "urn:state:page-arrange:pages:heading-entered",
+      "to": "urn:state:page-arrange:pages:header-added",
+      "commandRef": "urn:transition:page-arrange:pages:add-header:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:add-header:command",
+      "label": "Add the header widget"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:add-header:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:add-header:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:add-header:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:add-header:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:add-widget-submit"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:add-header:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:add-widget-submit"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:add-header:pointer:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:add-header:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:add-header:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:add-header",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:add-header:pointer:1",
+        "urn:step:page-arrange:pages:add-header:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:add-header:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:add-header:keyboard:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:add-header:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:add-header:keyboard:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:add-header:keyboard:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:add-header:keyboard:4",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:add-header:keyboard:3",
+      "stepLocatorRef": "urn:locator:add-widget-submit"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:add-header:keyboard:5",
+      "stepPreviousRef": "urn:step:page-arrange:pages:add-header:keyboard:4"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:add-header:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:add-header",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:add-header:keyboard:1",
+        "urn:step:page-arrange:pages:add-header:keyboard:2",
+        "urn:step:page-arrange:pages:add-header:keyboard:3",
+        "urn:step:page-arrange:pages:add-header:keyboard:4",
+        "urn:step:page-arrange:pages:add-header:keyboard:5"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:open-add-data-widget",
+      "label": "Open Add widget for a table",
+      "from": "urn:state:page-arrange:pages:header-added",
+      "to": "urn:state:page-arrange:pages:add-data-widget",
+      "commandRef": "urn:transition:page-arrange:pages:open-add-data-widget:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:open-add-data-widget:command",
+      "label": "Open Add widget for a table"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:open-add-data-widget:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:open-add-data-widget:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:open-add-data-widget:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:open-add-data-widget:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:drafts-add-widget"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:open-add-data-widget:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:drafts-add-widget"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:open-add-data-widget:pointer:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:open-add-data-widget:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:open-add-data-widget:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:open-add-data-widget",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:open-add-data-widget:pointer:1",
+        "urn:step:page-arrange:pages:open-add-data-widget:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:open-add-data-widget:keyboard:1",
+      "stepMoveKindRef": "operability:previousStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:open-add-data-widget:keyboard:2",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:open-add-data-widget:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:open-add-data-widget:keyboard:3",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:open-add-data-widget:keyboard:2",
+      "stepLocatorRef": "urn:locator:drafts-add-widget"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:open-add-data-widget:keyboard:4",
+      "stepPreviousRef": "urn:step:page-arrange:pages:open-add-data-widget:keyboard:3"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:open-add-data-widget:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:open-add-data-widget",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:open-add-data-widget:keyboard:1",
+        "urn:step:page-arrange:pages:open-add-data-widget:keyboard:2",
+        "urn:step:page-arrange:pages:open-add-data-widget:keyboard:3",
+        "urn:step:page-arrange:pages:open-add-data-widget:keyboard:4"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:filter-widget-type",
+      "label": "Filter the widget types",
+      "from": "urn:state:page-arrange:pages:add-data-widget",
+      "to": "urn:state:page-arrange:pages:widget-types-filtered",
+      "commandRef": "urn:transition:page-arrange:pages:filter-widget-type:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:filter-widget-type:command",
+      "label": "Filter the widget types"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:filter-widget-type:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:filter-widget-type:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:filter-widget-type:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:filter-widget-type:command",
+      "observationEventRef": "urn:observation-event:text-entry",
+      "locatorRefs": [
+        "urn:locator:add-widget-widget-type"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:choose-table-or-view",
+      "label": "Choose Table or view",
+      "from": "urn:state:page-arrange:pages:widget-types-filtered",
+      "to": "urn:state:page-arrange:pages:data-widget-form",
+      "commandRef": "urn:transition:page-arrange:pages:choose-table-or-view:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:choose-table-or-view:command",
+      "label": "Choose Table or view"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:choose-table-or-view:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:choose-table-or-view:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:choose-table-or-view:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:choose-table-or-view:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:option-table-or-view"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:choose-table-or-view:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:option-table-or-view"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:choose-table-or-view:pointer:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:choose-table-or-view:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:choose-table-or-view:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:choose-table-or-view",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:choose-table-or-view:pointer:1",
+        "urn:step:page-arrange:pages:choose-table-or-view:pointer:2"
+      ]
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:choose-table-or-view:keyboard:1",
+      "stepLocatorRef": "urn:locator:option-table-or-view"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:choose-table-or-view:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:choose-table-or-view",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:choose-table-or-view:keyboard:1"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:filter-source",
+      "label": "Filter the tables and views",
+      "from": "urn:state:page-arrange:pages:data-widget-form",
+      "to": "urn:state:page-arrange:pages:sources-listed",
+      "commandRef": "urn:transition:page-arrange:pages:filter-source:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:filter-source:command",
+      "label": "Filter the tables and views"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:filter-source:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:filter-source:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:filter-source:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:filter-source:command",
+      "observationEventRef": "urn:observation-event:text-entry",
+      "locatorRefs": [
+        "urn:locator:add-widget-source"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:filter-source:text-entry:1",
+      "stepMoveKindRef": "operability:nextStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:filter-source:text-entry:2",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:filter-source:text-entry:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:filter-source:text-entry:3",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:filter-source:text-entry:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:filter-source:text-entry:4",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:filter-source:text-entry:3",
+      "stepLocatorRef": "urn:locator:add-widget-source"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:filter-source:text-entry",
+      "label": "Focus moves to the field",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:filter-source",
+      "materializationModalityRef": "urn:openuji:input-modality:keyboard-text-entry",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:filter-source:text-entry:1",
+        "urn:step:page-arrange:pages:filter-source:text-entry:2",
+        "urn:step:page-arrange:pages:filter-source:text-entry:3",
+        "urn:step:page-arrange:pages:filter-source:text-entry:4"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:choose-tasks",
+      "label": "Choose Tasks",
+      "from": "urn:state:page-arrange:pages:sources-listed",
+      "to": "urn:state:page-arrange:pages:source-chosen",
+      "commandRef": "urn:transition:page-arrange:pages:choose-tasks:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:choose-tasks:command",
+      "label": "Choose Tasks"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:choose-tasks:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:choose-tasks:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:choose-tasks:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:choose-tasks:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:option-tasks"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:choose-tasks:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:option-tasks"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:choose-tasks:pointer:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:choose-tasks:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:choose-tasks:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:choose-tasks",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:choose-tasks:pointer:1",
+        "urn:step:page-arrange:pages:choose-tasks:pointer:2"
+      ]
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:choose-tasks:keyboard:1",
+      "stepLocatorRef": "urn:locator:option-tasks"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:choose-tasks:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:choose-tasks",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:choose-tasks:keyboard:1"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:add-data-widget",
+      "label": "Add the table widget",
+      "from": "urn:state:page-arrange:pages:source-chosen",
+      "to": "urn:state:page-arrange:pages:data-widget-added",
+      "commandRef": "urn:transition:page-arrange:pages:add-data-widget:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:add-data-widget:command",
+      "label": "Add the table widget"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:add-data-widget:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:add-data-widget:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:add-data-widget:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:add-data-widget:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:add-widget-submit"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:add-data-widget:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:add-widget-submit"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:add-data-widget:pointer:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:add-data-widget:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:add-data-widget:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:add-data-widget",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:add-data-widget:pointer:1",
+        "urn:step:page-arrange:pages:add-data-widget:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:add-data-widget:keyboard:1",
+      "stepMoveKindRef": "operability:nextStop",
+      "stepLocatorRef": "urn:locator:add-widget-submit"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:add-data-widget:keyboard:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:add-data-widget:keyboard:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:add-data-widget:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:add-data-widget",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:add-data-widget:keyboard:1",
+        "urn:step:page-arrange:pages:add-data-widget:keyboard:2"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:open-widget-menu",
+      "label": "Open Actions for Tasks",
+      "from": "urn:state:page-arrange:pages:data-widget-added",
+      "to": "urn:state:page-arrange:pages:widget-menu",
+      "commandRef": "urn:transition:page-arrange:pages:open-widget-menu:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:open-widget-menu:command",
+      "label": "Open Actions for Tasks"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:open-widget-menu:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:open-widget-menu:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:open-widget-menu:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:open-widget-menu:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:tasks-widget-actions"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:open-widget-menu:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:tasks-widget-actions"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:open-widget-menu:pointer:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:open-widget-menu:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:open-widget-menu:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:open-widget-menu",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:open-widget-menu:pointer:1",
+        "urn:step:page-arrange:pages:open-widget-menu:pointer:2"
+      ]
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:open-widget-menu:keyboard:1",
+      "stepLocatorRef": "urn:locator:tasks-widget-actions"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:open-widget-menu:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:open-widget-menu",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:open-widget-menu:keyboard:1"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:make-narrower",
+      "label": "Make the widget narrower",
+      "from": "urn:state:page-arrange:pages:widget-menu",
+      "to": "urn:state:page-arrange:pages:narrower",
+      "commandRef": "urn:transition:page-arrange:pages:make-narrower:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:make-narrower:command",
+      "label": "Make the widget narrower"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:make-narrower:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:make-narrower:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:make-narrower:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:make-narrower:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:menu-make-narrower"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:make-narrower:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:menu-make-narrower"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:make-narrower:pointer:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:make-narrower:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:make-narrower:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:make-narrower",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:make-narrower:pointer:1",
+        "urn:step:page-arrange:pages:make-narrower:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:make-narrower:keyboard:1",
+      "stepMoveKindRef": "operability:nextItem"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:make-narrower:keyboard:2",
+      "stepMoveKindRef": "operability:nextItem",
+      "stepPreviousRef": "urn:step:page-arrange:pages:make-narrower:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:make-narrower:keyboard:3",
+      "stepMoveKindRef": "operability:nextItem",
+      "stepPreviousRef": "urn:step:page-arrange:pages:make-narrower:keyboard:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:make-narrower:keyboard:4",
+      "stepMoveKindRef": "operability:nextItem",
+      "stepPreviousRef": "urn:step:page-arrange:pages:make-narrower:keyboard:3",
+      "stepLocatorRef": "urn:locator:menu-make-narrower"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:make-narrower:keyboard:5",
+      "stepPreviousRef": "urn:step:page-arrange:pages:make-narrower:keyboard:4"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:make-narrower:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:make-narrower",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:make-narrower:keyboard:1",
+        "urn:step:page-arrange:pages:make-narrower:keyboard:2",
+        "urn:step:page-arrange:pages:make-narrower:keyboard:3",
+        "urn:step:page-arrange:pages:make-narrower:keyboard:4",
+        "urn:step:page-arrange:pages:make-narrower:keyboard:5"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:move-right",
+      "label": "Move the widget right",
+      "from": "urn:state:page-arrange:pages:narrower",
+      "to": "urn:state:page-arrange:pages:moved",
+      "commandRef": "urn:transition:page-arrange:pages:move-right:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:move-right:command",
+      "label": "Move the widget right"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:move-right:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:move-right:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:move-right:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:move-right:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:menu-move-right"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:move-right:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:menu-move-right"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:move-right:pointer:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:move-right:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:move-right:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:move-right",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:move-right:pointer:1",
+        "urn:step:page-arrange:pages:move-right:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:move-right:keyboard:1",
+      "stepMoveKindRef": "operability:previousItem"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:move-right:keyboard:2",
+      "stepMoveKindRef": "operability:previousItem",
+      "stepPreviousRef": "urn:step:page-arrange:pages:move-right:keyboard:1"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:move-right:keyboard:3",
+      "stepMoveKindRef": "operability:previousItem",
+      "stepPreviousRef": "urn:step:page-arrange:pages:move-right:keyboard:2"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:move-right:keyboard:4",
+      "stepMoveKindRef": "operability:previousItem",
+      "stepPreviousRef": "urn:step:page-arrange:pages:move-right:keyboard:3",
+      "stepLocatorRef": "urn:locator:menu-move-right"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:move-right:keyboard:5",
+      "stepPreviousRef": "urn:step:page-arrange:pages:move-right:keyboard:4"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:move-right:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:move-right",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:move-right:keyboard:1",
+        "urn:step:page-arrange:pages:move-right:keyboard:2",
+        "urn:step:page-arrange:pages:move-right:keyboard:3",
+        "urn:step:page-arrange:pages:move-right:keyboard:4",
+        "urn:step:page-arrange:pages:move-right:keyboard:5"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:close-widget-menu",
+      "label": "Close the widget menu",
+      "from": "urn:state:page-arrange:pages:moved",
+      "to": "urn:state:page-arrange:pages:menu-closed",
+      "commandRef": "urn:transition:page-arrange:pages:close-widget-menu:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:close-widget-menu:command",
+      "label": "Close the widget menu"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:close-widget-menu:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:close-widget-menu:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:close-widget-menu:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:close-widget-menu:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:tasks-widget-actions"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:close-widget-menu:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:tasks-widget-actions"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:close-widget-menu:pointer:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:close-widget-menu:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:close-widget-menu:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:close-widget-menu",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:close-widget-menu:pointer:1",
+        "urn:step:page-arrange:pages:close-widget-menu:pointer:2"
+      ]
+    },
+    {
+      "@type": "ShortcutStep",
+      "@id": "urn:step:page-arrange:pages:close-widget-menu:keyboard:1",
+      "extensions": {
+        "urn:openuji:playwright:shortcut": {
+          "keys": "Escape"
+        }
+      },
+      "stepLocatorRef": "urn:locator:tasks-widget-menu"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:close-widget-menu:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:close-widget-menu",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:close-widget-menu:keyboard:1"
+      ]
+    },
+    {
+      "@type": "Effect",
+      "@id": "urn:effect:page-arrange:widgets-saved",
+      "label": "Both widgets are stored in their places"
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:save",
+      "label": "Save the page",
+      "from": "urn:state:page-arrange:pages:menu-closed",
+      "to": "urn:state:page-arrange:pages:saved",
+      "commandRef": "urn:transition:page-arrange:pages:save:command",
+      "effectRef": "urn:effect:page-arrange:widgets-saved"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:save:command",
+      "label": "Save the page"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:save:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:save:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:save:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:save:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:drafts-save"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:save:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:drafts-save"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:save:pointer:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:save:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:save:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:save",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:save:pointer:1",
+        "urn:step:page-arrange:pages:save:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:save:keyboard:1",
+      "stepMoveKindRef": "operability:previousStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:save:keyboard:2",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:save:keyboard:1",
+      "stepLocatorRef": "urn:locator:drafts-save"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:save:keyboard:3",
+      "stepPreviousRef": "urn:step:page-arrange:pages:save:keyboard:2"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:save:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:save",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:save:keyboard:1",
+        "urn:step:page-arrange:pages:save:keyboard:2",
+        "urn:step:page-arrange:pages:save:keyboard:3"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:select-home",
+      "label": "Select Home",
+      "from": "urn:state:page-arrange:pages:saved",
+      "to": "urn:state:page-arrange:pages:home-again",
+      "commandRef": "urn:transition:page-arrange:pages:select-home:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:select-home:command",
+      "label": "Select Home"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:select-home:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:select-home:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:select-home:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:select-home:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:tab-home"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:select-home:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:tab-home"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:select-home:pointer:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:select-home:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:select-home:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:select-home",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:select-home:pointer:1",
+        "urn:step:page-arrange:pages:select-home:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:select-home:keyboard:1",
+      "stepMoveKindRef": "operability:previousStop"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:select-home:keyboard:2",
+      "stepMoveKindRef": "operability:previousStop",
+      "stepPreviousRef": "urn:step:page-arrange:pages:select-home:keyboard:1",
+      "stepLocatorRef": "urn:locator:tab-drafts"
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:select-home:keyboard:3",
+      "stepMoveKindRef": "operability:firstItem",
+      "stepPreviousRef": "urn:step:page-arrange:pages:select-home:keyboard:2",
+      "stepLocatorRef": "urn:locator:tab-home"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:select-home:keyboard:4",
+      "stepPreviousRef": "urn:step:page-arrange:pages:select-home:keyboard:3"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:select-home:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:select-home",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:select-home:keyboard:1",
+        "urn:step:page-arrange:pages:select-home:keyboard:2",
+        "urn:step:page-arrange:pages:select-home:keyboard:3",
+        "urn:step:page-arrange:pages:select-home:keyboard:4"
+      ]
+    },
+    {
+      "@type": "Transition",
+      "@id": "urn:transition:page-arrange:pages:select-drafts-again",
+      "label": "Select Drafts again",
+      "from": "urn:state:page-arrange:pages:home-again",
+      "to": "urn:state:page-arrange:pages:drafts-with-widgets",
+      "commandRef": "urn:transition:page-arrange:pages:select-drafts-again:command"
+    },
+    {
+      "@type": "Command",
+      "@id": "urn:transition:page-arrange:pages:select-drafts-again:command",
+      "label": "Select Drafts again"
+    },
+    {
+      "@type": "Surface",
+      "@id": "urn:surface:page-arrange:pages:select-drafts-again:command",
+      "graphNodeRef": "urn:transition:page-arrange:pages:select-drafts-again:command"
+    },
+    {
+      "@type": "ObservationBinding",
+      "@id": "urn:obs:page-arrange:pages:select-drafts-again:command",
+      "observeSurfaceRef": "urn:surface:page-arrange:pages:select-drafts-again:command",
+      "observationEventRef": "urn:observation-event:activate",
+      "locatorRefs": [
+        "urn:locator:tab-drafts"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:select-drafts-again:pointer:1",
+      "stepMoveKindRef": "operability:pointAt",
+      "stepLocatorRef": "urn:locator:tab-drafts"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:select-drafts-again:pointer:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:select-drafts-again:pointer:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:select-drafts-again:pointer",
+      "label": "Point at it and press",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:select-drafts-again",
+      "materializationModalityRef": "observability:pointer",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:select-drafts-again:pointer:1",
+        "urn:step:page-arrange:pages:select-drafts-again:pointer:2"
+      ]
+    },
+    {
+      "@type": "MoveStep",
+      "@id": "urn:step:page-arrange:pages:select-drafts-again:keyboard:1",
+      "stepMoveKindRef": "operability:nextItem",
+      "stepLocatorRef": "urn:locator:tab-drafts"
+    },
+    {
+      "@type": "ActivationStep",
+      "@id": "urn:step:page-arrange:pages:select-drafts-again:keyboard:2",
+      "stepPreviousRef": "urn:step:page-arrange:pages:select-drafts-again:keyboard:1"
+    },
+    {
+      "@type": "TransitionMaterialization",
+      "@id": "urn:materialization:page-arrange:pages:select-drafts-again:keyboard",
+      "label": "Keyboard path",
+      "materializationTransitionRef": "urn:transition:page-arrange:pages:select-drafts-again",
+      "materializationModalityRef": "observability:keyboard",
+      "materializationStepRefs": [
+        "urn:step:page-arrange:pages:select-drafts-again:keyboard:1",
+        "urn:step:page-arrange:pages:select-drafts-again:keyboard:2"
+      ]
+    },
+    {
+      "@type": "Touchpoint",
+      "@id": "urn:touchpoint:tables",
+      "label": "Nextcloud Tables (Application owner)",
+      "journeyRefs": [
+        "urn:journey:page-arrange:login",
+        "urn:journey:page-arrange:pages"
+      ]
+    },
+    {
+      "@type": "Persona",
+      "@id": "urn:user:owner",
+      "label": "Application owner",
+      "touchpointRefs": [
+        "urn:touchpoint:tables"
+      ]
+    },
+    {
+      "@type": "JourneyEntryIndex",
+      "@id": "urn:document:page-arrange:entries",
+      "entryRefs": [
+        "urn:entry:page-arrange:login",
+        "urn:entry:page-arrange:pages"
+      ]
+    }
+  ]
+}

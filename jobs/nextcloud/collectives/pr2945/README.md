@@ -8,14 +8,30 @@ The repository and PR are declared once, in `collectives-source`.
 SKIP_SETUP=1 scripts/run-job.sh nextcloud/collectives/pr2945
 ```
 
-Requires a journey-mesh release containing service composition and the HTTP
-environment plugin. Release that prerequisite before publishing these jobs to
-the daily workflow. For a development checkout, build/install it as described in
-the repository README. Docker and `host.docker.internal` must be reachable.
+Requires a journey-mesh release with:
+- UJG 1.0 RC4 models and declared Operability steps
+- service composition and the HTTP environment plugin
 
-The ten UJG JSON-LD documents are the behavioral source of truth. Each defines
-login and sharing journeys, observable states, command surfaces, input modalities,
-and effect identities. Both interaction profiles execute those compiled journeys.
+Release that prerequisite before publishing these jobs to the daily workflow.
+For a development checkout, build and install it as described in the repository
+README. Docker and `host.docker.internal` must be reachable.
+
+The ten UJG JSON-LD documents (RC4) are the behavioral source of truth. Each
+defines login and sharing journeys, observable states, command surfaces, input
+modalities and effect identities. Both interaction profiles execute those
+compiled journeys.
+
+Every command declares its Operability steps:
+- **pointer:** point at it and press
+- **keyboard:** the Tab, Shift+Tab or arrow-key stops, then the activation
+- **text fields that need focus first:** their Tab stops
+
+The keyboard paths were taken from Collectives at `6236504` on Nextcloud 35.0.2,
+and the report's **Input steps** page lists them with the keys used. Opening the
+sidebar leaves no element focused, so the path to its Sharing tab runs backwards
+through the page from where the Open sidebar button was. A change in tab order
+fails the first step that no longer matches, and the error names the focused
+object.
 The mesh supplies credentials/input values, runtime bindings, fixtures, and effect
 readbacks. It contains no independent browser test or test-action script.
 
