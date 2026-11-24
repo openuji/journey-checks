@@ -133,16 +133,17 @@ jobs:
           if-no-files-found: ignore
           retention-days: 30
 
-  publish:
+  # Publishing is two jobs on purpose. With upload and deploy in one job, a failed deploy cannot
+  # be rerun: the rerun uploads a second artifact with the same name, and deploy-pages refuses
+  # to choose between them. Here a failed deploy is rerun alone, against the site built once.
+  # To retry by hand, rerun only the "publish" job. "Re-run failed jobs" also reruns every red
+  # check job.
+  site:
     needs: [plan, check]
     if: ${{ !cancelled() && needs.plan.result == 'success' }}
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      artifact: ${{ steps.names.outputs.artifact }}
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -155,8 +156,56 @@ jobs:
             | xargs -0 jq -s '{generatedAt: (now | todate), jobs: (map({key: .job, value: .}) | from_entries)}' \
             > site/index.json
           cat site/index.json
+      # One artifact name per attempt, handed to the publish job as an output. Rerunning this
+      # job can never leave two artifacts with the name the publish job looks for.
+      - name: Name the site artifact
+        id: names
+        env:
+          ATTEMPT: ${{ github.run_attempt }}
+        run: echo "artifact=github-pages-$ATTEMPT" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-pages-artifact@v3
         with:
+          name: ${{ steps.names.outputs.artifact }}
           path: site
+          # Long enough to rerun the publish job the next day, which the default (1 day) is not.
+          retention-days: 7
+
+  # Pages sometimes fails a deployment it just accepted ("Deployment failed, try again later")
+  # or lists artifacts a moment too early. Both pass on a retry, so a failed attempt waits and
+  # tries again, and says so in a warning. Only the last attempt may fail the job.
+  publish:
+    needs: site
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy-3.outputs.page_url || steps.deploy-2.outputs.page_url || steps.deploy-1.outputs.page_url }}
+    steps:
       - uses: actions/deploy-pages@v4
-        id: deployment
+        id: deploy-1
+        continue-on-error: true
+        with:
+          artifact_name: ${{ needs.site.outputs.artifact }}
+      - name: Wait before the second attempt
+        if: ${{ steps.deploy-1.outcome == 'failure' }}
+        run: |
+          echo "::warning::The Pages deployment failed; trying again in 30 seconds"
+          sleep 30
+      - uses: actions/deploy-pages@v4
+        id: deploy-2
+        if: ${{ steps.deploy-1.outcome == 'failure' }}
+        continue-on-error: true
+        with:
+          artifact_name: ${{ needs.site.outputs.artifact }}
+      - name: Wait before the last attempt
+        if: ${{ steps.deploy-2.outcome == 'failure' }}
+        run: |
+          echo "::warning::The Pages deployment failed again; the last attempt is in 90 seconds"
+          sleep 90
+      - uses: actions/deploy-pages@v4
+        id: deploy-3
+        if: ${{ steps.deploy-2.outcome == 'failure' }}
+        with:
+          artifact_name: ${{ needs.site.outputs.artifact }}
