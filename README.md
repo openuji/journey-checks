@@ -46,8 +46,8 @@ All browser behavior comes from the UJG JSON-LD models. HTTP effect checks only 
 The Playwright adapter performs exactly these steps, and the report's **Input steps** page shows them. A profile fails before any service starts when a transition it runs has no steps. To find the stops, run the test on a running stack with `journey-mesh discover`. It reports each missing path, and `--apply` declares the reviewed paths in the model:
 
 ```sh
-node_modules/.bin/journey-mesh discover jobs/<job>/<name>.mesh.yaml --test <id>           # report
-node_modules/.bin/journey-mesh discover jobs/<job>/<name>.mesh.yaml --test <id> --apply   # declare
+node_modules/.bin/journey-mesh discover jobs/<owner>/<repo>/<pr>/<pr>.mesh.yaml --test <id>           # report
+node_modules/.bin/journey-mesh discover jobs/<owner>/<repo>/<pr>/<pr>.mesh.yaml --test <id> --apply   # declare
 ```
 
 Discovery is an authoring aid and never runs in CI. It is Web only: a test with a journey on another adapter, such as the Android job's Appium journeys, is rejected before anything starts. See the [Playwright adapter](https://github.com/openuji/journey-mesh/blob/main/packages/journey-adapter-playwright/README.md#finding-paths). Android models declare no steps, and their touch profile sets `requireMaterialization: false`.

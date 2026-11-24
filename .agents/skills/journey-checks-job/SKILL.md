@@ -32,7 +32,7 @@ Keep the job self-contained under `jobs/`. Follow repository conventions for dep
 Every keyboard, pointer and text-entry transition a web profile runs needs a `TransitionMaterialization`. The Playwright adapter performs only declared steps, and a profile fails preflight when steps are missing. Find the steps on the running product; never guess a count.
 
 1. Model the journeys, states and bindings without materializations.
-2. Run `node_modules/.bin/journey-mesh discover jobs/<job-id>/<name>.mesh.yaml --test <id>`, optionally with `--profile <combination>`. It runs the test in the discovery mode of its adapter. The job's own browser, viewport, `keyboard` and `transientUi` options apply. Profiles don't require steps during the run, and observers are left out. It reports:
+2. Run `node_modules/.bin/journey-mesh discover jobs/<owner>/<repo>/<pr>/<pr>.mesh.yaml --test <id>`, for example `jobs/nextcloud/tables/pr3215/pr3215.mesh.yaml`. Optionally add `--profile <combination>`. It runs the test in the discovery mode of its adapter. The job's own browser, viewport, `keyboard` and `transientUi` options apply. Profiles don't require steps during the run, and observers are left out. It reports:
    - the shortest Tab or Shift+Tab walk to each bound object, with arrow keys inside tab lists, menus, listboxes, trees and radio groups
    - point-and-press for pointer transitions
    - which objects could not be reached, and which paths differ between profiles
