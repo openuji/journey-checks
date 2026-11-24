@@ -43,11 +43,18 @@ All browser behavior comes from the UJG JSON-LD models. HTTP effect checks only 
 - the Tab, Shift+Tab or arrow-key stops, or the pointer target, leading to the control
 - then the activation
 
-The Playwright adapter performs exactly these steps, and the report's **Input steps** page shows them. A profile fails before any service starts when a transition it runs has no steps. Find the stops on a running stack and declare them in the model; see the [Playwright adapter](https://github.com/openuji/journey-mesh/blob/main/packages/journey-adapter-playwright/README.md). Android models declare none, and their touch profile sets `requireMaterialization: false`.
+The Playwright adapter performs exactly these steps, and the report's **Input steps** page shows them. A profile fails before any service starts when a transition it runs has no steps. To find the stops, run the test on a running stack with `journey-mesh discover`. It reports each missing path, and `--apply` declares the reviewed paths in the model:
+
+```sh
+node_modules/.bin/journey-mesh discover jobs/<job>/<name>.mesh.yaml --test <id>           # report
+node_modules/.bin/journey-mesh discover jobs/<job>/<name>.mesh.yaml --test <id> --apply   # declare
+```
+
+Discovery is an authoring aid and never runs in CI. It is Web only: a test with a journey on another adapter, such as the Android job's Appium journeys, is rejected before anything starts. See the [Playwright adapter](https://github.com/openuji/journey-mesh/blob/main/packages/journey-adapter-playwright/README.md#finding-paths). Android models declare no steps, and their touch profile sets `requireMaterialization: false`.
 
 ## Add a job
 
-Use the [journey-checks-job skill](.agents/skills/journey-checks-job/SKILL.md) to author and verify a job from its user goal and UJG model through execution evidence and the rendered report.
+Use the [journey-checks-job skill](.agents/skills/journey-checks-job/SKILL.md) to author and verify a job, from its user goal and UJG model to the execution evidence and the rendered report. The skill works for any product journey-mesh can drive.
 
 A job is a directory under `jobs/` containing one `*.mesh.yaml`. The mesh defines the suite and all tests to run. Its job id is the directory path below `jobs/`, by convention `<owner>/<repo>/<pr>`.
 
