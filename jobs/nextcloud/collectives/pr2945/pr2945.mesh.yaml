@@ -77,6 +77,12 @@ adapters:
           width: 1440
           height: 1000
         locale: en-US
+      # Nextcloud success toasts (role=status) expire after about 7 seconds, and their Close
+      # buttons are tab stops at the end of the document. A keyboard walk starts only once none
+      # is up, so the declared Shift+Tab counts do not depend on how fast the run is.
+      # Nothing else in Collectives has this role.
+      transientUi:
+        - role: status
     driver:
       use: "@openuji/journey-driver-nextcloud/web/plugin"
       options:

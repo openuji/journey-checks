@@ -2681,25 +2681,13 @@
       "@type": "MoveStep",
       "@id": "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:5",
       "stepMoveKindRef": "operability:previousStop",
-      "stepPreviousRef": "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:4"
-    },
-    {
-      "@type": "MoveStep",
-      "@id": "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:6",
-      "stepMoveKindRef": "operability:previousStop",
-      "stepPreviousRef": "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:5"
-    },
-    {
-      "@type": "MoveStep",
-      "@id": "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:7",
-      "stepMoveKindRef": "operability:previousStop",
-      "stepPreviousRef": "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:6",
+      "stepPreviousRef": "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:4",
       "stepLocatorRef": "urn:locator:collective-own:60"
     },
     {
       "@type": "ActivationStep",
-      "@id": "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:8",
-      "stepPreviousRef": "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:7"
+      "@id": "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:6",
+      "stepPreviousRef": "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:5"
     },
     {
       "@type": "TransitionMaterialization",
@@ -2713,9 +2701,7 @@
         "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:3",
         "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:4",
         "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:5",
-        "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:6",
-        "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:7",
-        "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:8"
+        "urn:step:urn:journey:collective-own:sharing:transition:10:keyboard:6"
       ]
     },
     {
