@@ -32,6 +32,7 @@ https://openuji.github.io/journey-checks/index.json            # every job in on
 The mesh composes the subject from reusable services: Git source → build → installation. Each source declares its repository and PR once; every run resolves the current head and passes the same identity to its dependents. `target` selects a verified installed identity for the published result. This works for both the Nextcloud server PR and the Collectives app PR.
 
 The jobs need a journey-mesh release with all of the following:
+- the `executors:`/`client:` configuration and the split packages (`journey-executor-*`, `journey-vendor-nextcloud`, `journey-service-android`); releases up to `v0.5.0` still use `adapters:`/`driver:` and reject these meshes
 - UJG 1.0 RC4 models
 - declared Operability steps
 - the operability observer and report (`@openuji/journey-observer-operability`, `@openuji/journey-report-operability`)
@@ -43,14 +44,14 @@ All browser behavior comes from the UJG JSON-LD models. HTTP effect checks only 
 - the Tab, Shift+Tab or arrow-key stops, or the pointer target, leading to the control
 - then the activation
 
-The Playwright adapter performs exactly these steps, and the report's **Input steps** page shows them. A profile fails before any service starts when a transition it runs has no steps. To find the stops, run the test on a running stack with `journey-mesh discover`. It reports each missing path, and `--apply` declares the reviewed paths in the model:
+The Playwright executor performs exactly these steps, and the report's **Input steps** page shows them. A profile fails before any service starts when a transition it runs has no steps. To find the stops, run the test on a running stack with `journey-mesh discover`. It reports each missing path, and `--apply` declares the reviewed paths in the model:
 
 ```sh
 node_modules/.bin/journey-mesh discover jobs/<owner>/<repo>/<pr>/<pr>.mesh.yaml --test <id>           # report
 node_modules/.bin/journey-mesh discover jobs/<owner>/<repo>/<pr>/<pr>.mesh.yaml --test <id> --apply   # declare
 ```
 
-Discovery is an authoring aid and never runs in CI. It is Web only: a test with a journey on another adapter, such as the Android job's Appium journeys, is rejected before anything starts. See the [Playwright adapter](https://github.com/openuji/journey-mesh/blob/main/packages/journey-adapter-playwright/README.md#finding-paths). Android models declare no steps, and their touch profile sets `requireMaterialization: false`.
+Discovery is an authoring aid and never runs in CI. It is Web only: a test with a journey on another executor, such as the Android job's Appium journeys, is rejected before anything starts. See the [Playwright executor](https://github.com/openuji/journey-mesh/blob/main/packages/journey-executor-playwright/README.md#finding-paths). Android models declare no steps, and their touch profile sets `requireMaterialization: false`.
 
 ## Add a job
 

@@ -26,7 +26,7 @@ services:
       pullRequest: 2209
       directory: .tmp/android-library-source
   app-build:
-    use: "@openuji/journey-driver-android/apk-build/service"
+    use: "@openuji/journey-service-android/apk-build/service"
     inputs:
       source:
         service: app-source
@@ -54,7 +54,7 @@ services:
       sha: 7ac7bafbbed54a3b7e188668787c5394cb25d0be
       directory: .tmp/groupfolders-source
   groupfolders-build:
-    use: "@openuji/journey-driver-nextcloud/app-build/service"
+    use: "@openuji/journey-vendor-nextcloud/app-build/service"
     inputs:
       source:
         service: groupfolders-source
@@ -65,7 +65,7 @@ services:
       nodeImage: node:24.11.1-bookworm-slim@sha256:48abc13a19400ca3985071e287bd405a1d99306770eb81d61202fb6b65cf0b57
       composerImage: composer:2.8.12@sha256:5248900ab8b5f7f880c2d62180e40960cd87f60149ec9a1abfd62ac72a02577c
   stack:
-    use: "@openuji/journey-driver-nextcloud/stack/service"
+    use: "@openuji/journey-vendor-nextcloud/stack/service"
     options:
       project: journey-android-teams
       composeFiles:
@@ -89,7 +89,7 @@ services:
         - circles
         - files_sharing
   groupfolders-install:
-    use: "@openuji/journey-driver-nextcloud/app-install/service"
+    use: "@openuji/journey-vendor-nextcloud/app-install/service"
     inputs:
       app:
         service: groupfolders-build
@@ -103,7 +103,7 @@ services:
         - nextcloud
       enable: true
   devices:
-    use: "@openuji/journey-driver-android/service"
+    use: "@openuji/journey-service-android/emulator/service"
     options:
       api: 35
       image: system-images;android-35;google_apis;x86_64
@@ -124,16 +124,16 @@ services:
         bob:
           avd: journey-teams-bob
   appium:
-    use: "@openuji/journey-adapter-appium/service"
+    use: "@openuji/journey-executor-appium/service"
     inputs:
       devices:
         service: devices
         output: devices
     options:
       port: ${APPIUM_PORT:-4724}
-adapters:
+executors:
   android:
-    use: "@openuji/journey-adapter-appium/plugin"
+    use: "@openuji/journey-executor-appium/plugin"
     inputs:
       application:
         service: app-build
@@ -160,8 +160,8 @@ adapters:
         urn:touchpoint:android-bob:
           device: bob
           capabilities: *a11yTraversal
-    driver:
-      use: "@openuji/journey-driver-nextcloud/android/plugin"
+    client:
+      use: "@openuji/journey-vendor-nextcloud/android/plugin"
       options:
         touchpoints:
           urn:touchpoint:android-alice:
@@ -221,35 +221,35 @@ tests:
       - id: alice-setup
         source: ujg/setup.android.ujg.jsonld
         select: urn:journey:alice-android-setup
-        adapter: android
+        executor: android
       - id: bob-setup
         source: ujg/setup.android.ujg.jsonld
         select: urn:journey:bob-android-setup
-        adapter: android
+        executor: android
       - id: alice-creates-team
         source: ujg/teams.android.ujg.jsonld
         select: urn:journey:alice-creates-team
-        adapter: android
+        executor: android
       - id: alice-requires-acceptance
         source: ujg/teams.android.ujg.jsonld
         select: urn:journey:alice-requires-acceptance
-        adapter: android
+        executor: android
       - id: alice-invites-bob
         source: ujg/teams.android.ujg.jsonld
         select: urn:journey:alice-invites-bob
-        adapter: android
+        executor: android
       - id: bob-accepts-invitation
         source: ujg/teams.android.ujg.jsonld
         select: urn:journey:bob-accepts-invitation
-        adapter: android
+        executor: android
       - id: alice-sees-bob
         source: ujg/teams.android.ujg.jsonld
         select: urn:journey:alice-sees-bob
-        adapter: android
+        executor: android
       - id: bob-opens-team-folder
         source: ujg/teams.android.ujg.jsonld
         select: urn:journey:bob-opens-team-folder
-        adapter: android
+        executor: android
     profiles:
       - id: touch
         journeys:

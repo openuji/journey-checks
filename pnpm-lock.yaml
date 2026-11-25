@@ -8,24 +8,18 @@ importers:
 
   .:
     devDependencies:
-      '@openuji/journey-adapter-appium':
-        specifier: link:./journey-mesh/packages/journey-adapter-appium
-        version: link:journey-mesh/packages/journey-adapter-appium
-      '@openuji/journey-adapter-playwright':
-        specifier: link:./journey-mesh/packages/journey-adapter-playwright
-        version: link:journey-mesh/packages/journey-adapter-playwright
       '@openuji/journey-cli':
         specifier: link:./journey-mesh/packages/journey-cli
         version: link:journey-mesh/packages/journey-cli
-      '@openuji/journey-driver-android':
-        specifier: link:./journey-mesh/packages/journey-driver-android
-        version: link:journey-mesh/packages/journey-driver-android
-      '@openuji/journey-driver-nextcloud':
-        specifier: link:./journey-mesh/packages/journey-driver-nextcloud
-        version: link:journey-mesh/packages/journey-driver-nextcloud
       '@openuji/journey-environment-http':
         specifier: link:./journey-mesh/packages/journey-environment-http
         version: link:journey-mesh/packages/journey-environment-http
+      '@openuji/journey-executor-appium':
+        specifier: link:./journey-mesh/packages/journey-executor-appium
+        version: link:journey-mesh/packages/journey-executor-appium
+      '@openuji/journey-executor-playwright':
+        specifier: link:./journey-mesh/packages/journey-executor-playwright
+        version: link:journey-mesh/packages/journey-executor-playwright
       '@openuji/journey-model-ujg':
         specifier: link:./journey-mesh/packages/journey-model-ujg
         version: link:journey-mesh/packages/journey-model-ujg
@@ -53,9 +47,15 @@ importers:
       '@openuji/journey-report-operability':
         specifier: link:./journey-mesh/packages/journey-report-operability
         version: link:journey-mesh/packages/journey-report-operability
+      '@openuji/journey-service-android':
+        specifier: link:./journey-mesh/packages/journey-service-android
+        version: link:journey-mesh/packages/journey-service-android
       '@openuji/journey-service-git':
         specifier: link:./journey-mesh/packages/journey-service-git
         version: link:journey-mesh/packages/journey-service-git
+      '@openuji/journey-vendor-nextcloud':
+        specifier: link:./journey-mesh/packages/journey-vendor-nextcloud
+        version: link:journey-mesh/packages/journey-vendor-nextcloud
       yaml:
         specifier: ^2.9.1
         version: 2.9.1
