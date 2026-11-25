@@ -6,7 +6,7 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 import test from "node:test";
-import { writeRunRecord } from "../journey-mesh/packages/journey-run-record/dist/node.js";
+import { runRecordVersion, writeRunRecord } from "../journey-mesh/packages/journey-run-record/dist/node.js";
 import { buildResult } from "./write-result.mjs";
 
 const base = { job: "nextcloud/server/pr66147", ref: "v0.3.0", sha: "abc", run: "https://example.test/run/1", now: new Date("2026-01-02T03:04:05Z") };
@@ -20,14 +20,14 @@ async function directory(t) {
 
 function testRecord(id, ok = true) {
   return {
-    format: "journey-mesh/run/test", version: 1, id, ok,
+    format: "journey-mesh/run/test", version: runRecordVersion, id, ok,
     segments: [], views: {}, plan: { id: "plan", operations: [] },
     result: { ok, runId: "run", plan: { id: "plan" }, errors: [], assessments: [], executions: [], evidence: { executions: [] } },
     observers: [], observerErrors: [], files: [],
   };
 }
 
-// Use the tool's writer to exercise the v0.3.0 disk format and referenced test records.
+// Use the tool's writer to exercise its current disk format and referenced test records.
 async function runRecord(t, summary) {
   const path = await directory(t);
   if (summary === undefined) return path;
@@ -128,7 +128,7 @@ test("legacy and rendered reports without a committed run record cannot pass", a
 });
 
 test("unsupported or malformed run indexes fail", async (t) => {
-  for (const override of [{ format: "other" }, { version: 2 }, { tests: {} }]) {
+  for (const override of [{ format: "other" }, { version: runRecordVersion + 1 }, { tests: {} }]) {
     const reportDir = await runRecord(t, { ok: true });
     await updateJson(join(reportDir, "run.json"), override);
     const result = await buildResult({ ...base, exitCode: 0, reportDir });
@@ -138,7 +138,7 @@ test("unsupported or malformed run indexes fail", async (t) => {
 });
 
 test("missing or invalid referenced test records fail even when the run index says ok", async (t) => {
-  for (const override of [undefined, { format: "other" }, { version: 2 }, { id: "another-test" }]) {
+  for (const override of [undefined, { format: "other" }, { version: runRecordVersion + 1 }, { id: "another-test" }]) {
     const reportDir = await runRecord(t, { ok: true });
     const path = join(reportDir, "tests/browser/run.json");
     if (override === undefined) await rm(path);

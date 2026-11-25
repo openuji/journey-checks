@@ -20,7 +20,7 @@ services:
       pullRequest: 3215
       directory: .tmp/tables-source
   tables-build:
-    use: "@openuji/journey-driver-nextcloud/app-build/service"
+    use: "@openuji/journey-vendor-nextcloud/app-build/service"
     inputs:
       source:
         service: tables-source
@@ -36,7 +36,7 @@ services:
       composerIgnorePlatformReqs:
         - ext-gd
   stack:
-    use: "@openuji/journey-driver-nextcloud/stack/service"
+    use: "@openuji/journey-vendor-nextcloud/stack/service"
     options:
       project: journey-tables-pages
       composeFiles:
@@ -54,7 +54,7 @@ services:
           username: admin
           password: JourneyAdmin2026!
   tables-install:
-    use: "@openuji/journey-driver-nextcloud/app-install/service"
+    use: "@openuji/journey-vendor-nextcloud/app-install/service"
     inputs:
       app:
         service: tables-build
@@ -67,9 +67,9 @@ services:
       services:
         - nextcloud
       enable: true
-adapters:
+executors:
   web:
-    use: "@openuji/journey-adapter-playwright/plugin"
+    use: "@openuji/journey-executor-playwright/plugin"
     options:
       browser: chromium
       headless: ${HEADLESS:-true}
@@ -79,8 +79,8 @@ adapters:
           width: 1600
           height: 1000
         locale: en-US
-    driver:
-      use: "@openuji/journey-driver-nextcloud/web/plugin"
+    client:
+      use: "@openuji/journey-vendor-nextcloud/web/plugin"
       options:
         touchpoints:
           urn:touchpoint:tables:
@@ -163,11 +163,11 @@ tests:
       - id: login
         source: ujg/page-add.ujg.jsonld
         select: urn:journey:page-add:login
-        adapter: web
+        executor: web
       - id: pages
         source: ujg/page-add.ujg.jsonld
         select: urn:journey:page-add:pages
-        adapter: web
+        executor: web
     profiles:
       - id: default
         journeys: { login: default, pages: default }
@@ -280,11 +280,11 @@ tests:
       - id: login
         source: ujg/page-arrange.ujg.jsonld
         select: urn:journey:page-arrange:login
-        adapter: web
+        executor: web
       - id: pages
         source: ujg/page-arrange.ujg.jsonld
         select: urn:journey:page-arrange:pages
-        adapter: web
+        executor: web
     profiles:
       - id: default
         journeys: { login: default, pages: default }
@@ -399,11 +399,11 @@ tests:
       - id: login
         source: ujg/page-cancel.ujg.jsonld
         select: urn:journey:page-cancel:login
-        adapter: web
+        executor: web
       - id: pages
         source: ujg/page-cancel.ujg.jsonld
         select: urn:journey:page-cancel:pages
-        adapter: web
+        executor: web
     profiles:
       - id: default
         journeys: { login: default, pages: default }
@@ -495,11 +495,11 @@ tests:
       - id: login
         source: ujg/page-manage.ujg.jsonld
         select: urn:journey:page-manage:login
-        adapter: web
+        executor: web
       - id: pages
         source: ujg/page-manage.ujg.jsonld
         select: urn:journey:page-manage:pages
-        adapter: web
+        executor: web
     profiles:
       - id: default
         journeys: { login: default, pages: default }
@@ -537,19 +537,19 @@ tests:
       - id: login
         source: ujg/page-viewer.ujg.jsonld
         select: urn:journey:page-viewer:login
-        adapter: web
+        executor: web
       - id: seed
         source: ujg/page-viewer.ujg.jsonld
         select: urn:journey:page-viewer:seed
-        adapter: web
+        executor: web
       - id: viewer-login
         source: ujg/page-viewer.ujg.jsonld
         select: urn:journey:page-viewer:viewer-login
-        adapter: web
+        executor: web
       - id: pages
         source: ujg/page-viewer.ujg.jsonld
         select: urn:journey:page-viewer:pages
-        adapter: web
+        executor: web
     profiles:
       # Seeding is setup: it always uses the default profile, so only the viewer's journey varies.
       - id: default
@@ -662,15 +662,15 @@ tests:
       - id: login
         source: ujg/page-missing-source.ujg.jsonld
         select: urn:journey:page-missing-source:login
-        adapter: web
+        executor: web
       - id: seed
         source: ujg/page-missing-source.ujg.jsonld
         select: urn:journey:page-missing-source:seed
-        adapter: web
+        executor: web
       - id: pages
         source: ujg/page-missing-source.ujg.jsonld
         select: urn:journey:page-missing-source:pages
-        adapter: web
+        executor: web
     profiles:
       - id: default
         journeys: { login: default, seed: default, pages: default }

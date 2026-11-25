@@ -72,7 +72,7 @@ With activation-only entry navigation, the latest local validation passes 49 of
 104 steps and fails at "Files are shown" after Alice creates the team. The app
 remains on the Teams screen when activated; the old generic cold restart had
 hidden this entry-state assumption. The modeled invitation and acceptance steps
-remain unexecuted in this run. No restart workaround was added to the adapter.
+remain unexecuted in this run. No restart workaround was added to the executor.
 
 Both devices' installed APKs matched the built APK's package, version code,
 version name and SHA-256. The target was app head `b2582a1`, "35.2.0 Alpha 51";

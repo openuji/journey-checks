@@ -20,7 +20,7 @@ services:
       pullRequest: 2945
       directory: .tmp/collectives-source
   collectives-build:
-    use: "@openuji/journey-driver-nextcloud/app-build/service"
+    use: "@openuji/journey-vendor-nextcloud/app-build/service"
     inputs:
       source:
         service: collectives-source
@@ -31,7 +31,7 @@ services:
       nodeImage: node:24.11.1-bookworm-slim@sha256:48abc13a19400ca3985071e287bd405a1d99306770eb81d61202fb6b65cf0b57
       composerImage: composer:2.8.12@sha256:5248900ab8b5f7f880c2d62180e40960cd87f60149ec9a1abfd62ac72a02577c
   stack:
-    use: "@openuji/journey-driver-nextcloud/stack/service"
+    use: "@openuji/journey-vendor-nextcloud/stack/service"
     options:
       project: journey-collectives-sharing
       composeFiles:
@@ -53,7 +53,7 @@ services:
         - text
         - files_sharing
   collectives-install:
-    use: "@openuji/journey-driver-nextcloud/app-install/service"
+    use: "@openuji/journey-vendor-nextcloud/app-install/service"
     inputs:
       app:
         service: collectives-build
@@ -66,9 +66,9 @@ services:
       services:
         - nextcloud
       enable: true
-adapters:
+executors:
   web:
-    use: "@openuji/journey-adapter-playwright/plugin"
+    use: "@openuji/journey-executor-playwright/plugin"
     options:
       browser: chromium
       headless: ${HEADLESS:-true}
@@ -83,8 +83,8 @@ adapters:
       # Nothing else in Collectives has this role.
       transientUi:
         - role: status
-    driver:
-      use: "@openuji/journey-driver-nextcloud/web/plugin"
+    client:
+      use: "@openuji/journey-vendor-nextcloud/web/plugin"
       options:
         touchpoints:
           urn:touchpoint:collectives:
@@ -179,11 +179,11 @@ tests:
       - id: login
         source: ujg/collective-own.ujg.jsonld
         select: urn:journey:collective-own:login
-        adapter: web
+        executor: web
       - id: sharing
         source: ujg/collective-own.ujg.jsonld
         select: urn:journey:collective-own:sharing
-        adapter: web
+        executor: web
     profiles:
       - id: default
         journeys:
@@ -496,11 +496,11 @@ tests:
       - id: login
         source: ujg/collective-member.ujg.jsonld
         select: urn:journey:collective-member:login
-        adapter: web
+        executor: web
       - id: sharing
         source: ujg/collective-member.ujg.jsonld
         select: urn:journey:collective-member:sharing
-        adapter: web
+        executor: web
     profiles:
       - id: default
         journeys:
@@ -724,11 +724,11 @@ tests:
       - id: login
         source: ujg/collective-admin.ujg.jsonld
         select: urn:journey:collective-admin:login
-        adapter: web
+        executor: web
       - id: sharing
         source: ujg/collective-admin.ujg.jsonld
         select: urn:journey:collective-admin:sharing
-        adapter: web
+        executor: web
     profiles:
       - id: default
         journeys:
@@ -983,11 +983,11 @@ tests:
       - id: login
         source: ujg/collective-sharing-restricted.ujg.jsonld
         select: urn:journey:collective-sharing-restricted:login
-        adapter: web
+        executor: web
       - id: sharing
         source: ujg/collective-sharing-restricted.ujg.jsonld
         select: urn:journey:collective-sharing-restricted:sharing
-        adapter: web
+        executor: web
     profiles:
       - id: default
         journeys:
@@ -1226,11 +1226,11 @@ tests:
       - id: login
         source: ujg/collective-editing-restricted.ujg.jsonld
         select: urn:journey:collective-editing-restricted:login
-        adapter: web
+        executor: web
       - id: sharing
         source: ujg/collective-editing-restricted.ujg.jsonld
         select: urn:journey:collective-editing-restricted:sharing
-        adapter: web
+        executor: web
     profiles:
       - id: default
         journeys:
@@ -1493,11 +1493,11 @@ tests:
       - id: login
         source: ujg/page-own.ujg.jsonld
         select: urn:journey:page-own:login
-        adapter: web
+        executor: web
       - id: sharing
         source: ujg/page-own.ujg.jsonld
         select: urn:journey:page-own:sharing
-        adapter: web
+        executor: web
     profiles:
       - id: default
         journeys:
@@ -1784,11 +1784,11 @@ tests:
       - id: login
         source: ujg/page-member.ujg.jsonld
         select: urn:journey:page-member:login
-        adapter: web
+        executor: web
       - id: sharing
         source: ujg/page-member.ujg.jsonld
         select: urn:journey:page-member:sharing
-        adapter: web
+        executor: web
     profiles:
       - id: default
         journeys:
@@ -2031,11 +2031,11 @@ tests:
       - id: login
         source: ujg/page-admin.ujg.jsonld
         select: urn:journey:page-admin:login
-        adapter: web
+        executor: web
       - id: sharing
         source: ujg/page-admin.ujg.jsonld
         select: urn:journey:page-admin:sharing
-        adapter: web
+        executor: web
     profiles:
       - id: default
         journeys:
@@ -2309,11 +2309,11 @@ tests:
       - id: login
         source: ujg/page-sharing-restricted.ujg.jsonld
         select: urn:journey:page-sharing-restricted:login
-        adapter: web
+        executor: web
       - id: sharing
         source: ujg/page-sharing-restricted.ujg.jsonld
         select: urn:journey:page-sharing-restricted:sharing
-        adapter: web
+        executor: web
     profiles:
       - id: default
         journeys:
@@ -2571,11 +2571,11 @@ tests:
       - id: login
         source: ujg/page-editing-restricted.ujg.jsonld
         select: urn:journey:page-editing-restricted:login
-        adapter: web
+        executor: web
       - id: sharing
         source: ujg/page-editing-restricted.ujg.jsonld
         select: urn:journey:page-editing-restricted:sharing
-        adapter: web
+        executor: web
     profiles:
       - id: default
         journeys:

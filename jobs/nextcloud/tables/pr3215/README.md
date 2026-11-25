@@ -74,7 +74,7 @@ Every keyboard and pointer transition declares its UJG RC4 Operability steps:
 - **pointer:** point at the control, then press
 - **text fields** that don't already have focus: their Tab stops
 
-The Playwright adapter performs exactly these steps, and the report's **Input
+The Playwright executor performs exactly these steps, and the report's **Input
 steps** page lists them with the keys used. The paths were taken from Tables at
 `101ff07` on Nextcloud 35.0.2. If the PR changes a page's tab order, the first
 step that no longer matches fails, and the error names the object that has focus.

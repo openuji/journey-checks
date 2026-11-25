@@ -48,7 +48,7 @@ setup() {
     cd "$mesh_dir"
     pnpm install --frozen-lockfile
     pnpm build
-    pnpm --filter @openuji/journey-adapter-playwright exec playwright install ${CI:+--with-deps} chromium
+    pnpm --filter @openuji/journey-executor-playwright exec playwright install ${CI:+--with-deps} chromium
     cd "$root"
     pnpm install --frozen-lockfile
   )

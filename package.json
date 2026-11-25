@@ -7,12 +7,10 @@
     "test": "node --test scripts/*.test.mjs"
   },
   "devDependencies": {
-    "@openuji/journey-adapter-appium": "link:./journey-mesh/packages/journey-adapter-appium",
-    "@openuji/journey-adapter-playwright": "link:./journey-mesh/packages/journey-adapter-playwright",
     "@openuji/journey-cli": "link:./journey-mesh/packages/journey-cli",
-    "@openuji/journey-driver-android": "link:./journey-mesh/packages/journey-driver-android",
-    "@openuji/journey-driver-nextcloud": "link:./journey-mesh/packages/journey-driver-nextcloud",
     "@openuji/journey-environment-http": "link:./journey-mesh/packages/journey-environment-http",
+    "@openuji/journey-executor-appium": "link:./journey-mesh/packages/journey-executor-appium",
+    "@openuji/journey-executor-playwright": "link:./journey-mesh/packages/journey-executor-playwright",
     "@openuji/journey-model-ujg": "link:./journey-mesh/packages/journey-model-ujg",
     "@openuji/journey-observer-android-accessibility": "link:./journey-mesh/packages/journey-observer-android-accessibility",
     "@openuji/journey-observer-axe": "link:./journey-mesh/packages/journey-observer-axe",
@@ -22,7 +20,9 @@
     "@openuji/journey-report-android": "link:./journey-mesh/packages/journey-report-android",
     "@openuji/journey-report-axe": "link:./journey-mesh/packages/journey-report-axe",
     "@openuji/journey-report-operability": "link:./journey-mesh/packages/journey-report-operability",
+    "@openuji/journey-service-android": "link:./journey-mesh/packages/journey-service-android",
     "@openuji/journey-service-git": "link:./journey-mesh/packages/journey-service-git",
+    "@openuji/journey-vendor-nextcloud": "link:./journey-mesh/packages/journey-vendor-nextcloud",
     "yaml": "^2.9.1"
   }
 }

@@ -80,7 +80,7 @@ jobs:
       - name: Detect native requirements
         id: native
         run: |
-          if grep -q '@openuji/journey-driver-android' "jobs/$JOB"/*.mesh.yaml; then echo "android=true" >> "$GITHUB_OUTPUT"; fi
+          if grep -q '@openuji/journey-service-android' "jobs/$JOB"/*.mesh.yaml; then echo "android=true" >> "$GITHUB_OUTPUT"; fi
       - name: Enable KVM for the Android emulator
         if: steps.native.outputs.android == 'true'
         run: |
